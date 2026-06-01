@@ -241,9 +241,12 @@ function renderEducation(writer, education) {
     if (index > 0) writer.move(2.2);
     writer.ensure(13);
 
-    const credential = [formatDegree(item.degree), item.branch].filter(Boolean).join(" ");
+    const shouldShowLevel = ["Class 10", "Class 12", "Diploma"].includes(item.level);
+    const credential = shouldShowLevel
+      ? [item.level, formatDegree(item.degree), item.branch].filter(Boolean).join(" ")
+      : [formatDegree(item.degree) || item.level, item.branch].filter(Boolean).join(" ");
     const details = [credential || item.level, item.score].filter(Boolean).join(" • ");
-    const dateLines = [item.currentYear, item.graduationYear ? (item.level?.startsWith("Class") ? item.graduationYear : `Expected Graduation: ${item.graduationYear}`) : ""].filter(Boolean);
+    const dateLines = [item.currentYear, item.graduationYear ? (item.level?.startsWith("Class") ? item.graduationYear : `Graduation: ${item.graduationYear}`) : ""].filter(Boolean);
     const rightWidth = 43;
     const leftWidth = Math.max(60, writer.bounds.width - rightWidth - 8);
 

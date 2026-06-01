@@ -258,7 +258,7 @@ function BuilderApp() {
                     <AutocompleteInput label="Degree" value={education.degree} onChange={(value) => updateEducation(index, "degree", value)} suggestions={degrees} placeholder="B.Tech" />
                     <AutocompleteInput label="Branch / Specialization" value={education.branch} onChange={(value) => updateEducation(index, "branch", value)} suggestions={branches} placeholder="Computer Science" />
                     <SelectInput label="Current Year" value={education.currentYear} onChange={(value) => updateEducation(index, "currentYear", value)} options={currentYears} />
-                    <SelectInput label="Expected Graduation Year" value={education.graduationYear} onChange={(value) => updateEducation(index, "graduationYear", value)} options={graduationYears} />
+                    <SelectInput label="Graduation Year" value={education.graduationYear} onChange={(value) => updateEducation(index, "graduationYear", value)} options={graduationYears} />
                     <TextInput label="Percentage / CGPA" value={education.score} onChange={(value) => updateEducation(index, "score", value)} placeholder="8.4 CGPA or 91%" />
                     <div className="sm:col-span-2"><TextArea label="Relevant Coursework" value={education.coursework} onChange={(value) => updateEducation(index, "coursework", value)} placeholder="Data Structures, DBMS, Operating Systems" rows={2} /></div>
                   </div>

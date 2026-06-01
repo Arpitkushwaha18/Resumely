@@ -96,8 +96,11 @@ function EducationContent({ education }) {
   return (
     <div className="space-y-2.5">
       {education.map((item, index) => {
-        const credential = [formatDegree(item.degree), item.branch].filter(Boolean).join(" ");
-        const details = [credential || item.level, item.score].filter(Boolean).join(" • ");
+        const shouldShowLevel = ["Class 10", "Class 12", "Diploma"].includes(item.level);
+        const credential = shouldShowLevel
+          ? [item.level, formatDegree(item.degree), item.branch].filter(Boolean).join(" ")
+          : [formatDegree(item.degree) || item.level, item.branch].filter(Boolean).join(" ");
+        const details = [credential, item.score].filter(Boolean).join(" • ");
         return (
           <div key={`${item.institution}-${index}`} className="flex justify-between gap-4">
             <div>
@@ -107,7 +110,7 @@ function EducationContent({ education }) {
             </div>
             <div className="shrink-0 text-right text-[8px] font-semibold leading-[1.65] text-[#65756f]">
               {item.currentYear && <p>{item.currentYear}</p>}
-              {item.graduationYear && <p>{item.level?.startsWith("Class") ? item.graduationYear : `Expected Graduation: ${item.graduationYear}`}</p>}
+              {item.graduationYear && <p>{item.level?.startsWith("Class") ? item.graduationYear : `Graduation Year: ${item.graduationYear}`}</p>}
             </div>
           </div>
         );
