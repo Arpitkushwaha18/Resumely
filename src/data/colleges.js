@@ -3,7 +3,6 @@ export const colleges = [
   "Galgotias College of Engineering and Technology",
   "Sharda University",
   "Bennett University",
-  "GL Bajaj Institute of Technology and Management",
   "KCC Institute of Technology and Management",
   "GNIOT (Greater Noida Institute of Technology)",
   "NIET (Noida Institute of Engineering and Technology)",

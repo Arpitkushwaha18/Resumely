@@ -50,8 +50,8 @@ function getInitialTemplateId() {
 function TextInput({ label, value, onChange, placeholder, type = "text" }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-bold text-[#53615c]">{label}</span>
-      <input type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="h-11 w-full rounded-xl border border-[#dce7e2] bg-white px-3.5 text-sm text-ink outline-none transition placeholder:text-[#a4afab] focus:border-mint-500 focus:ring-4 focus:ring-mint-100" />
+      <span className="mb-2 block text-xs font-bold text-[#475569]">{label}</span>
+      <input type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="h-11 w-full rounded-xl border border-[#d8e2ef] bg-white px-3.5 text-sm text-ink outline-none transition placeholder:text-[#94a3b8] hover:border-[#bfcee3] focus:border-mint-500 focus:ring-4 focus:ring-mint-100" />
     </label>
   );
 }
@@ -59,8 +59,8 @@ function TextInput({ label, value, onChange, placeholder, type = "text" }) {
 function TextArea({ label, value, onChange, placeholder, rows = 3, maxLength, showCount = false }) {
   return (
     <label className="block">
-      {label && <span className="mb-2 block text-xs font-bold text-[#53615c]">{label}</span>}
-      <textarea rows={rows} value={value} maxLength={maxLength} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="w-full resize-none rounded-xl border border-[#dce7e2] bg-white px-3.5 py-3 text-sm leading-6 text-ink outline-none transition placeholder:text-[#a4afab] focus:border-mint-500 focus:ring-4 focus:ring-mint-100" />
+      {label && <span className="mb-2 block text-xs font-bold text-[#475569]">{label}</span>}
+      <textarea rows={rows} value={value} maxLength={maxLength} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} className="w-full resize-none rounded-xl border border-[#d8e2ef] bg-white px-3.5 py-3 text-sm leading-6 text-ink outline-none transition placeholder:text-[#94a3b8] hover:border-[#bfcee3] focus:border-mint-500 focus:ring-4 focus:ring-mint-100" />
       {showCount && <span className="mt-1.5 block text-right text-[11px] font-medium text-[#8b9793]">{value.length} / {maxLength}</span>}
     </label>
   );
@@ -69,8 +69,8 @@ function TextArea({ label, value, onChange, placeholder, rows = 3, maxLength, sh
 function SelectInput({ label, value, onChange, options }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-bold text-[#53615c]">{label}</span>
-      <select value={value} onChange={(event) => onChange(event.target.value)} className="h-11 w-full rounded-xl border border-[#dce7e2] bg-white px-3.5 text-sm text-ink outline-none transition focus:border-mint-500 focus:ring-4 focus:ring-mint-100">
+      <span className="mb-2 block text-xs font-bold text-[#475569]">{label}</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)} className="h-11 w-full rounded-xl border border-[#d8e2ef] bg-white px-3.5 text-sm text-ink outline-none transition hover:border-[#bfcee3] focus:border-mint-500 focus:ring-4 focus:ring-mint-100">
         <option value="">Select</option>
         {options.map((option) => <option key={option}>{option}</option>)}
       </select>
@@ -79,18 +79,18 @@ function SelectInput({ label, value, onChange, options }) {
 }
 
 function AddButton({ children, onClick }) {
-  return <button type="button" onClick={onClick} className="inline-flex items-center gap-1.5 rounded-full border border-[#cfe3da] bg-mint-50 px-3 py-2 text-xs font-bold text-mint-700 transition hover:bg-mint-100"><Plus size={14} />{children}</button>;
+  return <button type="button" onClick={onClick} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-blue-200 bg-mint-50 px-3 py-2 text-xs font-bold text-mint-700 transition hover:bg-mint-100 active:scale-[0.98]"><Plus size={14} />{children}</button>;
 }
 
 function DeleteButton({ label, onClick }) {
-  return <button type="button" onClick={onClick} aria-label={label} className="grid h-8 w-8 place-items-center rounded-lg text-[#a16969] transition hover:bg-[#fff0ef]"><Trash2 size={16} /></button>;
+  return <button type="button" onClick={onClick} aria-label={label} className="grid h-9 w-9 place-items-center rounded-lg text-[#b45353] transition hover:bg-[#fff1f2] active:scale-95"><Trash2 size={16} /></button>;
 }
 
 function TemplateSelect({ value, onChange }) {
   return (
-    <label className="flex items-center gap-2 rounded-full border border-[#dce7e2] bg-white px-3 py-2 text-xs font-bold text-[#56645f]">
+    <label className="flex min-h-9 items-center gap-2 rounded-full border border-[#d8e2ef] bg-white px-3 py-2 text-xs font-bold text-[#475569] shadow-sm">
       <span className="hidden sm:inline">Template</span>
-      <select value={value} onChange={(event) => onChange(event.target.value)} className="bg-transparent text-xs font-bold text-[#56645f] outline-none">
+      <select value={value} onChange={(event) => onChange(event.target.value)} className="bg-transparent text-xs font-bold text-[#475569] outline-none">
         {resumeTemplates.map((template) => <option key={template.id} value={template.id}>{template.name}</option>)}
       </select>
     </label>
@@ -173,13 +173,13 @@ function BuilderApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f8f6] text-ink">
-      <header className="sticky top-0 z-40 border-b border-[#e0e9e5] bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-3 px-4 py-3 sm:px-6">
+    <div className="min-h-screen bg-[#f6f9fc] text-ink">
+      <header className="sticky top-0 z-40 border-b border-[#dce6f2] bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1500px] flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-3">
-            <a href="/" aria-label="Back to landing page" className="grid h-9 w-9 place-items-center rounded-xl border border-[#e0e9e5] text-muted transition hover:border-mint-500 hover:text-mint-700"><ArrowLeft size={17} /></a>
+            <a href="/" aria-label="Back to landing page" className="grid h-9 w-9 place-items-center rounded-full border border-[#d8e2ef] bg-white text-[#475569] shadow-sm transition hover:border-mint-500 hover:text-mint-700"><ArrowLeft size={17} /></a>
             <a href="/" className="flex items-center gap-2 font-bold tracking-[-0.04em] text-ink">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-mint-600 text-white"><FileText size={18} /></span>
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-mint-600 text-white shadow-[0_8px_18px_rgba(37,99,235,0.18)]"><FileText size={18} /></span>
               <span className="hidden text-lg sm:inline">resumely<span className="text-mint-600">.</span></span>
             </a>
             <span className="hidden h-6 w-px bg-[#e1e8e5] sm:block" />
@@ -188,21 +188,21 @@ function BuilderApp() {
               <p className="text-[11px] font-medium text-muted">{saveState}</p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-[#e1eaf5] bg-[#f8fafc] p-1.5 lg:justify-end">
             <TemplateSelect value={selectedTemplateId} onChange={setSelectedTemplateId} />
-            <button type="button" onClick={() => setResume(sampleResumeData)} className="rounded-full border border-[#dce7e2] bg-white px-3 py-2 text-xs font-bold text-[#56645f] transition hover:border-mint-500 hover:text-mint-700 sm:px-4">Load Sample Resume</button>
-            <button type="button" onClick={() => setResume(emptyResume())} className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold text-[#a06464] transition hover:bg-[#fff0ef] sm:px-4"><RotateCcw size={14} /><span className="hidden sm:inline">Clear Resume</span></button>
-            <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} className="inline-flex items-center gap-1.5 rounded-full bg-mint-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4"><Download size={14} />{pdfButtonText}</button>
+            <button type="button" onClick={() => setResume(sampleResumeData)} className="min-h-9 rounded-full border border-[#d8e2ef] bg-white px-3 text-xs font-bold text-[#475569] shadow-sm transition hover:border-mint-500 hover:text-mint-700 sm:px-4">Sample</button>
+            <button type="button" onClick={() => setResume(emptyResume())} className="inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-bold text-[#a06464] transition hover:bg-[#fff1f2] sm:px-4"><RotateCcw size={14} /><span>Clear</span></button>
+            <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-mint-600 px-3 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4"><Download size={14} /><span className="hidden sm:inline">{pdfButtonText}</span></button>
           </div>
         </div>
         {pdfMessage && <p className="border-t border-[#f0dddd] bg-[#fff4f3] px-4 py-2 text-center text-xs font-semibold text-[#a06464]">{pdfMessage}</p>}
       </header>
 
       <main className="builder-shell mx-auto grid max-w-[1500px] gap-6 px-4 py-5 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.88fr)]">
-        <div className="space-y-4">
+        <div className="space-y-5">
           <SectionCard title="Personal Information" description="Add the details recruiters can use to contact you.">
             <div className="grid gap-4 sm:grid-cols-2">
-              <TextInput label="Full Name" value={resume.personal.fullName} onChange={(value) => updatePersonal("fullName", value)} placeholder="Riya Sharma" />
+              <TextInput label="Full Name" value={resume.personal.fullName} onChange={(value) => updatePersonal("fullName", value)} placeholder="Chamki Chand" />
               <TextInput label="Professional Title" value={resume.personal.professionalTitle} onChange={(value) => updatePersonal("professionalTitle", value)} placeholder="Computer Science Engineering Student" />
               <TextInput label="Email" value={resume.personal.email} onChange={(value) => updatePersonal("email", value)} placeholder="you@email.com" type="email" />
               <TextInput label="Phone" value={resume.personal.phone} onChange={(value) => updatePersonal("phone", value)} placeholder="+91 98765 43210" />
@@ -230,7 +230,7 @@ function BuilderApp() {
             ) : (
               <div className="space-y-4">
                 {resume.experience.map((experience, index) => (
-                  <div key={index} className="rounded-xl border border-[#e5ece9] bg-[#fbfdfc] p-4">
+                  <div key={index} className="rounded-xl border border-[#e1eaf5] bg-[#fbfdff] p-4">
                     <div className="mb-3 flex items-center justify-between"><p className="text-xs font-bold text-muted">Experience {index + 1}</p><DeleteButton label={`Delete experience ${index + 1}`} onClick={() => setResume((current) => ({ ...current, experience: current.experience.filter((_, itemIndex) => itemIndex !== index) }))} /></div>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <TextInput label="Role" value={experience.role} onChange={(value) => updateExperience(index, "role", value)} placeholder="Frontend Developer Intern" />
@@ -250,7 +250,7 @@ function BuilderApp() {
           <SectionCard title="Education" description="Add school, diploma, undergraduate, or postgraduate education." action={<AddButton onClick={() => setResume((current) => ({ ...current, education: [...current.education, emptyEducation()] }))}>Add Education</AddButton>}>
             <div className="space-y-4">
               {resume.education.map((education, index) => (
-                <div key={index} className="rounded-xl border border-[#e5ece9] bg-[#fbfdfc] p-4">
+                <div key={index} className="rounded-xl border border-[#e1eaf5] bg-[#fbfdff] p-4">
                   <div className="mb-3 flex items-center justify-between"><p className="text-xs font-bold text-muted">Education {index + 1}</p>{resume.education.length > 1 && <DeleteButton label={`Delete education ${index + 1}`} onClick={() => setResume((current) => ({ ...current, education: current.education.filter((_, itemIndex) => itemIndex !== index) }))} />}</div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="sm:col-span-2"><AutocompleteInput label="Institution Name" value={education.institution} onChange={(value) => updateEducation(index, "institution", value)} suggestions={colleges} placeholder="Start typing institution name" /></div>
@@ -270,7 +270,7 @@ function BuilderApp() {
           <SectionCard title="Projects" description="Add the projects that best show your practical skills." action={<AddButton onClick={() => setResume((current) => ({ ...current, projects: [...current.projects, emptyProject()] }))}>Add Project</AddButton>}>
             <div className="space-y-4">
               {resume.projects.map((project, index) => (
-                <div key={index} className="rounded-xl border border-[#e5ece9] bg-[#fbfdfc] p-4">
+                <div key={index} className="rounded-xl border border-[#e1eaf5] bg-[#fbfdff] p-4">
                   <div className="mb-3 flex items-center justify-between"><p className="text-xs font-bold text-muted">Project {index + 1}</p>{resume.projects.length > 1 && <DeleteButton label={`Delete project ${index + 1}`} onClick={() => setResume((current) => ({ ...current, projects: current.projects.filter((_, itemIndex) => itemIndex !== index) }))} />}</div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <TextInput label="Project Name" value={project.name} onChange={(value) => updateProject(index, "name", value)} placeholder="Campus Placement Portal" />
@@ -285,7 +285,7 @@ function BuilderApp() {
           <SectionCard title="Skills" description="Choose suggestions or add any custom skill.">
             <div className="flex gap-2">
               <div className="min-w-0 flex-1"><AutocompleteInput value={skillDraft} onChange={setSkillDraft} onSelect={addSkill} onEnter={addSkill} suggestions={skillSuggestions} placeholder="Type a skill and press Enter" /></div>
-              <button type="button" onClick={() => addSkill(skillDraft)} className="h-11 shrink-0 rounded-xl bg-mint-600 px-4 text-xs font-bold text-white transition hover:bg-mint-700">Add Skill</button>
+              <button type="button" onClick={() => addSkill(skillDraft)} className="h-11 shrink-0 rounded-xl bg-mint-600 px-4 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700">Add Skill</button>
             </div>
             {resume.skills.length > 0 && <div className="mt-4 flex flex-wrap gap-2">{resume.skills.map((skill) => <SkillTag key={skill} skill={skill} onRemove={() => setResume((current) => ({ ...current, skills: current.skills.filter((item) => item !== skill) }))} />)}</div>}
             {availablePopularSkills.length > 0 && <div className="mt-5 border-t border-[#e5ece9] pt-4"><p className="mb-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#83908c]">Popular skills</p><div className="flex flex-wrap gap-2">{availablePopularSkills.map((skill) => <button type="button" key={skill} onClick={() => addSkill(skill)} className="rounded-full border border-[#dce7e2] bg-white px-3 py-1.5 text-xs font-semibold text-[#61706b] transition hover:border-mint-500 hover:text-mint-700">+ {skill}</button>)}</div></div>}
@@ -294,7 +294,7 @@ function BuilderApp() {
           <SectionCard title="Certifications" action={<AddButton onClick={() => setResume((current) => ({ ...current, certifications: [...current.certifications, emptyCertificate()] }))}>Add Certificate</AddButton>}>
             <div className="space-y-4">
               {resume.certifications.map((certificate, index) => (
-                <div key={index} className="grid gap-4 rounded-xl border border-[#e5ece9] bg-[#fbfdfc] p-4 sm:grid-cols-[1fr_1fr_100px_auto] sm:items-end">
+                <div key={index} className="grid gap-4 rounded-xl border border-[#e1eaf5] bg-[#fbfdff] p-4 sm:grid-cols-[1fr_1fr_100px_auto] sm:items-end">
                   <TextInput label="Certificate Name" value={certificate.name} onChange={(value) => updateCertificate(index, "name", value)} placeholder="Web Development Bootcamp" />
                   <TextInput label="Organization" value={certificate.organization} onChange={(value) => updateCertificate(index, "organization", value)} placeholder="Organization" />
                   <TextInput label="Year" value={certificate.year} onChange={(value) => updateCertificate(index, "year", value)} placeholder="2025" />
@@ -319,16 +319,16 @@ function BuilderApp() {
         <aside className="hidden lg:block">
           <div className="sticky top-24">
             <div className="mb-3 flex items-center justify-between"><div><h2 className="text-sm font-bold">Live Preview</h2><p className="mt-0.5 text-xs text-muted">{selectedTemplate.name}</p></div><span className="rounded-full bg-mint-100 px-3 py-1 text-[11px] font-bold text-mint-700">A4 Preview</span></div>
-            <div className="builder-scrollbar max-h-[calc(100vh-9rem)] overflow-auto rounded-2xl bg-[#e8efec] p-5"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div>
+            <div className="builder-scrollbar max-h-[calc(100vh-9rem)] overflow-auto rounded-2xl bg-[#e8eef7] p-5"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div>
           </div>
         </aside>
       </main>
 
-      <button type="button" onClick={() => setPreviewOpen(true)} className="fixed bottom-4 left-1/2 z-40 inline-flex min-h-12 -translate-x-1/2 items-center gap-2 rounded-full bg-mint-600 px-6 text-sm font-bold text-white shadow-[0_12px_30px_rgba(34,154,109,0.34)] lg:hidden"><Eye size={17} />Preview Resume</button>
+      <button type="button" onClick={() => setPreviewOpen(true)} className="fixed bottom-4 left-1/2 z-40 inline-flex min-h-12 -translate-x-1/2 items-center gap-2 rounded-full bg-mint-600 px-6 text-sm font-bold text-white shadow-[0_12px_30px_rgba(37,99,235,0.34)] lg:hidden"><Eye size={17} />Preview Resume</button>
       {previewOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-[#e8efec] lg:hidden">
-          <div className="flex items-center justify-between border-b border-[#d8e4df] bg-white px-4 py-3"><div><p className="text-sm font-bold">Resume Preview</p><p className="text-[11px] text-muted">{selectedTemplate.name}</p></div><button type="button" onClick={() => setPreviewOpen(false)} className="grid h-9 w-9 place-items-center rounded-full border border-[#dce7e2] bg-white"><X size={17} /></button></div>
-          <div className="builder-scrollbar flex-1 overflow-auto p-4"><div className="mx-auto max-w-[620px]"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div></div>
+        <div className="fixed inset-0 z-50 flex min-h-0 flex-col bg-[#e8eef7] lg:hidden">
+          <div className="shrink-0 flex items-center justify-between border-b border-[#d8e2ef] bg-white px-4 py-3"><div><p className="text-sm font-bold">Resume Preview</p><p className="text-[11px] text-muted">{selectedTemplate.name}</p></div><button type="button" onClick={() => setPreviewOpen(false)} className="grid h-9 w-9 place-items-center rounded-full border border-[#d8e2ef] bg-white"><X size={17} /></button></div>
+          <div className="builder-scrollbar builder-mobile-preview min-h-0 flex-1 overflow-y-auto px-3 py-5"><div className="mx-auto w-full max-w-[620px] pb-10"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div></div>
         </div>
       )}
     </div>

@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="420" height="594" viewBox="0 0 420 594">
   <rect width="420" height="594" fill="#fff"/>
-  <text x="28" y="50" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="900" fill="#202a26">RIYA SHARMA</text>
+  <text x="28" y="50" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="900" fill="#202a26">CHAMKI CHAND</text>
   <text x="28" y="68" font-family="Inter, Arial, sans-serif" font-size="8.5" font-weight="800" fill="#626d68">COMPUTER SCIENCE STUDENT</text>
-  <text x="218" y="51" font-family="Inter, Arial, sans-serif" font-size="7.5" fill="#64736e">riya@email.com | +91 98765 43210</text>
-  <text x="245" y="65" font-family="Inter, Arial, sans-serif" font-size="7.5" fill="#64736e">github.com/riya | Delhi, India</text>
+  <text x="218" y="51" font-family="Inter, Arial, sans-serif" font-size="7.5" fill="#64736e">chamki@email.com | +91 98765 43210</text>
+  <text x="245" y="65" font-family="Inter, Arial, sans-serif" font-size="7.5" fill="#64736e">github.com/chamki | Delhi, India</text>
   <line x1="28" y1="82" x2="392" y2="82" stroke="#333f3b" stroke-width="1.5"/>
   <g font-family="Inter, Arial, sans-serif" font-size="8.3">
     <text x="28" y="111" font-size="8" font-weight="900" letter-spacing="1.1" fill="#333f3b">PROFESSIONAL SUMMARY</text>
@@ -11,7 +11,7 @@
     <text x="28" y="133" fill="#59635f">Computer Science student focused on practical web applications and reliable user experiences.</text>
     <text x="28" y="163" font-size="8" font-weight="900" letter-spacing="1.1" fill="#333f3b">EDUCATION</text>
     <line x1="28" y1="169" x2="392" y2="169" stroke="#c9d2ce"/>
-    <text x="28" y="185" font-size="10" font-weight="800" fill="#2b3e37">GL Bajaj Institute of Technology and Management</text>
+    <text x="28" y="185" font-size="10" font-weight="800" fill="#2b3e37">KCC Institute of Technology and Management</text>
     <text x="28" y="199" fill="#52635d">B.Tech Computer Science and Engineering • 8.4 CGPA</text>
     <text x="304" y="185" fill="#65756f">Expected Graduation: 2027</text>
     <text x="28" y="219" font-size="10" font-weight="800" fill="#2b3e37">Delhi Public School</text>

@@ -4,14 +4,19 @@
 
 .builder-scrollbar::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: #cddbd5;
+  background: #cbd5e1;
 }
 
 .resume-paper {
   aspect-ratio: 210 / 297;
   width: 100%;
   background: white;
-  box-shadow: 0 18px 50px rgba(21, 64, 50, 0.12);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+}
+
+.builder-mobile-preview {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media print {

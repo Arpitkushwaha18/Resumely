@@ -1,12 +1,12 @@
 export const sampleResumeData = {
   personal: {
-    fullName: "Riya Sharma",
+    fullName: "Chamki Chand",
     professionalTitle: "Computer Science Student",
-    email: "riya.sharma@email.com",
+    email: "chamki.chand@email.com",
     phone: "+91 98765 43210",
-    linkedin: "linkedin.com/in/riyasharma",
-    github: "github.com/riyasharma",
-    portfolio: "riyasharma.dev",
+    linkedin: "linkedin.com/in/chamkichand",
+    github: "github.com/chamkichand",
+    portfolio: "chamkichand.dev",
     location: "Delhi, India",
   },
   summary: "Computer Science student focused on building practical web applications, clean interfaces, and reliable user experiences. Seeking internship opportunities to apply full-stack development skills and contribute to meaningful products.",
@@ -23,7 +23,7 @@ export const sampleResumeData = {
   ],
   education: [
     {
-      institution: "GL Bajaj Institute of Technology and Management",
+      institution: "KCC Institute of Technology and Management",
       level: "Undergraduate",
       degree: "B.Tech (Bachelor of Technology)",
       branch: "Computer Science and Engineering",

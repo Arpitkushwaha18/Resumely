@@ -8,7 +8,7 @@ function Highlight({ text, query }) {
   return (
     <>
       {text.slice(0, index)}
-      <mark className="bg-[#d9f6e9] font-semibold text-mint-700">{text.slice(index, index + query.length)}</mark>
+      <mark className="bg-mint-100 font-semibold text-mint-700">{text.slice(index, index + query.length)}</mark>
       {text.slice(index + query.length)}
     </>
   );
@@ -82,7 +82,7 @@ export default function AutocompleteInput({
 
   return (
     <label className="relative block">
-      {label && <span className="mb-2 block text-xs font-bold text-[#53615c]">{label}{required && " *"}</span>}
+      {label && <span className="mb-2 block text-xs font-bold text-[#475569]">{label}{required && " *"}</span>}
       <input
         type={type}
         value={query}
@@ -95,10 +95,10 @@ export default function AutocompleteInput({
         autoComplete="off"
         aria-autocomplete="list"
         aria-controls={listId}
-        className="h-11 w-full rounded-xl border border-[#dce7e2] bg-white px-3.5 text-sm text-ink outline-none transition placeholder:text-[#a4afab] focus:border-mint-500 focus:ring-4 focus:ring-mint-100"
+        className="h-11 w-full rounded-xl border border-[#d8e2ef] bg-white px-3.5 text-sm text-ink outline-none transition placeholder:text-[#94a3b8] hover:border-[#bfcee3] focus:border-mint-500 focus:ring-4 focus:ring-mint-100"
       />
       {open && matches.length > 0 && (
-        <ul id={listId} role="listbox" className="absolute z-30 mt-1.5 max-h-60 w-full overflow-auto rounded-xl border border-[#dae6e1] bg-white p-1.5 shadow-[0_14px_35px_rgba(29,74,59,0.14)]">
+        <ul id={listId} role="listbox" className="absolute z-30 mt-1.5 max-h-60 w-full overflow-auto rounded-xl border border-[#d8e2ef] bg-white p-1.5 shadow-[0_14px_35px_rgba(30,64,175,0.14)]">
           {matches.map((item, index) => (
             <li key={item} role="option" aria-selected={activeIndex === index}>
               <button

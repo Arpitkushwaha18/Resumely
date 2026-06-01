@@ -33,7 +33,7 @@ const features = [
     icon: LayoutTemplate,
     title: "Professional Templates",
     text: "Modern layouts designed to make your experience stand out, even when you are just starting out.",
-    tint: "bg-[#eaf8f0] text-[#268b67]",
+    tint: "bg-blue-50 text-blue-700",
   },
   {
     icon: Download,
@@ -91,7 +91,7 @@ const studentBenefits = [
 function Logo() {
   return (
     <a href="#" className="flex items-center gap-2.5 font-bold tracking-[-0.04em] text-ink">
-      <span className="grid h-9 w-9 place-items-center rounded-xl bg-mint-600 text-white shadow-[0_8px_18px_rgba(34,154,109,0.2)]">
+      <span className="grid h-9 w-9 place-items-center rounded-xl bg-mint-600 text-white shadow-[0_8px_18px_rgba(37,99,235,0.22)]">
         <FileText size={18} strokeWidth={2.5} />
       </span>
       <span className="text-xl">resumely<span className="text-mint-600">.</span></span>
@@ -106,7 +106,7 @@ function Button({ children, href = "#", secondary = false, className = "" }) {
       className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition duration-300 ${
         secondary
           ? "border border-[#dce5df] bg-white text-ink hover:border-mint-500 hover:text-mint-700"
-          : "bg-mint-600 text-white shadow-[0_10px_24px_rgba(34,154,109,0.18)] hover:-translate-y-0.5 hover:bg-mint-700 hover:shadow-[0_14px_28px_rgba(34,154,109,0.26)]"
+          : "bg-mint-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.20)] hover:-translate-y-0.5 hover:bg-mint-700 hover:shadow-[0_14px_28px_rgba(37,99,235,0.28)]"
       } ${className}`}
     >
       {children}
@@ -156,7 +156,7 @@ function Navbar() {
   );
 }
 
-function ResumePreview({ mini = false, accent = "#229a6d", kind = "classic" }) {
+function ResumePreview({ mini = false, accent = "#2563eb", kind = "classic" }) {
   const side = kind === "sidebar";
   const tiny = mini ? "text-[5px]" : "text-[7px] sm:text-[8px]";
   const heading = mini ? "text-[5px]" : "text-[7px] sm:text-[8px]";
@@ -168,7 +168,7 @@ function ResumePreview({ mini = false, accent = "#229a6d", kind = "classic" }) {
             <aside className="w-[27%] shrink-0 border-r border-[#e5ebe8] pr-[5%]">
               <div className="mb-[16%] aspect-square rounded-full bg-[#e4ece8]" />
               <ResumeHeading text="CONTACT" accent={accent} mini={mini} />
-              <p className={`${tiny} leading-[1.7] text-[#6f7b77]`}>Delhi, India<br />+91 98765 43210<br />riya@email.com</p>
+              <p className={`${tiny} leading-[1.7] text-[#6f7b77]`}>Delhi, India<br />+91 98765 43210<br />chamki@email.com</p>
               <div className="mt-[16%]"><ResumeHeading text="SKILLS" accent={accent} mini={mini} /></div>
               <p className={`${tiny} leading-[1.8] text-[#6f7b77]`}>React<br />JavaScript<br />Figma<br />Communication</p>
             </aside>
@@ -176,14 +176,14 @@ function ResumePreview({ mini = false, accent = "#229a6d", kind = "classic" }) {
           <div className="min-w-0 flex-1">
             <div className="mb-[6%]">
               <h3 className={`${mini ? "text-[9px]" : "text-base sm:text-lg"} font-bold tracking-[-0.04em]`} style={{ color: accent }}>
-                RIYA SHARMA
+                CHAMKI CHAND
               </h3>
               <p className={`${mini ? "mt-0.5 text-[5px]" : "mt-1 text-[8px] sm:text-[9px]"} font-semibold tracking-[0.15em] text-[#495651]`}>
                 COMPUTER SCIENCE STUDENT
               </p>
               {!side && (
                 <p className={`${tiny} mt-[2%] text-[#77817e]`}>
-                  Delhi, India&nbsp;&nbsp; | &nbsp;&nbsp;riya@email.com&nbsp;&nbsp; | &nbsp;&nbsp;+91 98765 43210
+                  Delhi, India&nbsp;&nbsp; | &nbsp;&nbsp;chamki@email.com&nbsp;&nbsp; | &nbsp;&nbsp;+91 98765 43210
                 </p>
               )}
             </div>
@@ -248,8 +248,8 @@ function ResumeEntry({ title, meta, text, mini, compact = false }) {
 function HeroVisual() {
   return (
     <div className="relative mx-auto mt-10 max-w-[560px] lg:mt-0">
-      <div className="absolute -inset-5 rounded-[3rem] bg-[#dff7e9]/70 blur-2xl" />
-      <div className="relative rounded-2xl border border-[#dce7e2] bg-white p-2 shadow-[0_30px_70px_rgba(41,103,78,0.16)]">
+      <div className="absolute -inset-5 rounded-[3rem] bg-blue-100/70 blur-2xl" />
+      <div className="relative rounded-2xl border border-[#dce7e2] bg-white p-2 shadow-[0_30px_70px_rgba(30,64,175,0.16)]">
         <div className="flex items-center gap-1.5 border-b border-[#edf1ef] px-2 pb-2 pt-1">
           <span className="h-2 w-2 rounded-full bg-[#ff9a87]" />
           <span className="h-2 w-2 rounded-full bg-[#f3c96b]" />
@@ -260,11 +260,11 @@ function HeroVisual() {
           <ResumePreview />
         </div>
       </div>
-      <div className="animate-float absolute -left-2 top-[24%] flex items-center gap-2 rounded-xl border border-white bg-white/95 px-3 py-2.5 shadow-[0_14px_32px_rgba(40,80,65,0.14)] sm:-left-8">
+      <div className="animate-float absolute -left-2 top-[24%] flex items-center gap-2 rounded-xl border border-white bg-white/95 px-3 py-2.5 shadow-[0_14px_32px_rgba(30,64,175,0.14)] sm:-left-8">
         <span className="grid h-7 w-7 place-items-center rounded-lg bg-mint-100 text-mint-700"><ShieldCheck size={15} /></span>
         <div><p className="text-[10px] font-bold text-ink">ATS-friendly format</p><p className="text-[9px] text-muted">Clean and readable</p></div>
       </div>
-      <div className="animate-float animation-delay-500 absolute -bottom-3 right-0 flex items-center gap-2 rounded-xl border border-white bg-white/95 px-3 py-2.5 shadow-[0_14px_32px_rgba(40,80,65,0.14)] sm:-right-6">
+      <div className="animate-float animation-delay-500 absolute -bottom-3 right-0 flex items-center gap-2 rounded-xl border border-white bg-white/95 px-3 py-2.5 shadow-[0_14px_32px_rgba(30,64,175,0.14)] sm:-right-6">
         <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#fff1e8] text-coral"><Download size={14} /></span>
         <div><p className="text-[10px] font-bold text-ink">PDF download</p><p className="text-[9px] text-muted">Ready when you are</p></div>
       </div>
@@ -305,10 +305,10 @@ function App() {
       <Navbar />
       <main>
         <section className="relative">
-          <div className="absolute left-0 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-[#eaf8f0] blur-3xl" />
+          <div className="absolute left-0 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-100/70 blur-3xl" />
           <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 pb-16 pt-14 sm:px-8 sm:pt-18 lg:grid-cols-[1.04fr_0.96fr] lg:px-12 lg:pb-20 lg:pt-20">
             <div className="relative z-10">
-              <div className="animate-reveal mb-6 inline-flex items-center gap-2 rounded-full border border-[#dcece4] bg-white px-3 py-2 text-xs font-bold text-mint-700 shadow-sm">
+              <div className="animate-reveal mb-6 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-3 py-2 text-xs font-bold text-mint-700 shadow-sm">
                 <span className="grid h-5 w-5 place-items-center rounded-full bg-mint-100"><Sparkles size={12} /></span>
                 Resume building made simple
               </div>
@@ -346,27 +346,27 @@ function App() {
           </div>
         </section>
 
-        <section id="templates" className="bg-[#f3f8f5] py-16 lg:py-20">
+        <section id="templates" className="bg-[#eef5ff] py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
             <SectionTitle eyebrow="Resume Templates" title="Start with a template that fits" text="Recruiter-friendly designs for every step of your career. Pick one and make it yours." />
             <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-5">
               {templates.map((template) => (
-                <article key={template.name} className="group overflow-hidden rounded-2xl border border-[#dce8e3] bg-white p-3 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(43,89,71,0.12)]">
+                <a key={template.name} href={template.href} className="group block overflow-hidden rounded-2xl border border-blue-100 bg-white p-3 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:border-blue-200 hover:shadow-[0_16px_36px_rgba(30,64,175,0.14)] active:scale-[0.985] focus:outline-none focus:ring-4 focus:ring-mint-100">
                   <div className="relative aspect-[0.78] overflow-hidden rounded-xl bg-[#edf3f0] p-4 sm:p-5">
                     <div className="flex h-full items-start justify-center overflow-hidden rounded-sm bg-white shadow-[0_8px_20px_rgba(42,79,65,0.13)]">
                       <img src={template.preview} alt={`${template.name} sample resume preview`} className="h-full w-full object-contain object-top" />
                     </div>
                     <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[8px] font-bold uppercase tracking-wide text-mint-700 shadow-sm">{template.tag}</span>
-                    <div className="absolute inset-0 grid place-items-center bg-[#1d4f3d]/0 transition duration-300 group-hover:bg-[#1d4f3d]/20">
-                      <a href={template.href} className="translate-y-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-mint-700 opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">Use Template</a>
+                    <div className="absolute inset-0 grid place-items-center bg-blue-950/0 transition duration-300 group-hover:bg-blue-950/20">
+                      <span className="translate-y-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-mint-700 opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">Use Template</span>
                     </div>
                   </div>
                   <div className="px-1 pb-1 pt-4">
                     <h3 className="text-base font-bold tracking-[-0.02em] text-ink">{template.name}</h3>
                     <p className="mt-1 text-xs text-muted">{template.description}</p>
-                    <a href={template.href} className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-mint-600 transition hover:text-mint-700">Use Template <ArrowRight size={12} /></a>
+                    <span className="mt-3 inline-flex min-h-9 items-center gap-1 text-xs font-bold text-mint-600 transition group-hover:text-mint-700">Use Template <ArrowRight size={12} /></span>
                   </div>
-                </article>
+                </a>
               ))}
             </div>
             <div className="mt-10 text-center"><Button href="#templates" secondary>Browse All Templates <ArrowRight size={15} /></Button></div>
@@ -409,17 +409,40 @@ function App() {
           </div>
         </section>
 
+        <section id="about" className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+          <div className="grid gap-8 rounded-[1.5rem] border border-blue-100 bg-white p-6 shadow-sm sm:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <div>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-mint-600">About Us</p>
+              <h2 className="text-3xl font-bold tracking-[-0.045em] text-ink sm:text-4xl">Why Resumely?</h2>
+              <p className="mt-4 text-base leading-7 text-muted">
+                Resumely was built to help students and freshers create professional resumes without struggling with formatting, design, or expensive resume tools.
+              </p>
+              <p className="mt-3 text-base leading-7 text-muted">
+                Choose a template, fill your information, and download a professional resume within minutes.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {["ATS-Friendly Templates", "Student-Focused Design", "Fast Resume Creation", "Professional PDF Export", "Mobile Friendly"].map((item) => (
+                <div key={item} className="flex min-h-12 items-center gap-3 rounded-xl border border-[#dbe7f5] bg-blue-50/60 px-4 py-3 text-sm font-bold text-[#1e3a5f]">
+                  <CircleCheck size={17} className="shrink-0 text-mint-600" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="cta" className="px-5 py-14 sm:px-8 lg:px-12 lg:py-18">
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-[#1d604b] px-6 py-12 text-center text-white sm:px-12 sm:py-14">
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-[#173a6a] px-6 py-12 text-center text-white sm:px-12 sm:py-14">
             <div className="absolute -left-20 -top-20 h-60 w-60 rounded-full border-[30px] border-white/5" />
-            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full border-[30px] border-[#80d4ad]/15" />
+            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full border-[30px] border-blue-300/20" />
             <Sparkles className="absolute right-[16%] top-12 text-[#f6c977]" size={26} />
             <div className="relative">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#a7e1c8]">Start for free today</p>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-200">Start for free today</p>
               <h2 className="text-3xl font-bold tracking-[-0.045em] sm:text-5xl">Ready to Build Your Resume?</h2>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-[#cce7dc] sm:text-base">Create a professional resume in minutes and download it instantly.</p>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-blue-100 sm:text-base">Create a professional resume in minutes and download it instantly.</p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="/builder" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-bold text-[#173e32] shadow-xl transition duration-300 hover:-translate-y-0.5 hover:bg-[#f3fbf7] sm:w-auto">
+                <a href="/builder" className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-bold text-[#173a6a] shadow-xl transition duration-300 hover:-translate-y-0.5 hover:bg-blue-50 sm:w-auto">
                   Create Resume Free <ArrowRight size={16} />
                 </a>
                 <a href="#templates" className="inline-flex items-center gap-1.5 text-sm font-bold text-white transition hover:text-[#bde8d5]">
@@ -431,16 +454,29 @@ function App() {
         </section>
       </main>
 
-      <footer id="about" className="border-t border-[#e4ece7] bg-white">
-        <div className="mx-auto grid max-w-7xl gap-5 px-5 py-8 sm:px-8 md:grid-cols-[1fr_auto] md:items-center lg:px-12">
+      <footer className="border-t border-blue-100 bg-[#0f1f3a] text-white">
+        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 md:grid-cols-[1.4fr_0.8fr_0.8fr] lg:px-12">
           <div>
-            <Logo />
-            <p className="mt-3 text-sm text-muted">Built for students and freshers.</p>
+            <a href="#" className="flex items-center gap-2.5 font-bold tracking-[-0.04em] text-white">
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-white text-mint-700"><FileText size={18} strokeWidth={2.5} /></span>
+              <span className="text-xl">resumely<span className="text-blue-300">.</span></span>
+            </a>
+            <h3 className="mt-6 text-sm font-bold">About Resumely</h3>
+            <p className="mt-2 max-w-md text-sm leading-6 text-blue-100">Resumely helps students and freshers create professional, ATS-friendly resumes quickly using modern templates and smart tools.</p>
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-muted">
-            {["About", "Contact", "Privacy Policy", "Terms"].map((item) => <a key={item} href="#" className="transition hover:text-mint-700">{item}</a>)}
+          <div>
+            <h3 className="text-sm font-bold">Contact</h3>
+            <a href="mailto:resumelyofficial@gmail.com" className="mt-3 inline-block text-sm text-blue-100 transition hover:text-white">resumelyofficial@gmail.com</a>
           </div>
-          <p className="text-xs text-[#8b9893] md:col-span-2">© 2026 Resumely. All rights reserved.</p>
+          <div>
+            <h3 className="text-sm font-bold">Links</h3>
+            <div className="mt-3 flex flex-col gap-2 text-sm text-blue-100">
+              <a href="#" className="transition hover:text-white">Home</a>
+              <a href="#templates" className="transition hover:text-white">Templates</a>
+              <a href="/builder" className="transition hover:text-white">Resume Builder</a>
+            </div>
+          </div>
+          <p className="border-t border-white/10 pt-5 text-xs text-blue-200 md:col-span-3">© Resumely</p>
         </div>
       </footer>
     </div>
