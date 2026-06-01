@@ -8,7 +8,7 @@ function Highlight({ text, query }) {
   return (
     <>
       {text.slice(0, index)}
-      <mark className="bg-mint-100 font-semibold text-mint-700">{text.slice(index, index + query.length)}</mark>
+      <mark className="rounded bg-blue-500/20 font-semibold text-blue-200">{text.slice(index, index + query.length)}</mark>
       {text.slice(index + query.length)}
     </>
   );
@@ -82,7 +82,7 @@ export default function AutocompleteInput({
 
   return (
     <label className="relative block">
-      {label && <span className="mb-2 block text-xs font-bold text-[#475569]">{label}{required && " *"}</span>}
+      {label && <span className="mb-2 block text-xs font-bold text-blue-100/85">{label}{required && " *"}</span>}
       <input
         type={type}
         value={query}
@@ -95,17 +95,17 @@ export default function AutocompleteInput({
         autoComplete="off"
         aria-autocomplete="list"
         aria-controls={listId}
-        className="h-11 w-full rounded-xl border border-[#d8e2ef] bg-white px-3.5 text-sm text-ink outline-none transition placeholder:text-[#94a3b8] hover:border-[#bfcee3] focus:border-mint-500 focus:ring-4 focus:ring-mint-100"
+        className="h-11 w-full rounded-xl border border-white/10 bg-slate-950/55 px-3.5 text-sm text-white outline-none transition placeholder:text-slate-500 hover:border-blue-300/40 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/15"
       />
       {open && matches.length > 0 && (
-        <ul id={listId} role="listbox" className="absolute z-30 mt-1.5 max-h-60 w-full overflow-auto rounded-xl border border-[#d8e2ef] bg-white p-1.5 shadow-[0_14px_35px_rgba(30,64,175,0.14)]">
+        <ul id={listId} role="listbox" className="absolute z-30 mt-1.5 max-h-60 w-full overflow-auto rounded-xl border border-white/10 bg-slate-950 p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.35)]">
           {matches.map((item, index) => (
             <li key={item} role="option" aria-selected={activeIndex === index}>
               <button
                 type="button"
                 onMouseDown={(event) => event.preventDefault()}
                 onClick={() => choose(item)}
-                className={`w-full rounded-lg px-3 py-2.5 text-left text-xs leading-5 transition ${activeIndex === index ? "bg-mint-50 text-mint-700" : "text-[#52605b] hover:bg-[#f4f8f6]"}`}
+                className={`w-full rounded-lg px-3 py-2.5 text-left text-xs leading-5 transition ${activeIndex === index ? "bg-blue-500/15 text-blue-200" : "text-blue-100/80 hover:bg-white/10"}`}
               >
                 <Highlight text={item} query={debouncedQuery} />
               </button>
