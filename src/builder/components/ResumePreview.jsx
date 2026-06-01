@@ -225,7 +225,7 @@ function MainSections({ sections, template, minimal = false }) {
 
 function HorizonTemplate({ sections, template }) {
   return (
-    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
       <header className="rounded-xl px-4 py-3 text-white" style={{ backgroundColor: template.accent }}>
         <h1 className="text-2xl font-black uppercase leading-none tracking-[0.03em] sm:text-3xl">{sections.personal.fullName || "Your Name"}</h1>
         <p className="mt-1.5 text-[10px] font-bold tracking-[0.12em] text-white/90">{sections.personal.professionalTitle || "Student Professional"}</p>
@@ -246,7 +246,7 @@ function HorizonTemplate({ sections, template }) {
 
 function SwiftTemplate({ sections, template }) {
   return (
-    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
       <header className="border-b pb-2" style={{ borderColor: template.accent }}>
         <div className="flex items-end justify-between gap-4">
           <div>
@@ -269,7 +269,7 @@ function SingleColumnTemplate({ sections, template, variant = "classic" }) {
   const creative = variant === "creative";
 
   return (
-    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
       {creative && <div className="-mx-[1.5%] mb-3 rounded-xl px-4 py-3" style={{ backgroundColor: "#f3effb" }}>
         <p className="text-[8px] font-black uppercase tracking-[0.2em]" style={{ color: template.accent }}>Portfolio Resume</p>
       </div>}
@@ -282,7 +282,7 @@ function SingleColumnTemplate({ sections, template, variant = "classic" }) {
 function SidebarTemplate({ sections, template }) {
   const contactItems = sections.contactItems.length > 0 ? sections.contactItems : ["you@email.com", "+91 98765 43210"];
   return (
-    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
       <div className="grid h-full grid-cols-[31%_1fr]">
         <aside className="px-[12%] py-[15%]" style={{ backgroundColor: template.pdf.sidebarBg }}>
           <h1 className="text-[16px] font-bold uppercase leading-tight tracking-[0.04em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
@@ -313,7 +313,7 @@ function SidebarTemplate({ sections, template }) {
 
 function ElevateTemplate({ sections, template }) {
   return (
-    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
       <header className="relative overflow-hidden rounded-xl px-4 py-3" style={{ backgroundColor: "#f3effb" }}>
         <span className="absolute right-4 top-4 h-10 w-10 rounded-full border-[7px]" style={{ borderColor: `${template.accent}33` }} />
         <h1 className="relative text-2xl font-black uppercase leading-none tracking-[0.02em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>

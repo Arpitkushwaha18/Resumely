@@ -333,7 +333,7 @@ function BuilderApp() {
       {previewOpen && (
         <div className="fixed inset-0 z-50 flex min-h-0 flex-col bg-[#e8eef7] lg:hidden">
           <div className="shrink-0 flex items-center justify-between border-b border-[#d8e2ef] bg-white px-4 py-3"><div><p className="text-sm font-bold">Resume Preview</p><p className="text-[11px] text-muted">{selectedTemplate.name}</p></div><button type="button" onClick={() => setPreviewOpen(false)} className="grid h-9 w-9 place-items-center rounded-full border border-[#d8e2ef] bg-white"><X size={17} /></button></div>
-          <div className="builder-scrollbar builder-mobile-preview min-h-0 flex-1 overflow-y-auto px-3 py-5"><div className="mx-auto w-full max-w-[620px] pb-10"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div></div>
+          <div className="builder-scrollbar builder-mobile-preview min-h-0 flex-1 overflow-y-auto px-3 pt-5"><div className="builder-mobile-preview-page mx-auto w-full max-w-[620px]"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div></div>
         </div>
       )}
     </div>
