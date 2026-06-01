@@ -176,23 +176,28 @@ function BuilderApp() {
     <div className="min-h-screen bg-[#f6f9fc] text-ink">
       <header className="sticky top-0 z-40 border-b border-[#dce6f2] bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-3">
-            <a href="/" aria-label="Back to landing page" className="grid h-9 w-9 place-items-center rounded-full border border-[#d8e2ef] bg-white text-[#475569] shadow-sm transition hover:border-mint-500 hover:text-mint-700"><ArrowLeft size={17} /></a>
-            <a href="/" className="flex items-center gap-2 font-bold tracking-[-0.04em] text-ink">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-mint-600 text-white shadow-[0_8px_18px_rgba(37,99,235,0.18)]"><FileText size={18} /></span>
-              <span className="hidden text-lg sm:inline">resumely<span className="text-mint-600">.</span></span>
-            </a>
-            <span className="hidden h-6 w-px bg-[#e1e8e5] sm:block" />
-            <div>
-              <p className="text-sm font-bold">Resume Builder</p>
-              <p className="text-[11px] font-medium text-muted">{saveState}</p>
+          <div className="flex items-center justify-between gap-3 lg:justify-start">
+            <div className="flex min-w-0 items-center gap-3">
+              <a href="/" aria-label="Back to landing page" className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#d8e2ef] bg-white text-[#475569] shadow-sm transition hover:border-mint-500 hover:text-mint-700"><ArrowLeft size={17} /></a>
+              <a href="/" className="flex shrink-0 items-center gap-2 font-bold tracking-[-0.04em] text-ink">
+                <span className="grid h-9 w-9 place-items-center rounded-xl bg-mint-600 text-white shadow-[0_8px_18px_rgba(37,99,235,0.18)]"><FileText size={18} /></span>
+                <span className="hidden text-lg sm:inline">resumely<span className="text-mint-600">.</span></span>
+              </a>
+              <span className="hidden h-6 w-px bg-[#e1e8e5] sm:block" />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold">Resume Builder</p>
+                <p className="text-[11px] font-medium text-muted">{saveState}</p>
+              </div>
             </div>
+            <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-mint-600 text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 lg:hidden"><Download size={15} /></button>
           </div>
-          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-[#e1eaf5] bg-[#f8fafc] p-1.5 lg:justify-end">
+          <div className="flex items-center gap-3 rounded-2xl border border-[#e1eaf5] bg-[#f8fafc] p-1.5 lg:justify-end">
             <TemplateSelect value={selectedTemplateId} onChange={setSelectedTemplateId} />
-            <button type="button" onClick={() => setResume(sampleResumeData)} className="min-h-9 rounded-full border border-[#d8e2ef] bg-white px-3 text-xs font-bold text-[#475569] shadow-sm transition hover:border-mint-500 hover:text-mint-700 sm:px-4">Sample</button>
-            <button type="button" onClick={() => setResume(emptyResume())} className="inline-flex min-h-9 items-center gap-1.5 rounded-full px-3 text-xs font-bold text-[#a06464] transition hover:bg-[#fff1f2] sm:px-4"><RotateCcw size={14} /><span>Clear</span></button>
-            <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-mint-600 px-3 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4"><Download size={14} /><span className="hidden sm:inline">{pdfButtonText}</span></button>
+            <div className="ml-auto flex items-center gap-2">
+              <button type="button" onClick={() => setResume(sampleResumeData)} className="min-h-9 rounded-full border border-[#d8e2ef] bg-white px-3 text-xs font-bold text-[#475569] shadow-sm transition hover:border-mint-500 hover:text-mint-700 sm:px-4">Load Sample</button>
+              <button type="button" onClick={() => setResume(emptyResume())} aria-label="Clear Resume" title="Clear Resume" className="grid h-9 w-9 place-items-center rounded-full text-[#a06464] transition hover:bg-[#fff1f2]"><RotateCcw size={14} /></button>
+              <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="hidden min-h-9 items-center gap-1.5 rounded-full bg-mint-600 px-3 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4 lg:inline-flex"><Download size={14} /><span>{pdfButtonText}</span></button>
+            </div>
           </div>
         </div>
         {pdfMessage && <p className="border-t border-[#f0dddd] bg-[#fff4f3] px-4 py-2 text-center text-xs font-semibold text-[#a06464]">{pdfMessage}</p>}
