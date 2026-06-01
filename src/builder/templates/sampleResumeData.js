@@ -1,0 +1,56 @@
+export const sampleResumeData = {
+  personal: {
+    fullName: "Riya Sharma",
+    professionalTitle: "Computer Science Student",
+    email: "riya.sharma@email.com",
+    phone: "+91 98765 43210",
+    linkedin: "linkedin.com/in/riyasharma",
+    github: "github.com/riyasharma",
+    portfolio: "riyasharma.dev",
+    location: "Delhi, India",
+  },
+  summary: "Computer Science student focused on building practical web applications, clean interfaces, and reliable user experiences. Seeking internship opportunities to apply full-stack development skills and contribute to meaningful products.",
+  experience: [
+    {
+      role: "Frontend Developer Intern",
+      organization: "TechNova Labs",
+      type: "Internship",
+      location: "Remote",
+      startDate: "May 2025",
+      endDate: "Jul 2025",
+      description: "Built reusable React components, improved responsive layouts, and collaborated with designers to polish dashboard workflows.",
+    },
+  ],
+  education: [
+    {
+      institution: "GL Bajaj Institute of Technology and Management",
+      level: "Undergraduate",
+      degree: "B.Tech (Bachelor of Technology)",
+      branch: "Computer Science and Engineering",
+      currentYear: "Third Year",
+      graduationYear: "2027",
+      score: "8.4 CGPA",
+      coursework: "Data Structures, Operating Systems, Database Management Systems",
+    },
+    {
+      institution: "Delhi Public School",
+      level: "Class 12",
+      degree: "",
+      branch: "Science",
+      currentYear: "",
+      graduationYear: "2023",
+      score: "91%",
+      coursework: "Physics, Chemistry, Mathematics, Computer Science",
+    },
+  ],
+  projects: [
+    { name: "Campus Placement Portal", technologies: "React.js, Node.js, Express.js, MongoDB", description: "Built a responsive portal to manage placement applications, job listings, and application status tracking." },
+    { name: "Expense Tracker App", technologies: "JavaScript, HTML5, CSS3", description: "Created a mobile-first expense tracker with category insights, filters, and monthly spending summaries." },
+  ],
+  skills: ["JavaScript", "Python", "React.js", "Node.js", "Express.js", "MongoDB", "SQL", "Git", "Communication Skills", "Problem Solving"],
+  certifications: [
+    { name: "IBM SkillsBuild Internship", organization: "IBM", year: "2025" },
+    { name: "Web Development Bootcamp", organization: "Udemy", year: "2024" },
+  ],
+  achievements: ["Finalist in college hackathon for building a student utility app.", "Organized weekly peer coding sessions for first-year students."],
+};

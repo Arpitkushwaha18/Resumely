@@ -15,6 +15,12 @@ import {
   WandSparkles,
   X,
 } from "lucide-react";
+import elevatePreview from "./assets/template-previews/elevate.svg";
+import horizonPreview from "./assets/template-previews/horizon.svg";
+import launchpadPreview from "./assets/template-previews/launchpad.svg";
+import nexusPreview from "./assets/template-previews/nexus.svg";
+import swiftPreview from "./assets/template-previews/swift.svg";
+import { resumeTemplates } from "./builder/templates/templateRegistry.js";
 
 const navLinks = [
   ["Resume Templates", "#templates"],
@@ -49,11 +55,15 @@ const features = [
   },
 ];
 
-const templates = [
-  { name: "ATS Professional", accent: "#258b68", kind: "classic", tag: "ATS Ready", description: "Clean and recruiter-friendly" },
-  { name: "Modern Student", accent: "#e67e63", kind: "sidebar", tag: "For Students", description: "Great for projects and skills" },
-  { name: "Placement Ready", accent: "#5271ae", kind: "line", tag: "Popular", description: "Made for campus placements" },
-];
+const templatePreviews = {
+  launchpad: launchpadPreview,
+  horizon: horizonPreview,
+  swift: swiftPreview,
+  nexus: nexusPreview,
+  elevate: elevatePreview,
+};
+
+const templates = resumeTemplates.map((template) => ({ ...template, href: `/builder?template=${template.id}`, preview: templatePreviews[template.id] }));
 
 const studentBenefits = [
   {
@@ -339,22 +349,22 @@ function App() {
         <section id="templates" className="bg-[#f3f8f5] py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
             <SectionTitle eyebrow="Resume Templates" title="Start with a template that fits" text="Recruiter-friendly designs for every step of your career. Pick one and make it yours." />
-            <div className="mx-auto grid max-w-5xl gap-5 sm:grid-cols-3">
+            <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-5">
               {templates.map((template) => (
                 <article key={template.name} className="group overflow-hidden rounded-2xl border border-[#dce8e3] bg-white p-3 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_rgba(43,89,71,0.12)]">
                   <div className="relative aspect-[0.78] overflow-hidden rounded-xl bg-[#edf3f0] p-4 sm:p-5">
-                    <div className="h-full overflow-hidden rounded-sm shadow-[0_8px_20px_rgba(42,79,65,0.13)]">
-                      <ResumePreview mini accent={template.accent} kind={template.kind} />
+                    <div className="flex h-full items-start justify-center overflow-hidden rounded-sm bg-white shadow-[0_8px_20px_rgba(42,79,65,0.13)]">
+                      <img src={template.preview} alt={`${template.name} sample resume preview`} className="h-full w-full object-contain object-top" />
                     </div>
                     <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[8px] font-bold uppercase tracking-wide text-mint-700 shadow-sm">{template.tag}</span>
                     <div className="absolute inset-0 grid place-items-center bg-[#1d4f3d]/0 transition duration-300 group-hover:bg-[#1d4f3d]/20">
-                      <a href="/builder/" className="translate-y-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-mint-700 opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">Use Template</a>
+                      <a href={template.href} className="translate-y-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-mint-700 opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">Use Template</a>
                     </div>
                   </div>
                   <div className="px-1 pb-1 pt-4">
                     <h3 className="text-base font-bold tracking-[-0.02em] text-ink">{template.name}</h3>
                     <p className="mt-1 text-xs text-muted">{template.description}</p>
-                    <a href="/builder/" className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-mint-600 transition hover:text-mint-700">Use Template <ArrowRight size={12} /></a>
+                    <a href={template.href} className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-mint-600 transition hover:text-mint-700">Use Template <ArrowRight size={12} /></a>
                   </div>
                 </article>
               ))}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="594" viewBox="0 0 420 594">
+  <rect width="420" height="594" fill="#fff"/>
+  <rect x="30" y="28" width="360" height="95" rx="14" fill="#f3effb" stroke="#d8cbea"/>
+  <circle cx="354" cy="62" r="22" fill="none" stroke="#8058a8" stroke-opacity=".3" stroke-width="10"/>
+  <text x="50" y="66" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="900" fill="#302b45">RIYA SHARMA</text>
+  <text x="50" y="90" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" fill="#8058a8">COMPUTER SCIENCE STUDENT</text>
+  <text x="50" y="110" font-family="Inter, Arial, sans-serif" font-size="8" fill="#686276">riya@email.com | +91 98765 43210 | github.com/riya | Delhi, India</text>
+  <g font-family="Inter, Arial, sans-serif">
+    <rect x="30" y="150" width="360" height="60" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
+    <text x="46" y="174" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">PROFESSIONAL SUMMARY</text>
+    <text x="46" y="192" font-size="8.5" fill="#625d6c">Student developer focused on practical web applications, clean interfaces,</text>
+    <text x="46" y="205" font-size="8.5" fill="#625d6c">and reliable user experiences.</text>
+    <rect x="30" y="226" width="360" height="89" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
+    <text x="46" y="250" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">EDUCATION</text>
+    <text x="46" y="270" font-size="10" font-weight="800" fill="#2b3e37">GL Bajaj Institute of Technology and Management</text>
+    <text x="46" y="285" font-size="8.5" fill="#52635d">B.Tech Computer Science and Engineering • 8.4 CGPA</text>
+    <text x="46" y="304" font-size="9" font-weight="800" fill="#2b3e37">Delhi Public School</text>
+    <text x="226" y="304" font-size="8.5" fill="#52635d">Class 12 Science • 91%</text>
+    <rect x="30" y="331" width="360" height="111" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
+    <text x="46" y="355" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">PROJECTS</text>
+    <text x="46" y="376" font-size="10" font-weight="800" fill="#2b3e37">Campus Placement Portal</text>
+    <text x="46" y="391" font-size="8.5" fill="#52635d">React.js • Node.js • MongoDB</text>
+    <text x="46" y="406" font-size="8.5" fill="#687772">Built a dashboard for applications and placement tracking.</text>
+    <text x="46" y="429" font-size="10" font-weight="800" fill="#2b3e37">Expense Tracker App</text>
+    <text x="226" y="429" font-size="8.5" fill="#52635d">JavaScript • HTML5 • CSS3</text>
+    <rect x="30" y="458" width="360" height="67" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
+    <text x="46" y="482" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">SKILLS</text>
+    <text x="46" y="502" font-size="8.5" fill="#625d6c">JavaScript, Python, React.js, Node.js, MongoDB, SQL, Git</text>
+    <text x="46" y="517" font-size="8.5" fill="#625d6c">Communication Skills, Problem Solving</text>
+  </g>
+</svg>

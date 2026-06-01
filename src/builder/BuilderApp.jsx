@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Download, Eye, FileText, Plus, RotateCcw, Trash2, X } from "lucide-react";
 import { branches } from "../data/branches.js";
 import { cities } from "../data/cities.js";
@@ -9,55 +9,43 @@ import AutocompleteInput from "./components/AutocompleteInput.jsx";
 import ResumePreview from "./components/ResumePreview.jsx";
 import SectionCard from "./components/SectionCard.jsx";
 import SkillTag from "./components/SkillTag.jsx";
+import { sampleResumeData } from "./templates/sampleResumeData.js";
+import { DEFAULT_TEMPLATE_ID, getTemplate, isValidTemplateId, normalizeTemplateId, resumeTemplates } from "./templates/templateRegistry.js";
+import { normalizeEducationEntries, normalizeExperienceEntries } from "./templates/templateUtils.js";
 
 const STORAGE_KEY = "resumely-builder-draft";
+const TEMPLATE_STORAGE_KEY = "resumely-builder-template";
 const emptyProject = () => ({ name: "", technologies: "", description: "" });
 const emptyCertificate = () => ({ name: "", organization: "", year: "" });
+const emptyEducation = () => ({ institution: "", level: "", degree: "", branch: "", currentYear: "", graduationYear: "", score: "", coursework: "" });
+const emptyExperience = () => ({ role: "", organization: "", type: "", location: "", startDate: "", endDate: "", description: "" });
 
 const emptyResume = () => ({
   personal: { fullName: "", professionalTitle: "", email: "", phone: "", linkedin: "", github: "", portfolio: "", location: "" },
   summary: "",
-  education: { college: "", degree: "", branch: "", currentYear: "", graduationYear: "" },
+  experience: [],
+  education: [emptyEducation()],
   projects: [emptyProject()],
   skills: [],
   certifications: [emptyCertificate()],
   achievements: [""],
 });
 
-const sampleResume = {
-  personal: {
-    fullName: "Riya Sharma",
-    professionalTitle: "Computer Science Engineering Student",
-    email: "riya.sharma@email.com",
-    phone: "+91 98765 43210",
-    linkedin: "linkedin.com/in/riyasharma",
-    github: "github.com/riyasharma",
-    portfolio: "riyasharma.dev",
-    location: "Greater Noida",
-  },
-  summary: "Computer Science Engineering student passionate about building practical web applications and solving real-world problems. Seeking software development internship opportunities to apply technical skills, gain industry experience, and contribute to meaningful projects.",
-  education: {
-    college: "GL Bajaj Institute of Technology and Management",
-    degree: "B.Tech (Bachelor of Technology)",
-    branch: "Computer Science and Engineering (CSE)",
-    currentYear: "Third Year",
-    graduationYear: "2027",
-  },
-  projects: [
-    { name: "Resume Builder", technologies: "React.js, Tailwind CSS, JavaScript", description: "Developed an ATS-friendly resume builder with live preview, dataset-powered autocomplete suggestions, local storage autosave, and responsive layouts for desktop and mobile users." },
-    { name: "Campus Placement Portal", technologies: "React.js, Node.js, Express.js, MongoDB", description: "Built a responsive portal to manage student placement applications, job listings, and application status tracking through a clean dashboard." },
-  ],
-  skills: ["JavaScript", "Python", "Java", "React.js", "HTML5", "CSS3", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "SQL", "Git", "VS Code", "Communication Skills", "Problem Solving"],
-  certifications: [
-    { name: "IBM SkillsBuild Internship", organization: "IBM", year: "2025" },
-    { name: "Web Development Bootcamp", organization: "Udemy", year: "2024" },
-  ],
-  achievements: ["Finalist in the college Smart India Hackathon internal round.", "Top 10 in the college coding contest.", "Organized weekly peer coding sessions for first-year students."],
-};
-
 const popularSkills = ["JavaScript", "Python", "Java", "React.js", "SQL", "Git", "Communication Skills", "Problem Solving"].filter((skill) => skillSuggestions.includes(skill));
 const currentYears = ["First Year", "Second Year", "Third Year", "Final Year", "Graduated"];
-const graduationYears = Array.from({ length: 10 }, (_, index) => String(new Date().getFullYear() + index));
+const educationLevels = ["Class 10", "Class 12", "Diploma", "Undergraduate", "Postgraduate", "Doctorate"];
+const experienceTypes = ["Internship", "Part-Time", "Full-Time", "Volunteer"];
+const graduationYears = Array.from({ length: 19 }, (_, index) => String(new Date().getFullYear() - 8 + index));
+
+function getInitialTemplateId() {
+  const urlTemplate = new URLSearchParams(window.location.search).get("template");
+  if (isValidTemplateId(urlTemplate)) return normalizeTemplateId(urlTemplate);
+
+  const savedTemplate = localStorage.getItem(TEMPLATE_STORAGE_KEY);
+  if (isValidTemplateId(savedTemplate)) return normalizeTemplateId(savedTemplate);
+
+  return DEFAULT_TEMPLATE_ID;
+}
 
 function TextInput({ label, value, onChange, placeholder, type = "text" }) {
   return (
@@ -98,6 +86,17 @@ function DeleteButton({ label, onClick }) {
   return <button type="button" onClick={onClick} aria-label={label} className="grid h-8 w-8 place-items-center rounded-lg text-[#a16969] transition hover:bg-[#fff0ef]"><Trash2 size={16} /></button>;
 }
 
+function TemplateSelect({ value, onChange }) {
+  return (
+    <label className="flex items-center gap-2 rounded-full border border-[#dce7e2] bg-white px-3 py-2 text-xs font-bold text-[#56645f]">
+      <span className="hidden sm:inline">Template</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)} className="bg-transparent text-xs font-bold text-[#56645f] outline-none">
+        {resumeTemplates.map((template) => <option key={template.id} value={template.id}>{template.name}</option>)}
+      </select>
+    </label>
+  );
+}
+
 function BuilderApp() {
   const [resume, setResume] = useState(() => {
     try {
@@ -108,7 +107,8 @@ function BuilderApp() {
         ...fallback,
         ...saved,
         personal: { ...fallback.personal, ...saved.personal },
-        education: { ...fallback.education, ...saved.education },
+        experience: normalizeExperienceEntries(saved.experience),
+        education: normalizeEducationEntries(saved.education).length > 0 ? normalizeEducationEntries(saved.education) : fallback.education,
       };
     } catch {
       return emptyResume();
@@ -119,7 +119,9 @@ function BuilderApp() {
   const [saveState, setSaveState] = useState("Saved locally");
   const [pdfState, setPdfState] = useState("idle");
   const [pdfMessage, setPdfMessage] = useState("");
-  const previewRef = useRef(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState(getInitialTemplateId);
+
+  const selectedTemplate = getTemplate(selectedTemplateId);
 
   useEffect(() => {
     setSaveState("Saving...");
@@ -130,9 +132,17 @@ function BuilderApp() {
     return () => window.clearTimeout(timer);
   }, [resume]);
 
+  useEffect(() => {
+    localStorage.setItem(TEMPLATE_STORAGE_KEY, selectedTemplateId);
+    const url = new URL(window.location.href);
+    url.searchParams.set("template", selectedTemplateId);
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [selectedTemplateId]);
+
   const updatePersonal = (field, value) => setResume((current) => ({ ...current, personal: { ...current.personal, [field]: value } }));
   const updateSummary = (value) => setResume((current) => ({ ...current, summary: value }));
-  const updateEducation = (field, value) => setResume((current) => ({ ...current, education: { ...current.education, [field]: value } }));
+  const updateEducation = (index, field, value) => setResume((current) => ({ ...current, education: current.education.map((item, itemIndex) => itemIndex === index ? { ...item, [field]: value } : item) }));
+  const updateExperience = (index, field, value) => setResume((current) => ({ ...current, experience: current.experience.map((item, itemIndex) => itemIndex === index ? { ...item, [field]: value } : item) }));
   const updateProject = (index, field, value) => setResume((current) => ({ ...current, projects: current.projects.map((item, itemIndex) => itemIndex === index ? { ...item, [field]: value } : item) }));
   const updateCertificate = (index, field, value) => setResume((current) => ({ ...current, certifications: current.certifications.map((item, itemIndex) => itemIndex === index ? { ...item, [field]: value } : item) }));
   const updateAchievement = (index, value) => setResume((current) => ({ ...current, achievements: current.achievements.map((item, itemIndex) => itemIndex === index ? value : item) }));
@@ -152,7 +162,7 @@ function BuilderApp() {
     setPdfMessage("");
     try {
       const { exportResumePdf } = await import("./utils/exportResumePdf.js");
-      await exportResumePdf(previewRef.current, resume.personal.fullName);
+      await exportResumePdf(resume, selectedTemplateId);
       setPdfState("success");
       window.setTimeout(() => setPdfState("idle"), 2500);
     } catch {
@@ -179,7 +189,8 @@ function BuilderApp() {
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
-            <button type="button" onClick={() => setResume(sampleResume)} className="rounded-full border border-[#dce7e2] bg-white px-3 py-2 text-xs font-bold text-[#56645f] transition hover:border-mint-500 hover:text-mint-700 sm:px-4">Load Sample Resume</button>
+            <TemplateSelect value={selectedTemplateId} onChange={setSelectedTemplateId} />
+            <button type="button" onClick={() => setResume(sampleResumeData)} className="rounded-full border border-[#dce7e2] bg-white px-3 py-2 text-xs font-bold text-[#56645f] transition hover:border-mint-500 hover:text-mint-700 sm:px-4">Load Sample Resume</button>
             <button type="button" onClick={() => setResume(emptyResume())} className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold text-[#a06464] transition hover:bg-[#fff0ef] sm:px-4"><RotateCcw size={14} /><span className="hidden sm:inline">Clear Resume</span></button>
             <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} className="inline-flex items-center gap-1.5 rounded-full bg-mint-600 px-3 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4"><Download size={14} />{pdfButtonText}</button>
           </div>
@@ -213,13 +224,46 @@ function BuilderApp() {
             />
           </SectionCard>
 
-          <SectionCard title="Education" description="Suggestions are optional. You can enter any college, degree, or specialization.">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="sm:col-span-2"><AutocompleteInput label="College Name" value={resume.education.college} onChange={(value) => updateEducation("college", value)} suggestions={colleges} placeholder="Start typing your college" /></div>
-              <AutocompleteInput label="Degree" value={resume.education.degree} onChange={(value) => updateEducation("degree", value)} suggestions={degrees} placeholder="B.Tech" />
-              <AutocompleteInput label="Branch / Specialization" value={resume.education.branch} onChange={(value) => updateEducation("branch", value)} suggestions={branches} placeholder="Computer Science" />
-              <SelectInput label="Current Year" value={resume.education.currentYear} onChange={(value) => updateEducation("currentYear", value)} options={currentYears} />
-              <SelectInput label="Expected Graduation Year" value={resume.education.graduationYear} onChange={(value) => updateEducation("graduationYear", value)} options={graduationYears} />
+          <SectionCard title="Experience" description="Optional. Add internships, jobs, part-time work, or volunteering." action={<AddButton onClick={() => setResume((current) => ({ ...current, experience: [...current.experience, emptyExperience()] }))}>Add Experience</AddButton>}>
+            {resume.experience.length === 0 ? (
+              <p className="rounded-xl border border-dashed border-[#dce7e2] bg-[#fbfdfc] px-4 py-3 text-xs font-medium text-muted">No experience added yet.</p>
+            ) : (
+              <div className="space-y-4">
+                {resume.experience.map((experience, index) => (
+                  <div key={index} className="rounded-xl border border-[#e5ece9] bg-[#fbfdfc] p-4">
+                    <div className="mb-3 flex items-center justify-between"><p className="text-xs font-bold text-muted">Experience {index + 1}</p><DeleteButton label={`Delete experience ${index + 1}`} onClick={() => setResume((current) => ({ ...current, experience: current.experience.filter((_, itemIndex) => itemIndex !== index) }))} /></div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <TextInput label="Role" value={experience.role} onChange={(value) => updateExperience(index, "role", value)} placeholder="Frontend Developer Intern" />
+                      <TextInput label="Organization" value={experience.organization} onChange={(value) => updateExperience(index, "organization", value)} placeholder="TechNova Labs" />
+                      <SelectInput label="Type" value={experience.type} onChange={(value) => updateExperience(index, "type", value)} options={experienceTypes} />
+                      <AutocompleteInput label="Location" value={experience.location} onChange={(value) => updateExperience(index, "location", value)} suggestions={cities} placeholder="Remote or city" />
+                      <TextInput label="Start Date" value={experience.startDate} onChange={(value) => updateExperience(index, "startDate", value)} placeholder="May 2025" />
+                      <TextInput label="End Date" value={experience.endDate} onChange={(value) => updateExperience(index, "endDate", value)} placeholder="Jul 2025 or Present" />
+                      <div className="sm:col-span-2"><TextArea label="Description" value={experience.description} onChange={(value) => updateExperience(index, "description", value)} placeholder="Describe your responsibilities, tools used, and impact." /></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </SectionCard>
+
+          <SectionCard title="Education" description="Add school, diploma, undergraduate, or postgraduate education." action={<AddButton onClick={() => setResume((current) => ({ ...current, education: [...current.education, emptyEducation()] }))}>Add Education</AddButton>}>
+            <div className="space-y-4">
+              {resume.education.map((education, index) => (
+                <div key={index} className="rounded-xl border border-[#e5ece9] bg-[#fbfdfc] p-4">
+                  <div className="mb-3 flex items-center justify-between"><p className="text-xs font-bold text-muted">Education {index + 1}</p>{resume.education.length > 1 && <DeleteButton label={`Delete education ${index + 1}`} onClick={() => setResume((current) => ({ ...current, education: current.education.filter((_, itemIndex) => itemIndex !== index) }))} />}</div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="sm:col-span-2"><AutocompleteInput label="Institution Name" value={education.institution} onChange={(value) => updateEducation(index, "institution", value)} suggestions={colleges} placeholder="Start typing institution name" /></div>
+                    <SelectInput label="Education Level" value={education.level} onChange={(value) => updateEducation(index, "level", value)} options={educationLevels} />
+                    <AutocompleteInput label="Degree" value={education.degree} onChange={(value) => updateEducation(index, "degree", value)} suggestions={degrees} placeholder="B.Tech" />
+                    <AutocompleteInput label="Branch / Specialization" value={education.branch} onChange={(value) => updateEducation(index, "branch", value)} suggestions={branches} placeholder="Computer Science" />
+                    <SelectInput label="Current Year" value={education.currentYear} onChange={(value) => updateEducation(index, "currentYear", value)} options={currentYears} />
+                    <SelectInput label="Expected Graduation Year" value={education.graduationYear} onChange={(value) => updateEducation(index, "graduationYear", value)} options={graduationYears} />
+                    <TextInput label="Percentage / CGPA" value={education.score} onChange={(value) => updateEducation(index, "score", value)} placeholder="8.4 CGPA or 91%" />
+                    <div className="sm:col-span-2"><TextArea label="Relevant Coursework" value={education.coursework} onChange={(value) => updateEducation(index, "coursework", value)} placeholder="Data Structures, DBMS, Operating Systems" rows={2} /></div>
+                  </div>
+                </div>
+              ))}
             </div>
           </SectionCard>
 
@@ -274,8 +318,8 @@ function BuilderApp() {
 
         <aside className="hidden lg:block">
           <div className="sticky top-24">
-            <div className="mb-3 flex items-center justify-between"><div><h2 className="text-sm font-bold">Live Preview</h2><p className="mt-0.5 text-xs text-muted">ATS-friendly A4 layout</p></div><span className="rounded-full bg-mint-100 px-3 py-1 text-[11px] font-bold text-mint-700">A4 Preview</span></div>
-            <div className="builder-scrollbar max-h-[calc(100vh-9rem)] overflow-auto rounded-2xl bg-[#e8efec] p-5"><ResumePreview resume={resume} previewRef={previewRef} /></div>
+            <div className="mb-3 flex items-center justify-between"><div><h2 className="text-sm font-bold">Live Preview</h2><p className="mt-0.5 text-xs text-muted">{selectedTemplate.name}</p></div><span className="rounded-full bg-mint-100 px-3 py-1 text-[11px] font-bold text-mint-700">A4 Preview</span></div>
+            <div className="builder-scrollbar max-h-[calc(100vh-9rem)] overflow-auto rounded-2xl bg-[#e8efec] p-5"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div>
           </div>
         </aside>
       </main>
@@ -283,8 +327,8 @@ function BuilderApp() {
       <button type="button" onClick={() => setPreviewOpen(true)} className="fixed bottom-4 left-1/2 z-40 inline-flex min-h-12 -translate-x-1/2 items-center gap-2 rounded-full bg-mint-600 px-6 text-sm font-bold text-white shadow-[0_12px_30px_rgba(34,154,109,0.34)] lg:hidden"><Eye size={17} />Preview Resume</button>
       {previewOpen && (
         <div className="fixed inset-0 z-50 flex flex-col bg-[#e8efec] lg:hidden">
-          <div className="flex items-center justify-between border-b border-[#d8e4df] bg-white px-4 py-3"><div><p className="text-sm font-bold">Resume Preview</p><p className="text-[11px] text-muted">ATS-friendly A4 layout</p></div><button type="button" onClick={() => setPreviewOpen(false)} className="grid h-9 w-9 place-items-center rounded-full border border-[#dce7e2] bg-white"><X size={17} /></button></div>
-          <div className="builder-scrollbar flex-1 overflow-auto p-4"><div className="mx-auto max-w-[620px]"><ResumePreview resume={resume} /></div></div>
+          <div className="flex items-center justify-between border-b border-[#d8e4df] bg-white px-4 py-3"><div><p className="text-sm font-bold">Resume Preview</p><p className="text-[11px] text-muted">{selectedTemplate.name}</p></div><button type="button" onClick={() => setPreviewOpen(false)} className="grid h-9 w-9 place-items-center rounded-full border border-[#dce7e2] bg-white"><X size={17} /></button></div>
+          <div className="builder-scrollbar flex-1 overflow-auto p-4"><div className="mx-auto max-w-[620px]"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div></div>
         </div>
       )}
     </div>
