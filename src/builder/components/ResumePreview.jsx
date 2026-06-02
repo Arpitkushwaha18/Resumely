@@ -282,7 +282,7 @@ function SingleColumnTemplate({ sections, template, variant = "classic" }) {
 function SidebarTemplate({ sections, template }) {
   const contactItems = sections.contactItems.length > 0 ? sections.contactItems : ["you@email.com", "+91 98765 43210"];
   return (
-    <article className={`resume-paper font-sans ${template.paperClassName}`}>
+    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
       <div className="grid h-full grid-cols-[33%_1fr]">
         <aside className="min-w-0 overflow-hidden px-[10%] py-[15%]" style={{ backgroundColor: template.pdf.sidebarBg }}>
           <h1 className="break-words text-[15px] font-bold uppercase leading-tight tracking-[0.035em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
@@ -304,7 +304,6 @@ function SidebarTemplate({ sections, template }) {
         </aside>
         <main className="min-w-0 px-[6.5%] py-[6.5%]">
           <MainSections sections={{ ...sections, skillGroups: [] }} template={template} />
-          <Skills skillGroups={sections.skillGroups} accent={template.accent} />
         </main>
       </div>
     </article>
