@@ -1,0 +1,91 @@
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models";
+const DEFAULT_MODEL = "gemini-2.5-flash";
+const MAX_INPUT_LENGTH = 4000;
+
+export function validateText(value, fieldName, maxLength = MAX_INPUT_LENGTH) {
+  if (typeof value !== "string") {
+    return `${fieldName} must be text.`;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return `${fieldName} is required.`;
+  }
+
+  if (trimmed.length > maxLength) {
+    return `${fieldName} is too long.`;
+  }
+
+  return "";
+}
+
+export function sendJson(res, status, body) {
+  res.status(status).setHeader("Content-Type", "application/json");
+  res.json(body);
+}
+
+export async function readJsonBody(req) {
+  if (req.body && typeof req.body === "object") return req.body;
+  if (typeof req.body === "string") return JSON.parse(req.body);
+  return {};
+}
+
+export async function improveWithGemini({ instruction, input }) {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured.");
+  }
+
+  const model = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+  const response = await fetch(`${GEMINI_ENDPOINT}/${model}:generateContent`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": apiKey,
+    },
+    body: JSON.stringify({
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              text: `${instruction}
+
+Rules:
+- Improve writing, grammar, professionalism, and ATS friendliness.
+- Preserve the user's facts and meaning.
+- Do not invent internships, achievements, metrics, technologies, employers, dates, awards, or experience.
+- Do not add fake information.
+- Return only the improved text, with no markdown, labels, or explanations.
+
+User content:
+${input}`,
+            },
+          ],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.35,
+        maxOutputTokens: 700,
+      },
+    }),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    const message = data?.error?.message || "Gemini request failed.";
+    throw new Error(message);
+  }
+
+  const improvedText = data?.candidates?.[0]?.content?.parts
+    ?.map((part) => part.text || "")
+    .join("")
+    .trim();
+
+  if (!improvedText) {
+    throw new Error("Gemini returned an empty response.");
+  }
+
+  return improvedText;
+}

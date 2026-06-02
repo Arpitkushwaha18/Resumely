@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Download, Eye, FileText, Plus, RotateCcw, Trash2, X } from "lucide-react";
+import { ArrowLeft, Download, Eye, FileText, LoaderCircle, Plus, RotateCcw, Sparkles, Trash2, X } from "lucide-react";
 import { branches } from "../data/branches.js";
 import { cities } from "../data/cities.js";
 import { colleges } from "../data/colleges.js";
@@ -12,6 +12,7 @@ import SkillTag from "./components/SkillTag.jsx";
 import { sampleResumeData } from "./templates/sampleResumeData.js";
 import { DEFAULT_TEMPLATE_ID, getTemplate, isValidTemplateId, normalizeTemplateId, resumeTemplates } from "./templates/templateRegistry.js";
 import { normalizeEducationEntries, normalizeExperienceEntries } from "./templates/templateUtils.js";
+import { improveResumeText } from "./utils/aiImprove.js";
 
 const STORAGE_KEY = "resumely-builder-draft";
 const TEMPLATE_STORAGE_KEY = "resumely-builder-template";
@@ -86,6 +87,20 @@ function DeleteButton({ label, onClick }) {
   return <button type="button" onClick={onClick} aria-label={label} className="grid h-9 w-9 place-items-center rounded-lg text-rose-300 transition hover:bg-rose-500/15 active:scale-95"><Trash2 size={16} /></button>;
 }
 
+function ImproveButton({ onClick, loading, disabled, label = "Improve" }) {
+  return (
+    <button type="button" onClick={onClick} disabled={disabled || loading} className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border border-violet-300/25 bg-violet-500/15 px-3 py-2 text-xs font-bold text-violet-100 transition hover:bg-violet-500/25 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60">
+      {loading ? <LoaderCircle size={14} className="animate-spin" /> : <Sparkles size={14} />}
+      <span>{loading ? "Improving..." : label}</span>
+    </button>
+  );
+}
+
+function AiError({ message }) {
+  if (!message) return null;
+  return <p className="mt-2 rounded-lg border border-rose-400/20 bg-rose-500/10 px-3 py-2 text-xs font-semibold text-rose-100">{message}</p>;
+}
+
 function TemplateSelect({ value, onChange }) {
   return (
     <label className="flex min-h-9 items-center gap-2 rounded-full border border-white/10 bg-slate-950/55 px-3 py-2 text-xs font-bold text-blue-100 shadow-sm">
@@ -120,6 +135,7 @@ function BuilderApp() {
   const [pdfState, setPdfState] = useState("idle");
   const [pdfMessage, setPdfMessage] = useState("");
   const [selectedTemplateId, setSelectedTemplateId] = useState(getInitialTemplateId);
+  const [aiStatus, setAiStatus] = useState({ summary: { loading: false, error: "" }, projects: {}, achievements: {} });
 
   const selectedTemplate = getTemplate(selectedTemplateId);
 
@@ -156,6 +172,59 @@ function BuilderApp() {
 
   const availablePopularSkills = useMemo(() => popularSkills.filter((skill) => !resume.skills.includes(skill)), [resume.skills]);
   const pdfButtonText = pdfState === "generating" ? "Generating PDF..." : pdfState === "success" ? "Downloaded Successfully" : "Download PDF";
+
+  const updateAiStatus = (type, key, nextStatus) => {
+    if (type === "summary") {
+      setAiStatus((current) => ({ ...current, summary: { ...current.summary, ...nextStatus } }));
+      return;
+    }
+
+    setAiStatus((current) => ({
+      ...current,
+      [type]: {
+        ...current[type],
+        [key]: { ...(current[type][key] || { loading: false, error: "" }), ...nextStatus },
+      },
+    }));
+  };
+
+  const handleImproveSummary = async () => {
+    updateAiStatus("summary", null, { loading: true, error: "" });
+    try {
+      const improvedText = await improveResumeText("/api/ai/improve-summary", { summary: resume.summary });
+      updateSummary(improvedText);
+      updateAiStatus("summary", null, { loading: false, error: "" });
+    } catch {
+      updateAiStatus("summary", null, { loading: false, error: "We could not improve your summary right now. Please try again." });
+    }
+  };
+
+  const handleImproveProject = async (index) => {
+    const project = resume.projects[index];
+    updateAiStatus("projects", index, { loading: true, error: "" });
+    try {
+      const improvedText = await improveResumeText("/api/ai/improve-project", {
+        name: project.name,
+        technologies: project.technologies,
+        description: project.description,
+      });
+      updateProject(index, "description", improvedText);
+      updateAiStatus("projects", index, { loading: false, error: "" });
+    } catch {
+      updateAiStatus("projects", index, { loading: false, error: "We could not improve this project right now. Please try again." });
+    }
+  };
+
+  const handleImproveAchievement = async (index) => {
+    updateAiStatus("achievements", index, { loading: true, error: "" });
+    try {
+      const improvedText = await improveResumeText("/api/ai/improve-achievement", { achievement: resume.achievements[index] });
+      updateAchievement(index, improvedText);
+      updateAiStatus("achievements", index, { loading: false, error: "" });
+    } catch {
+      updateAiStatus("achievements", index, { loading: false, error: "We could not improve this achievement right now. Please try again." });
+    }
+  };
 
   const handleDownloadPdf = async () => {
     setPdfState("generating");
@@ -218,7 +287,7 @@ function BuilderApp() {
             </div>
           </SectionCard>
 
-          <SectionCard title="Professional Summary" description="Introduce yourself professionally and highlight the opportunities you are seeking.">
+          <SectionCard title="Professional Summary" description="Introduce yourself professionally and highlight the opportunities you are seeking." action={<ImproveButton onClick={handleImproveSummary} loading={aiStatus.summary.loading} disabled={!resume.summary.trim()} />}>
             <TextArea
               value={resume.summary || ""}
               onChange={updateSummary}
@@ -227,6 +296,7 @@ function BuilderApp() {
               maxLength={500}
               showCount
             />
+            <AiError message={aiStatus.summary.error} />
           </SectionCard>
 
           <SectionCard title="Experience" description="Optional. Add internships, jobs, part-time work, or volunteering." action={<AddButton onClick={() => setResume((current) => ({ ...current, experience: [...current.experience, emptyExperience()] }))}>Add Experience</AddButton>}>
@@ -280,7 +350,14 @@ function BuilderApp() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <TextInput label="Project Name" value={project.name} onChange={(value) => updateProject(index, "name", value)} placeholder="Campus Placement Portal" />
                     <TextInput label="Technologies" value={project.technologies} onChange={(value) => updateProject(index, "technologies", value)} placeholder="React, Node.js, MongoDB" />
-                    <div className="sm:col-span-2"><TextArea label="Description" value={project.description} onChange={(value) => updateProject(index, "description", value)} placeholder="Explain what you built and the result." /></div>
+                    <div className="sm:col-span-2">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="block text-xs font-bold text-blue-100/85">Description</span>
+                        <ImproveButton onClick={() => handleImproveProject(index)} loading={aiStatus.projects[index]?.loading} disabled={!project.description.trim()} />
+                      </div>
+                      <TextArea value={project.description} onChange={(value) => updateProject(index, "description", value)} placeholder="Explain what you built and the result." />
+                      <AiError message={aiStatus.projects[index]?.error} />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -312,8 +389,9 @@ function BuilderApp() {
           <SectionCard title="Achievements" action={<AddButton onClick={() => setResume((current) => ({ ...current, achievements: [...current.achievements, ""] }))}>Add Achievement</AddButton>}>
             <div className="space-y-3">
               {resume.achievements.map((achievement, index) => (
-                <div key={index} className="flex items-start gap-2">
+                <div key={index} className="flex flex-col gap-2 sm:flex-row sm:items-start">
                   <div className="flex-1"><TextArea value={achievement} onChange={(value) => updateAchievement(index, value)} placeholder="Describe an academic, technical, or leadership achievement." rows={2} /></div>
+                  <ImproveButton onClick={() => handleImproveAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
                   {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
                 </div>
               ))}
