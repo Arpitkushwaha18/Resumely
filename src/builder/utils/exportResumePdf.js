@@ -310,6 +310,51 @@ function renderElevateHeader(writer, sections) {
   writer.y += headerHeight + 6;
 }
 
+function renderNovaHeader(writer, sections) {
+  const { pdf, style, bounds } = writer;
+  const fullName = sections.personal.fullName || "Your Name";
+  const professionalTitle = sections.personal.professionalTitle || "Software Engineer";
+
+  setText(pdf, style.titleSize, style.ink, "bold");
+  pdf.text(fullName.toUpperCase(), bounds.left, writer.y, { maxWidth: bounds.width * 0.64 });
+  setText(pdf, 8.4, style.accent, "bold");
+  pdf.text(professionalTitle.toUpperCase(), bounds.left, writer.y + 6.3, { maxWidth: bounds.width * 0.64 });
+
+  const contactLinks = createContactLinks(sections.personal);
+  if (contactLinks.length > 0) {
+    const oldY = writer.y;
+    writer.y += 1;
+    writer.contactLine(contactLinks, { x: bounds.left + bounds.width * 0.68, maxRight: bounds.right, size: 7, color: style.muted, lineHeight: 3.6 });
+    writer.y = oldY;
+  }
+
+  writer.move(13);
+  writer.line(bounds.left, writer.y, bounds.right, style.accent, 0.8);
+  writer.move(5);
+}
+
+function renderPrestigeHeader(writer, sections) {
+  const { pdf, style, bounds } = writer;
+  const center = bounds.left + bounds.width / 2;
+  const fullName = sections.personal.fullName || "Your Name";
+  const professionalTitle = sections.personal.professionalTitle || "Professional";
+
+  setText(pdf, style.titleSize, style.ink, "bold");
+  pdf.text(fullName.toUpperCase(), center, writer.y, { align: "center", maxWidth: bounds.width });
+  writer.move(5.8);
+  setText(pdf, 8, style.accent, "bold");
+  pdf.text(professionalTitle.toUpperCase(), center, writer.y, { align: "center", maxWidth: bounds.width });
+  writer.move(4.6);
+
+  const contactLinks = createContactLinks(sections.personal);
+  if (contactLinks.length > 0) {
+    writer.contactLine(contactLinks, { x: bounds.left + 16, maxRight: bounds.right - 16, size: 7, color: style.muted, lineHeight: 3.7 });
+  }
+
+  writer.line(center - 15, writer.y + 1, center + 15, style.accent, 0.45);
+  writer.move(7);
+}
+
 function renderSidebarHeader(writer, sections) {
   const { pdf, style, bounds } = writer;
   const fullName = sections.personal.fullName || "Your Name";
@@ -424,16 +469,16 @@ function renderProjects(writer, projects) {
   const firstProject = projects[0];
   const firstProjectUrl = normalizeUrl(firstProject.url || firstProject.link || firstProject.projectUrl || extractFirstUrl(firstProject.description));
   const firstProjectHeight = 8
-    + (firstProject.technologies ? writer.paragraphHeight(`Technologies Used: ${formatTechnologies(firstProject.technologies)}`, { lineHeight: 4.1 }) : 0)
-    + (firstProject.description ? writer.paragraphHeight(`Description: ${firstProject.description}`, { lineHeight: 4.2 }) : 0)
+    + (firstProject.technologies ? writer.paragraphHeight(formatTechnologies(firstProject.technologies), { lineHeight: 4.1 }) : 0)
+    + (firstProject.description ? writer.paragraphHeight(firstProject.description, { lineHeight: 4.2 }) : 0)
     + (firstProjectUrl ? 4.2 : 0);
   writer.section("Projects", Math.max(14, firstProjectHeight));
   projects.forEach((project, index) => {
     if (index > 0) writer.move(2.4);
     const projectUrl = normalizeUrl(project.url || project.link || project.projectUrl || extractFirstUrl(project.description));
     const estimatedHeight = 8
-      + (project.technologies ? writer.paragraphHeight(`Technologies Used: ${formatTechnologies(project.technologies)}`, { lineHeight: 4.1 }) : 0)
-      + (project.description ? writer.paragraphHeight(`Description: ${project.description}`, { lineHeight: 4.2 }) : 0)
+      + (project.technologies ? writer.paragraphHeight(formatTechnologies(project.technologies), { lineHeight: 4.1 }) : 0)
+      + (project.description ? writer.paragraphHeight(project.description, { lineHeight: 4.2 }) : 0)
       + (projectUrl ? 4.2 : 0);
     writer.ensure(Math.max(14, estimatedHeight));
     setText(writer.pdf, 9.2, writer.style.ink, "bold");
@@ -441,11 +486,11 @@ function renderProjects(writer, projects) {
     writer.move(4.3);
 
     if (project.technologies) {
-      writer.paragraph(`Technologies Used: ${formatTechnologies(project.technologies)}`, { size: writer.style.bodySize, color: writer.style.muted, lineHeight: 4.1 });
+      writer.paragraph(formatTechnologies(project.technologies), { size: writer.style.bodySize, color: writer.style.muted, style: "bold", lineHeight: 4.1 });
     }
 
     if (project.description) {
-      writer.paragraph(`Description: ${project.description}`, { size: writer.style.bodySize, color: writer.style.soft, lineHeight: 4.2 });
+      writer.paragraph(project.description, { size: writer.style.bodySize, color: writer.style.soft, lineHeight: 4.2 });
     }
 
     if (projectUrl) {
@@ -510,6 +555,18 @@ function renderMainSections(writer, sections, options = {}) {
   renderAchievements(writer, sections.achievements);
 }
 
+function renderMainSectionsByOrder(writer, sections, order, options = {}) {
+  order.forEach((section) => {
+    if (section === "summary") renderSummary(writer, sections);
+    if (section === "experience") renderExperience(writer, sections.experience);
+    if (section === "education") renderEducation(writer, sections.education);
+    if (section === "projects") renderProjects(writer, sections.projects);
+    if (section === "skills" && !options.skipSkills) renderSkills(writer, sections.skillGroups);
+    if (section === "certifications") renderCertifications(writer, sections.certifications);
+    if (section === "achievements") renderAchievements(writer, sections.achievements);
+  });
+}
+
 function renderSidebarContent(pdf, template, sections) {
   const left = 10;
   const width = template.pdf.sidebarWidth - 4;
@@ -553,10 +610,28 @@ function renderSidebarContent(pdf, template, sections) {
 
 function renderSingleColumnPdf(pdf, template, sections) {
   const writer = new PdfWriter(pdf, template, getSingleBounds(template));
-  if (template.previewKind === "modern") renderHorizonHeader(writer, sections);
-  else if (template.previewKind === "creative") renderElevateHeader(writer, sections);
-  else renderHeader(writer, sections);
-  renderMainSections(writer, sections);
+  if (template.previewKind === "modern") {
+    renderHorizonHeader(writer, sections);
+    renderMainSections(writer, sections);
+  } else if (template.previewKind === "creative") {
+    renderElevateHeader(writer, sections);
+    renderMainSections(writer, sections);
+  } else if (template.pdf.layout === "executive") {
+    renderHeader(writer, sections);
+    renderMainSectionsByOrder(writer, sections, ["summary", "experience", "projects", "education", "skills", "certifications", "achievements"]);
+  } else if (template.pdf.layout === "nova") {
+    renderNovaHeader(writer, sections);
+    renderMainSectionsByOrder(writer, sections, ["skills", "projects", "experience", "education", "certifications", "achievements"]);
+  } else if (template.pdf.layout === "zenith") {
+    renderHorizonHeader(writer, sections);
+    renderMainSectionsByOrder(writer, sections, ["summary", "skills", "projects", "experience", "education", "certifications", "achievements"]);
+  } else if (template.pdf.layout === "prestige") {
+    renderPrestigeHeader(writer, sections);
+    renderMainSectionsByOrder(writer, sections, ["summary", "experience", "projects", "education", "skills", "certifications", "achievements"]);
+  } else {
+    renderHeader(writer, sections);
+    renderMainSections(writer, sections);
+  }
 }
 
 function renderSidebarPdf(pdf, template, sections) {
@@ -564,8 +639,13 @@ function renderSidebarPdf(pdf, template, sections) {
   renderSidebarContent(pdf, template, sections);
   const writer = new PdfWriter(pdf, template, getSidebarMainBounds(template));
   renderSidebarHeader(writer, sections);
-  renderMainSections(writer, sections, { skipSkills: true });
-  renderSkills(writer, sections.skillGroups);
+  if (template.pdf.layout === "atlas") {
+    renderMainSectionsByOrder(writer, sections, ["summary", "projects", "experience", "education", "certifications", "achievements"], { skipSkills: true });
+    renderSkills(writer, sections.skillGroups);
+  } else {
+    renderMainSections(writer, sections, { skipSkills: true });
+    renderSkills(writer, sections.skillGroups);
+  }
 }
 
 export async function exportResumePdf(resume, templateId = DEFAULT_TEMPLATE_ID) {
@@ -573,7 +653,7 @@ export async function exportResumePdf(resume, templateId = DEFAULT_TEMPLATE_ID) 
   const sections = getResumeSections(resume);
   const pdf = createPdf(sections);
 
-  if (template.pdf.layout === "sidebar") {
+  if (template.pdf.layout === "sidebar" || template.pdf.layout === "atlas") {
     renderSidebarPdf(pdf, template, sections);
   } else {
     renderSingleColumnPdf(pdf, template, sections);

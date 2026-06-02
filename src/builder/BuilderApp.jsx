@@ -9,7 +9,7 @@ import AutocompleteInput from "./components/AutocompleteInput.jsx";
 import ResumePreview from "./components/ResumePreview.jsx";
 import SectionCard from "./components/SectionCard.jsx";
 import SkillTag from "./components/SkillTag.jsx";
-import { sampleResumeData } from "./templates/sampleResumeData.js";
+import { getSampleResumeData, sampleResumeDataByTemplate } from "./templates/sampleResumeData.js";
 import { DEFAULT_TEMPLATE_ID, getTemplate, isValidTemplateId, normalizeTemplateId, resumeTemplates } from "./templates/templateRegistry.js";
 import { normalizeEducationEntries, normalizeExperienceEntries } from "./templates/templateUtils.js";
 import { enhanceResumeText } from "./utils/aiEnhance.js";
@@ -46,6 +46,33 @@ function getInitialTemplateId() {
   if (isValidTemplateId(savedTemplate)) return normalizeTemplateId(savedTemplate);
 
   return DEFAULT_TEMPLATE_ID;
+}
+
+const sampleResumeNames = new Set(Object.values(sampleResumeDataByTemplate).map((sample) => sample.personal.fullName));
+
+function hasFilledObject(object = {}) {
+  return Object.values(object).some((value) => String(value || "").trim());
+}
+
+function hasResumeContent(resume = {}) {
+  return Boolean(
+    hasFilledObject(resume.personal)
+    || String(resume.summary || "").trim()
+    || (resume.skills || []).length > 0
+    || (resume.experience || []).some(hasFilledObject)
+    || (resume.education || []).some(hasFilledObject)
+    || (resume.projects || []).some(hasFilledObject)
+    || (resume.certifications || []).some(hasFilledObject)
+    || (resume.achievements || []).some((item) => String(item || "").trim()),
+  );
+}
+
+function isTemplateSampleResume(resume = {}) {
+  return sampleResumeNames.has(resume.personal?.fullName || "");
+}
+
+function shouldReplaceWithTemplateSample(resume) {
+  return !hasResumeContent(resume) || isTemplateSampleResume(resume);
 }
 
 function TextInput({ label, value, onChange, placeholder, type = "text" }) {
@@ -114,19 +141,25 @@ function TemplateSelect({ value, onChange }) {
 
 function BuilderApp() {
   const [resume, setResume] = useState(() => {
+    const initialTemplateId = getInitialTemplateId();
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (!saved) return emptyResume();
+      if (!saved) return getSampleResumeData(initialTemplateId);
       const fallback = emptyResume();
-      return {
+      const hydratedResume = {
         ...fallback,
         ...saved,
         personal: { ...fallback.personal, ...saved.personal },
         experience: normalizeExperienceEntries(saved.experience),
         education: normalizeEducationEntries(saved.education).length > 0 ? normalizeEducationEntries(saved.education) : fallback.education,
       };
+      const urlTemplate = new URLSearchParams(window.location.search).get("template");
+      if (isValidTemplateId(urlTemplate) && shouldReplaceWithTemplateSample(hydratedResume)) {
+        return getSampleResumeData(initialTemplateId);
+      }
+      return hydratedResume;
     } catch {
-      return emptyResume();
+      return getSampleResumeData(initialTemplateId);
     }
   });
   const [skillDraft, setSkillDraft] = useState("");
@@ -138,6 +171,11 @@ function BuilderApp() {
   const [aiStatus, setAiStatus] = useState({ summary: { loading: false, error: "" }, experiences: {}, projects: {}, achievements: {} });
 
   const selectedTemplate = getTemplate(selectedTemplateId);
+
+  const handleTemplateChange = (templateId) => {
+    setSelectedTemplateId(templateId);
+    setResume((current) => shouldReplaceWithTemplateSample(current) ? getSampleResumeData(templateId) : current);
+  };
 
   useEffect(() => {
     setSaveState("Saving...");
@@ -281,9 +319,9 @@ function BuilderApp() {
             <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-mint-600 text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 lg:hidden"><Download size={15} /></button>
           </div>
           <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-1.5 lg:justify-end">
-            <TemplateSelect value={selectedTemplateId} onChange={setSelectedTemplateId} />
+            <TemplateSelect value={selectedTemplateId} onChange={handleTemplateChange} />
             <div className="ml-auto flex items-center gap-2">
-              <button type="button" onClick={() => setResume(sampleResumeData)} className="min-h-9 rounded-full border border-white/10 bg-slate-950/55 px-3 text-xs font-bold text-blue-100 shadow-sm transition hover:border-blue-300/40 hover:text-white sm:px-4">Load Sample</button>
+              <button type="button" onClick={() => setResume(getSampleResumeData(selectedTemplateId))} className="min-h-9 rounded-full border border-white/10 bg-slate-950/55 px-3 text-xs font-bold text-blue-100 shadow-sm transition hover:border-blue-300/40 hover:text-white sm:px-4">Load Sample</button>
               <button type="button" onClick={() => setResume(emptyResume())} aria-label="Clear Resume" title="Clear Resume" className="grid h-9 w-9 place-items-center rounded-full text-rose-300 transition hover:bg-rose-500/15"><RotateCcw size={14} /></button>
               <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="hidden min-h-9 items-center gap-1.5 rounded-full bg-mint-600 px-3 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4 lg:inline-flex"><Download size={14} /><span>{pdfButtonText}</span></button>
             </div>

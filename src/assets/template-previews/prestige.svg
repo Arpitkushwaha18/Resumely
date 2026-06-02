@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="594" viewBox="0 0 420 594">
+  <rect width="420" height="594" fill="#fff"/>
+  <text x="210" y="66" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="4" fill="#28241d">DANIEL MORGAN</text>
+  <text x="210" y="92" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="800" letter-spacing="2.3" fill="#8a6f3d">SOFTWARE ENGINEERING STUDENT</text>
+  <text x="210" y="116" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8" fill="#6b6255">daniel-morgan@example.com | +91 98765 43210 | Bengaluru</text>
+  <line x1="184" y1="140" x2="236" y2="140" stroke="#8a6f3d" stroke-width="2"/>
+  <text x="210" y="174" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8.5" fill="#6f675d">Software engineering student building reliable web applications,</text>
+  <text x="210" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="8.5" fill="#6f675d">clean interfaces, and product-focused engineering projects.</text>
+  <line x1="212" y1="226" x2="212" y2="548" stroke="#d5c7a6"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="42" y="246" font-size="8.5" font-weight="900" letter-spacing="1.5" fill="#8a6f3d">EXPERIENCE</text>
+    <line x1="42" y1="252" x2="188" y2="252" stroke="#d5c7a6"/>
+    <text x="42" y="276" font-size="10.5" font-weight="800" fill="#302d27">Software Engineering Intern</text>
+    <text x="42" y="292" font-size="8.5" fill="#6f675d">Built React components and supported API integration.</text>
+    <text x="42" y="350" font-size="8.5" font-weight="900" letter-spacing="1.5" fill="#8a6f3d">PROJECTS</text>
+    <line x1="42" y1="356" x2="188" y2="356" stroke="#d5c7a6"/>
+    <text x="42" y="380" font-size="10.5" font-weight="800" fill="#302d27">Internship Tracker</text>
+    <text x="42" y="396" font-size="8.5" fill="#6f675d">React.js · Node.js · PostgreSQL workflow.</text>
+    <text x="242" y="246" font-size="8.5" font-weight="900" letter-spacing="1.5" fill="#8a6f3d">EDUCATION</text>
+    <line x1="242" y1="252" x2="388" y2="252" stroke="#d5c7a6"/>
+    <text x="242" y="276" font-size="10.5" font-weight="800" fill="#302d27">B.Tech CSE</text>
+    <text x="242" y="292" font-size="8.5" fill="#6f675d">PES University | Third Year</text>
+    <text x="242" y="350" font-size="8.5" font-weight="900" letter-spacing="1.5" fill="#8a6f3d">SKILLS</text>
+    <line x1="242" y1="356" x2="388" y2="356" stroke="#d5c7a6"/>
+    <text x="242" y="380" font-size="8.5" fill="#6f675d">JavaScript, TypeScript, React.js</text>
+    <text x="242" y="396" font-size="8.5" fill="#6f675d">Node.js, PostgreSQL, Git</text>
+  </g>
+</svg>

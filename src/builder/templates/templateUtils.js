@@ -51,7 +51,7 @@ export function normalizeExperienceEntries(experience) {
 }
 
 export function formatTechnologies(value = "") {
-  return value.split(/[,•|]/).map((item) => item.trim()).filter(Boolean).join(" • ");
+  return value.split(/[,•|·]/).map((item) => item.trim()).filter(Boolean).join(" · ");
 }
 
 export function formatDegree(degree = "") {

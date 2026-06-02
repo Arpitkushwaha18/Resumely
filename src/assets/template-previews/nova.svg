@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="594" viewBox="0 0 420 594">
+  <rect width="420" height="594" fill="#fff"/>
+  <text x="28" y="62" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="900" fill="#113534">ETHAN CARTER</text>
+  <text x="28" y="86" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" letter-spacing="1.5" fill="#0f766e">FULL STACK DEVELOPER</text>
+  <text x="270" y="58" font-family="Inter, Arial, sans-serif" font-size="8" fill="#526d6a">ethan-carter@example.com</text>
+  <text x="270" y="73" font-family="Inter, Arial, sans-serif" font-size="8" fill="#526d6a">github.com/ethan-carter</text>
+  <text x="270" y="88" font-family="Inter, Arial, sans-serif" font-size="8" fill="#526d6a">Hyderabad, India</text>
+  <g fill="#e8f6f4" stroke="#b9e4dd">
+    <rect x="28" y="116" width="82" height="20" rx="4"/><rect x="118" y="116" width="82" height="20" rx="4"/><rect x="208" y="116" width="82" height="20" rx="4"/><rect x="298" y="116" width="82" height="20" rx="4"/>
+    <rect x="28" y="144" width="82" height="20" rx="4"/><rect x="118" y="144" width="82" height="20" rx="4"/><rect x="208" y="144" width="82" height="20" rx="4"/><rect x="298" y="144" width="82" height="20" rx="4"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="8" font-weight="800" fill="#0f766e">
+    <text x="44" y="130">React.js</text><text x="137" y="130">Node.js</text><text x="226" y="130">MongoDB</text><text x="319" y="130">Git</text>
+    <text x="43" y="158">REST APIs</text><text x="137" y="158">Python</text><text x="226" y="158">SQL</text><text x="319" y="158">Docker</text>
+  </g>
+  <line x1="158" y1="190" x2="158" y2="548" stroke="#8fc7bf"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="28" y="210" font-size="9" font-weight="900" letter-spacing="1.4" fill="#0f766e">PROFILE</text>
+    <text x="28" y="232" font-size="8.5" fill="#60736f">Full stack developer building</text>
+    <text x="28" y="247" font-size="8.5" fill="#60736f">React apps and API workflows.</text>
+    <text x="28" y="294" font-size="9" font-weight="900" letter-spacing="1.4" fill="#0f766e">EDUCATION</text>
+    <text x="28" y="318" font-size="10" font-weight="800" fill="#243b3a">B.Tech IT</text>
+    <text x="28" y="334" font-size="8.5" fill="#60736f">VNR VJIET</text>
+    <text x="184" y="210" font-size="9" font-weight="900" letter-spacing="1.4" fill="#0f766e">PROJECTS</text>
+    <line x1="184" y1="216" x2="388" y2="216" stroke="#8fc7bf"/>
+    <text x="184" y="239" font-size="11" font-weight="800" fill="#243b3a">Developer Portfolio CMS</text>
+    <text x="184" y="255" font-size="8.5" fill="#526d6a">React.js · Node.js · MongoDB</text>
+    <text x="184" y="270" font-size="8.5" fill="#60736f">Content-managed portfolio with admin authentication.</text>
+    <text x="184" y="318" font-size="11" font-weight="800" fill="#243b3a">Realtime Chat App</text>
+    <text x="184" y="334" font-size="8.5" fill="#526d6a">Next.js · WebSockets · PostgreSQL</text>
+    <text x="184" y="349" font-size="8.5" fill="#60736f">Room-based messaging with persistent conversation history.</text>
+    <text x="184" y="406" font-size="9" font-weight="900" letter-spacing="1.4" fill="#0f766e">EXPERIENCE</text>
+    <line x1="184" y1="412" x2="388" y2="412" stroke="#8fc7bf"/>
+    <text x="184" y="435" font-size="11" font-weight="800" fill="#243b3a">Full Stack Developer Intern</text>
+    <text x="184" y="451" font-size="8.5" fill="#60736f">Implemented auth screens and connected REST endpoints.</text>
+  </g>
+</svg>

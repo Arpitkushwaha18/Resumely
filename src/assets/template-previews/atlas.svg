@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="594" viewBox="0 0 420 594">
+  <rect width="420" height="594" fill="#fff"/>
+  <rect x="0" y="0" width="420" height="106" fill="#1d4ed8"/>
+  <text x="28" y="52" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="900" fill="#fff">NOAH ANDERSON</text>
+  <text x="28" y="76" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" letter-spacing="1.5" fill="#dbeafe">FRONTEND DEVELOPER</text>
+  <text x="28" y="94" font-family="Inter, Arial, sans-serif" font-size="8" fill="#dbeafe">noah-anderson@example.com | github.com/noah-anderson | Chennai</text>
+  <rect x="0" y="106" width="132" height="488" fill="#eef4ff"/>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="22" y="144" font-size="9" font-weight="900" letter-spacing="1.4" fill="#1d4ed8">PROFILE</text>
+    <text x="22" y="168" font-size="8" fill="#536179">Frontend developer focused</text>
+    <text x="22" y="183" font-size="8" fill="#536179">on accessible interfaces.</text>
+    <text x="22" y="232" font-size="9" font-weight="900" letter-spacing="1.4" fill="#1d4ed8">TECH STACK</text>
+    <text x="22" y="258" font-size="8.5" fill="#536179">React.js</text>
+    <text x="22" y="274" font-size="8.5" fill="#536179">TypeScript</text>
+    <text x="22" y="290" font-size="8.5" fill="#536179">Tailwind CSS</text>
+    <text x="22" y="306" font-size="8.5" fill="#536179">Figma</text>
+    <text x="22" y="356" font-size="9" font-weight="900" letter-spacing="1.4" fill="#1d4ed8">EDUCATION</text>
+    <text x="22" y="380" font-size="9" font-weight="800" fill="#253247">B.Tech CSE</text>
+    <text x="22" y="396" font-size="8" fill="#536179">Third Year</text>
+    <text x="162" y="148" font-size="9" font-weight="900" letter-spacing="1.4" fill="#1d4ed8">PROJECTS</text>
+    <line x1="162" y1="154" x2="390" y2="154" stroke="#9bb7f0"/>
+    <rect x="162" y="176" width="226" height="76" fill="#f8fbff" stroke="#dbeafe"/>
+    <text x="176" y="203" font-size="12" font-weight="900" fill="#253247">Campus Events Portal</text>
+    <text x="176" y="222" font-size="8.5" fill="#536179">React.js · Tailwind CSS · Firebase</text>
+    <text x="176" y="238" font-size="8.5" fill="#5e6a7d">Event discovery platform with filters and registrations.</text>
+    <rect x="162" y="278" width="226" height="76" fill="#f8fbff" stroke="#dbeafe"/>
+    <text x="176" y="305" font-size="12" font-weight="900" fill="#253247">Design System Playground</text>
+    <text x="176" y="324" font-size="8.5" fill="#536179">Storybook · TypeScript · CSS3</text>
+    <text x="176" y="340" font-size="8.5" fill="#5e6a7d">Reusable UI components with documented states.</text>
+    <text x="162" y="404" font-size="9" font-weight="900" letter-spacing="1.4" fill="#1d4ed8">EXPERIENCE</text>
+    <line x1="162" y1="410" x2="390" y2="410" stroke="#9bb7f0"/>
+    <text x="162" y="435" font-size="11" font-weight="800" fill="#253247">Frontend Developer Intern</text>
+    <text x="162" y="452" font-size="8.5" fill="#5e6a7d">Converted Figma screens into responsive React components.</text>
+  </g>
+</svg>

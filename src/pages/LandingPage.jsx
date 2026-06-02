@@ -16,10 +16,15 @@ import {
   X,
 } from "lucide-react";
 import elevatePreview from "../assets/template-previews/elevate.svg";
+import atlasPreview from "../assets/template-previews/atlas.svg";
+import executivePreview from "../assets/template-previews/executive.svg";
 import horizonPreview from "../assets/template-previews/horizon.svg";
 import launchpadPreview from "../assets/template-previews/launchpad.svg";
 import nexusPreview from "../assets/template-previews/nexus.svg";
+import novaPreview from "../assets/template-previews/nova.svg";
+import prestigePreview from "../assets/template-previews/prestige.svg";
 import swiftPreview from "../assets/template-previews/swift.svg";
+import zenithPreview from "../assets/template-previews/zenith.svg";
 import { resumeTemplates } from "../builder/templates/templateRegistry.js";
 
 const navLinks = [
@@ -61,6 +66,11 @@ const templatePreviews = {
   swift: swiftPreview,
   nexus: nexusPreview,
   elevate: elevatePreview,
+  executive: executivePreview,
+  nova: novaPreview,
+  atlas: atlasPreview,
+  zenith: zenithPreview,
+  prestige: prestigePreview,
 };
 
 const templates = resumeTemplates.map((template) => ({ ...template, href: `/builder?template=${template.id}`, preview: templatePreviews[template.id] }));
@@ -168,52 +178,52 @@ function ResumePreview({ mini = false, accent = "#2563eb", kind = "classic" }) {
             <aside className="w-[27%] shrink-0 border-r border-[#e5ebe8] pr-[5%]">
               <div className="mb-[16%] aspect-square rounded-full bg-[#e4ece8]" />
               <ResumeHeading text="CONTACT" accent={accent} mini={mini} />
-              <p className={`${tiny} leading-[1.7] text-[#6f7b77]`}>Noida, Uttar Pradesh<br />+91 98765 43210<br />aarav.sharma.dev@gmail.com</p>
+              <p className={`${tiny} leading-[1.7] text-[#6f7b77]`}>Bengaluru, Karnataka<br />+91 98765 43210<br />daniel-morgan@example.com</p>
               <div className="mt-[16%]"><ResumeHeading text="SKILLS" accent={accent} mini={mini} /></div>
-              <p className={`${tiny} leading-[1.8] text-[#6f7b77]`}>React<br />JavaScript<br />Figma<br />Communication</p>
+              <p className={`${tiny} leading-[1.8] text-[#6f7b77]`}>React<br />TypeScript<br />Node.js<br />PostgreSQL</p>
             </aside>
           )}
           <div className="min-w-0 flex-1">
             <div className="mb-[6%]">
               <h3 className={`${mini ? "text-[9px]" : "text-base sm:text-lg"} font-bold tracking-[-0.04em]`} style={{ color: accent }}>
-                AARAV SHARMA
+                DANIEL MORGAN
               </h3>
               <p className={`${mini ? "mt-0.5 text-[5px]" : "mt-1 text-[8px] sm:text-[9px]"} font-semibold tracking-[0.15em] text-[#495651]`}>
-                COMPUTER SCIENCE STUDENT
+                SOFTWARE ENGINEERING STUDENT
               </p>
               {!side && (
                 <p className={`${tiny} mt-[2%] text-[#77817e]`}>
-                  Noida, Uttar Pradesh&nbsp;&nbsp; | &nbsp;&nbsp;aarav.sharma.dev@gmail.com&nbsp;&nbsp; | &nbsp;&nbsp;+91 98765 43210
+                  Bengaluru, Karnataka&nbsp;&nbsp; | &nbsp;&nbsp;daniel-morgan@example.com&nbsp;&nbsp; | &nbsp;&nbsp;+91 98765 43210
                 </p>
               )}
             </div>
 
             <ResumeHeading text="PROFILE" accent={accent} mini={mini} />
             <p className={`${tiny} leading-[1.55] text-[#6f7b77]`}>
-              Motivated computer science student with hands-on experience building responsive web applications and solving real-world problems.
+              Software engineering student focused on reliable web applications, clean code, and product-ready user experiences.
             </p>
 
             <div className="mt-[6%]"><ResumeHeading text={kind === "line" ? "PROJECTS" : "EXPERIENCE"} accent={accent} mini={mini} /></div>
             <ResumeEntry
-              title={kind === "line" ? "Campus Placement Portal" : "Frontend Developer Intern"}
-              meta={kind === "line" ? "React, Node.js, MongoDB" : "TechNova Labs | May - Jul 2025"}
-              text={kind === "line" ? "Built a placement dashboard used to manage student applications." : "Developed reusable UI components and enhanced mobile responsiveness."}
+              title={kind === "line" ? "Internship Tracker" : "Software Engineering Intern"}
+              meta={kind === "line" ? "React.js · Node.js · PostgreSQL" : "BrightLayer Labs | May - Jul 2025"}
+              text={kind === "line" ? "Created a workflow app for applications, interviews, offers, and recruiter notes." : "Built reusable React components and supported API integration."}
               mini={mini}
             />
             <ResumeEntry
-              title={kind === "line" ? "Expense Tracker App" : "Student Community Volunteer"}
-              meta={kind === "line" ? "JavaScript, HTML, CSS" : "Coding Club | 2024 - Present"}
-              text={kind === "line" ? "Designed a mobile-first app with category-based expense insights." : "Organized peer learning sessions for first-year students."}
+              title={kind === "line" ? "Code Review Dashboard" : "Student Project Contributor"}
+              meta={kind === "line" ? "TypeScript · REST APIs · Tailwind CSS" : "Engineering Club | 2024 - Present"}
+              text={kind === "line" ? "Designed a dashboard for pull request activity, review status, and project health." : "Documented frontend patterns and helped review student project code."}
               mini={mini}
             />
 
             <div className="mt-[5%]"><ResumeHeading text="EDUCATION" accent={accent} mini={mini} /></div>
-            <ResumeEntry title="B.Tech in Computer Science" meta="Delhi Technical University | 2022 - 2026" text="CGPA: 8.7 / 10" mini={mini} compact />
+            <ResumeEntry title="B.Tech in Computer Science" meta="PES University | 2023 - 2027" text="CGPA: 8.6 / 10" mini={mini} compact />
 
             {!side && (
               <div className="mt-[4%]">
                 <ResumeHeading text="SKILLS" accent={accent} mini={mini} />
-                <p className={`${tiny} font-medium leading-[1.6] text-[#65716d]`}>React&nbsp;&nbsp; JavaScript&nbsp;&nbsp; HTML/CSS&nbsp;&nbsp; Git&nbsp;&nbsp; Figma&nbsp;&nbsp; Communication</p>
+                <p className={`${tiny} font-medium leading-[1.6] text-[#65716d]`}>JavaScript&nbsp;&nbsp; TypeScript&nbsp;&nbsp; React&nbsp;&nbsp; Node.js&nbsp;&nbsp; PostgreSQL&nbsp;&nbsp; Git</p>
               </div>
             )}
           </div>
@@ -317,7 +327,7 @@ function App() {
                 <span className="flex items-center gap-1.5"><CircleCheck size={15} className="text-blue-300" /> ATS-friendly format</span>
               </div>
               <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
-                {["5 Templates", "ATS Ready", "1-Click PDF"].map((item) => (
+                {["10 Professional Templates", "ATS Ready", "1-Click PDF"].map((item) => (
                   <div key={item} className="rounded-2xl border border-white/10 bg-white/10 px-3 py-3 text-center text-xs font-bold text-white backdrop-blur">
                     {item}
                   </div>
@@ -347,7 +357,7 @@ function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
             <div className="mx-auto mb-12 max-w-2xl text-center">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Resume Templates</p>
-              <h2 className="text-3xl font-bold text-white sm:text-4xl">Start with a template that fits</h2>
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">Start with a template that fits you</h2>
               <p className="mt-4 text-base leading-7 text-blue-100">Recruiter-friendly designs for every step of your career. Pick one and make it yours.</p>
             </div>
             <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-5">
@@ -357,14 +367,15 @@ function App() {
                     <div className="flex h-full items-start justify-center overflow-hidden rounded-sm bg-white shadow-[0_8px_20px_rgba(42,79,65,0.13)]">
                       <img src={template.preview} alt={`${template.name} sample resume preview`} className="h-full w-full object-contain object-top" />
                     </div>
-                    <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[8px] font-bold uppercase tracking-wide text-mint-700 shadow-sm">{template.tag}</span>
+                    <span className="absolute left-3 top-3 rounded-full border border-white/60 bg-white/90 px-2.5 py-1 text-[8px] font-bold uppercase tracking-wide text-slate-700 shadow-sm backdrop-blur">{template.tag}</span>
                     <div className="absolute inset-0 grid place-items-center bg-blue-950/0 transition duration-300 group-hover:bg-blue-950/20">
                       <span className="translate-y-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-mint-700 opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">Use Template</span>
                     </div>
                   </div>
                   <div className="px-1 pb-1 pt-4">
+                    <span className="mb-2 inline-flex rounded-full border border-blue-200/20 bg-blue-300/10 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-blue-200">{template.tag}</span>
                     <h3 className="text-base font-bold text-white">{template.name}</h3>
-                    <p className="mt-1 text-xs text-blue-100/75">{template.description}</p>
+                    <p className="mt-1 min-h-10 text-xs leading-5 text-blue-100/75">{template.description}</p>
                     <span className="mt-3 inline-flex min-h-9 items-center gap-1 text-xs font-bold text-blue-300 transition group-hover:text-white">Use Template <ArrowRight size={12} /></span>
                   </div>
                 </a>

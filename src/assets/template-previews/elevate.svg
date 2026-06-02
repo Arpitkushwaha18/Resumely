@@ -2,30 +2,30 @@
   <rect width="420" height="594" fill="#fff"/>
   <rect x="30" y="28" width="360" height="95" rx="14" fill="#f3effb" stroke="#d8cbea"/>
   <circle cx="354" cy="62" r="22" fill="none" stroke="#8058a8" stroke-opacity=".3" stroke-width="10"/>
-  <text x="50" y="66" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="900" fill="#302b45">RIYA MEHRA</text>
-  <text x="50" y="90" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" fill="#8058a8">DATA ANALYST STUDENT</text>
-  <text x="50" y="110" font-family="Inter, Arial, sans-serif" font-size="8" fill="#686276">riya.mehra.analytics@gmail.com | +91 98765 43210 | github.com/riyamehra | Gurugram</text>
+  <text x="50" y="66" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="900" fill="#302b45">JAMES FOSTER</text>
+  <text x="50" y="90" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" fill="#8058a8">INFORMATION TECHNOLOGY STUDENT</text>
+  <text x="50" y="110" font-family="Inter, Arial, sans-serif" font-size="8" fill="#686276">james-foster@example.com | +91 98765 43210 | github.com/james-foster | Jaipur</text>
   <g font-family="Inter, Arial, sans-serif">
     <rect x="30" y="150" width="360" height="60" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
     <text x="46" y="174" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">PROFESSIONAL SUMMARY</text>
-    <text x="46" y="192" font-size="8.5" fill="#625d6c">Data analytics student interested in dashboards, SQL, and business insights</text>
-    <text x="46" y="205" font-size="8.5" fill="#625d6c">with strong attention to detail and collaborative learning.</text>
+    <text x="46" y="192" font-size="8.5" fill="#625d6c">IT student interested in cloud tools, web systems, and user-friendly</text>
+    <text x="46" y="205" font-size="8.5" fill="#625d6c">digital products with clear presentation and practical execution.</text>
     <rect x="30" y="226" width="360" height="89" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
     <text x="46" y="250" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">EDUCATION</text>
-    <text x="46" y="270" font-size="10" font-weight="800" fill="#2b3e37">Amity University</text>
-    <text x="46" y="285" font-size="8.5" fill="#52635d">BBA Business Analytics • 8.6 CGPA</text>
+    <text x="46" y="270" font-size="10" font-weight="800" fill="#2b3e37">Manipal University Jaipur</text>
+    <text x="46" y="285" font-size="8.5" fill="#52635d">B.Tech Information Technology · 8.6 CGPA</text>
     <text x="46" y="304" font-size="9" font-weight="800" fill="#2b3e37">Delhi Public School</text>
     <text x="226" y="304" font-size="8.5" fill="#52635d">Class 12 Science • 91%</text>
     <rect x="30" y="331" width="360" height="111" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
     <text x="46" y="355" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">PROJECTS</text>
-    <text x="46" y="376" font-size="10" font-weight="800" fill="#2b3e37">Sales Insights Dashboard</text>
-    <text x="46" y="391" font-size="8.5" fill="#52635d">Excel • SQL • Power BI</text>
-    <text x="46" y="406" font-size="8.5" fill="#687772">Analyzed sales trends and built KPI dashboards for reporting.</text>
-    <text x="46" y="429" font-size="10" font-weight="800" fill="#2b3e37">Customer Churn Analysis</text>
-    <text x="226" y="429" font-size="8.5" fill="#52635d">Python • Pandas • Tableau</text>
+    <text x="46" y="376" font-size="10" font-weight="800" fill="#2b3e37">Service Desk Portal</text>
+    <text x="46" y="391" font-size="8.5" fill="#52635d">React.js · Firebase · Tailwind CSS</text>
+    <text x="46" y="406" font-size="8.5" fill="#687772">Designed ticket tracking views with status filters and role-based access.</text>
+    <text x="46" y="429" font-size="10" font-weight="800" fill="#2b3e37">Cloud Notes App</text>
+    <text x="226" y="429" font-size="8.5" fill="#52635d">JavaScript · Firestore · CSS3</text>
     <rect x="30" y="458" width="360" height="67" rx="7" fill="#fbf9fe" stroke="#eadff5"/>
     <text x="46" y="482" font-size="8" font-weight="900" letter-spacing="1.5" fill="#8058a8">SKILLS</text>
-    <text x="46" y="502" font-size="8.5" fill="#625d6c">SQL, Excel, Power BI, Tableau, Python, Pandas</text>
-    <text x="46" y="517" font-size="8.5" fill="#625d6c">Data Cleaning, Communication Skills, Problem Solving</text>
+    <text x="46" y="502" font-size="8.5" fill="#625d6c">React.js, JavaScript, Firebase, Cloud Computing, Git, Figma</text>
+    <text x="46" y="517" font-size="8.5" fill="#625d6c">Presentation Skills, Adaptability, Communication</text>
   </g>
 </svg>

@@ -4,9 +4,9 @@ import { formatDegree, formatTechnologies, getResumeSections } from "../template
 function Section({ title, children, accent, minimal = false }) {
   if (!children) return null;
   return (
-    <section className={minimal ? "mt-3" : "mt-3.5"}>
-      <h2 className={`border-b pb-1 text-[9px] font-bold uppercase ${minimal ? "tracking-[0.12em]" : "tracking-[0.18em]"}`} style={{ borderColor: `${accent}66`, color: accent }}>{title}</h2>
-      <div className="mt-2">{children}</div>
+    <section className={minimal ? "mt-2.5" : "mt-3.5"}>
+      <h2 className={`border-b pb-1 text-[8.5px] font-bold uppercase ${minimal ? "tracking-[0.12em]" : "tracking-[0.17em]"}`} style={{ borderColor: `${accent}45`, color: accent }}>{title}</h2>
+      <div className="mt-2.5">{children}</div>
     </section>
   );
 }
@@ -135,8 +135,8 @@ function ProjectsContent({ projects, accent }) {
       {projects.map((project, index) => (
         <div key={`${project.name}-${index}`}>
           <h3 className="text-[10px] font-bold text-[#2b3e37]">{project.name || "Untitled Project"}</h3>
-          {project.technologies && <p className="mt-0.5 text-[8px] leading-[1.5] text-[#52635d]"><b style={{ color: accent }}>Technologies Used:</b> {formatTechnologies(project.technologies)}</p>}
-          {project.description && <p className="mt-0.5 text-[8px] leading-[1.6] text-[#687772]"><b className="text-[#52635d]">Description:</b> {project.description}</p>}
+          {project.technologies && <p className="mt-1 text-[8px] font-semibold leading-[1.5] text-[#52635d]">{formatTechnologies(project.technologies)}</p>}
+          {project.description && <p className="mt-1 text-[8px] leading-[1.6] text-[#687772]">{project.description}</p>}
         </div>
       ))}
     </div>
@@ -310,6 +310,165 @@ function SidebarTemplate({ sections, template }) {
   );
 }
 
+function CompactSection({ title, children, accent }) {
+  if (!children) return null;
+  return (
+    <section className="mt-3">
+      <h2 className="mb-1.5 text-[8px] font-black uppercase tracking-[0.18em]" style={{ color: accent }}>{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function SterlingTemplate({ sections, template }) {
+  return (
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
+      <header className="grid grid-cols-[1fr_32%] gap-4 border-b-4 pb-3" style={{ borderColor: template.accent }}>
+        <div>
+          <p className="mb-1 text-[7px] font-black uppercase tracking-[0.22em]" style={{ color: template.accent }}>Sterling Resume</p>
+          <h1 className="text-[24px] font-black uppercase leading-none tracking-[0.02em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
+          <p className="mt-2 text-[10px] font-bold tracking-[0.08em]" style={{ color: template.pdf.muted }}>{sections.personal.professionalTitle || "Student Professional"}</p>
+        </div>
+        <ContactLine items={sections.contactItems} className="self-end text-right text-[#596879] [overflow-wrap:anywhere]" />
+      </header>
+      {sections.summary && (
+        <div className="mt-4 border-l-4 bg-slate-50 px-3 py-2" style={{ borderColor: template.accent }}>
+          <p className="text-[8px] font-semibold leading-[1.65] text-[#4d5b6a]">{sections.summary}</p>
+        </div>
+      )}
+      <div className="grid grid-cols-[1fr_30%] gap-5">
+        <main>
+          <Experience experience={sections.experience} accent={template.accent} />
+          <Projects projects={sections.projects} accent={template.accent} />
+          <Education education={sections.education} accent={template.accent} />
+        </main>
+        <aside className="border-l pl-4" style={{ borderColor: `${template.accent}44` }}>
+          <CompactSection title="Leadership Skills" accent={template.accent}><SkillsContent skillGroups={sections.skillGroups} /></CompactSection>
+          <CompactSection title="Certifications" accent={template.accent}><CertificationsContent certifications={sections.certifications} /></CompactSection>
+          <CompactSection title="Achievements" accent={template.accent}><AchievementsContent achievements={sections.achievements} /></CompactSection>
+        </aside>
+      </div>
+    </article>
+  );
+}
+
+function NovaTemplate({ sections, template }) {
+  const skills = sections.skillGroups.flatMap(({ skills: items }) => items).slice(0, 14);
+  return (
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
+      <header className="grid grid-cols-[1fr_34%] gap-4">
+        <div>
+          <h1 className="text-[27px] font-black uppercase leading-none tracking-[0.01em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
+          <p className="mt-2 text-[10px] font-black uppercase tracking-[0.12em]" style={{ color: template.accent }}>{sections.personal.professionalTitle || "Software Engineer"}</p>
+        </div>
+        <ContactLine items={sections.contactItems} className="text-right text-[#526d6a] [overflow-wrap:anywhere]" />
+      </header>
+      {skills.length > 0 && (
+        <div className="mt-4 grid grid-cols-2 gap-1.5">
+          {skills.map((skill) => <span key={skill} className="truncate rounded-md bg-[#e8f6f4] px-2 py-1 text-[7px] font-bold text-[#0f766e]">{skill}</span>)}
+        </div>
+      )}
+      <div className="mt-4 grid grid-cols-[36%_1fr] gap-5">
+        <aside>
+          {sections.summary && <CompactSection title="Engineer Profile" accent={template.accent}><p className="text-[8px] leading-[1.6] text-[#60736f]">{sections.summary}</p></CompactSection>}
+          <Education education={sections.education} accent={template.accent} minimal />
+          <Certifications certifications={sections.certifications} accent={template.accent} minimal />
+        </aside>
+        <main className="border-l pl-4" style={{ borderColor: `${template.accent}55` }}>
+          <Projects projects={sections.projects} accent={template.accent} />
+          <Experience experience={sections.experience} accent={template.accent} />
+          <Achievements achievements={sections.achievements} accent={template.accent} />
+        </main>
+      </div>
+    </article>
+  );
+}
+
+function VentureTemplate({ sections, template }) {
+  return (
+    <article className={`resume-paper overflow-hidden font-sans ${template.paperClassName}`}>
+      <header className="px-[6%] py-[5%] text-white" style={{ backgroundColor: template.accent }}>
+        <h1 className="text-[24px] font-black uppercase leading-none tracking-[0.02em]">{sections.personal.fullName || "Your Name"}</h1>
+        <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.16em] text-white/85">{sections.personal.professionalTitle || "Technical Student"}</p>
+        {sections.contactItems.length > 0 && <p className="mt-2 text-[7.5px] leading-[1.55] text-white/85">{sections.contactItems.join("  |  ")}</p>}
+      </header>
+      <div className="grid grid-cols-[31%_1fr] gap-0">
+        <aside className="min-h-[520px] px-[13%] py-[12%]" style={{ backgroundColor: template.pdf.sidebarBg }}>
+          {sections.summary && <CompactSection title="Profile" accent={template.accent}><p className="text-[7.5px] leading-[1.55] text-[#536179]">{sections.summary}</p></CompactSection>}
+          <CompactSection title="Tech Stack" accent={template.accent}><SkillsContent skillGroups={sections.skillGroups} /></CompactSection>
+          <CompactSection title="Education" accent={template.accent}><EducationContent education={sections.education} /></CompactSection>
+        </aside>
+        <main className="px-[6%] py-[5%]">
+          <Projects projects={sections.projects} accent={template.accent} />
+          <Experience experience={sections.experience} accent={template.accent} />
+          <Certifications certifications={sections.certifications} accent={template.accent} />
+          <Achievements achievements={sections.achievements} accent={template.accent} />
+        </main>
+      </div>
+    </article>
+  );
+}
+
+function InsightTemplate({ sections, template }) {
+  const skills = sections.skillGroups.flatMap(({ skills: items }) => items).slice(0, 10);
+  return (
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
+      <header className="border-b pb-3" style={{ borderColor: `${template.accent}66` }}>
+        <p className="text-[7px] font-black uppercase tracking-[0.24em]" style={{ color: template.accent }}>Data Science Resume</p>
+        <div className="mt-1 flex items-end justify-between gap-4">
+          <div>
+            <h1 className="text-[25px] font-black uppercase leading-none" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
+            <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: template.pdf.muted }}>{sections.personal.professionalTitle || "Data Analyst"}</p>
+          </div>
+          <ContactLine items={sections.contactItems} className="max-w-[42%] text-right text-[#665d78]" />
+        </div>
+      </header>
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {["Models", "Dashboards", "Insights"].map((metric) => <div key={metric} className="border-t-4 bg-[#f7f3ff] px-2 py-2 text-center text-[8px] font-black uppercase tracking-[0.12em] text-[#4c1d95]" style={{ borderColor: template.accent }}>{metric}</div>)}
+      </div>
+      <div className="mt-4 grid grid-cols-[1fr_32%] gap-5">
+        <main>
+          {sections.summary && <Section title="Analytics Summary" accent={template.accent}><p className="text-[8px] leading-[1.65] text-[#686175]">{sections.summary}</p></Section>}
+          <Projects projects={sections.projects} accent={template.accent} />
+          <Experience experience={sections.experience} accent={template.accent} />
+          <Education education={sections.education} accent={template.accent} />
+        </main>
+        <aside className="space-y-3">
+          {skills.length > 0 && <CompactSection title="Tools & Methods" accent={template.accent}><div className="flex flex-wrap gap-1">{skills.map((skill) => <span key={skill} className="rounded-sm bg-[#ede9fe] px-1.5 py-1 text-[7px] font-bold text-[#5b21b6]">{skill}</span>)}</div></CompactSection>}
+          <Certifications certifications={sections.certifications} accent={template.accent} minimal />
+          <Achievements achievements={sections.achievements} accent={template.accent} minimal />
+        </aside>
+      </div>
+    </article>
+  );
+}
+
+function PrestigeTemplate({ sections, template }) {
+  return (
+    <article className={`resume-paper font-sans ${template.paperClassName}`}>
+      <header className="text-center">
+        <h1 className="text-[24px] font-semibold uppercase leading-none tracking-[0.18em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
+        <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.22em]" style={{ color: template.accent }}>{sections.personal.professionalTitle || "Professional"}</p>
+        <ContactLine items={sections.contactItems} className="mx-auto mt-2 max-w-[86%] text-[#6b6255]" />
+      </header>
+      <div className="mx-auto mt-4 h-px w-16" style={{ backgroundColor: template.accent }} />
+      {sections.summary && <p className="mx-auto mt-4 max-w-[86%] text-center text-[8px] leading-[1.75] text-[#6f675d]">{sections.summary}</p>}
+      <div className="mt-5 grid grid-cols-2 gap-6">
+        <main>
+          <Experience experience={sections.experience} accent={template.accent} minimal />
+          <Projects projects={sections.projects} accent={template.accent} minimal />
+          <Achievements achievements={sections.achievements} accent={template.accent} minimal />
+        </main>
+        <aside className="border-l pl-5" style={{ borderColor: `${template.accent}44` }}>
+          <Education education={sections.education} accent={template.accent} minimal />
+          <Skills skillGroups={sections.skillGroups} accent={template.accent} minimal />
+          <Certifications certifications={sections.certifications} accent={template.accent} minimal />
+        </aside>
+      </div>
+    </article>
+  );
+}
+
 function ElevateTemplate({ sections, template }) {
   return (
     <article className={`resume-paper font-sans ${template.paperClassName}`}>
@@ -336,6 +495,11 @@ const renderers = {
   minimal: (props) => <SwiftTemplate {...props} />,
   creative: (props) => <ElevateTemplate {...props} />,
   sidebar: (props) => <SidebarTemplate {...props} />,
+  executive: (props) => <SterlingTemplate {...props} />,
+  nova: (props) => <NovaTemplate {...props} />,
+  atlas: (props) => <VentureTemplate {...props} />,
+  zenith: (props) => <InsightTemplate {...props} />,
+  prestige: (props) => <PrestigeTemplate {...props} />,
 };
 
 export default function ResumePreview({ resume, templateId = "launchpad", previewRef }) {
