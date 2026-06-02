@@ -168,7 +168,7 @@ function ResumePreview({ mini = false, accent = "#2563eb", kind = "classic" }) {
             <aside className="w-[27%] shrink-0 border-r border-[#e5ebe8] pr-[5%]">
               <div className="mb-[16%] aspect-square rounded-full bg-[#e4ece8]" />
               <ResumeHeading text="CONTACT" accent={accent} mini={mini} />
-              <p className={`${tiny} leading-[1.7] text-[#6f7b77]`}>Delhi, India<br />+91 98765 43210<br />chamki@email.com</p>
+              <p className={`${tiny} leading-[1.7] text-[#6f7b77]`}>Noida, Uttar Pradesh<br />+91 98765 43210<br />aarav.sharma.dev@gmail.com</p>
               <div className="mt-[16%]"><ResumeHeading text="SKILLS" accent={accent} mini={mini} /></div>
               <p className={`${tiny} leading-[1.8] text-[#6f7b77]`}>React<br />JavaScript<br />Figma<br />Communication</p>
             </aside>
@@ -176,14 +176,14 @@ function ResumePreview({ mini = false, accent = "#2563eb", kind = "classic" }) {
           <div className="min-w-0 flex-1">
             <div className="mb-[6%]">
               <h3 className={`${mini ? "text-[9px]" : "text-base sm:text-lg"} font-bold tracking-[-0.04em]`} style={{ color: accent }}>
-                CHAMKI CHAND
+                AARAV SHARMA
               </h3>
               <p className={`${mini ? "mt-0.5 text-[5px]" : "mt-1 text-[8px] sm:text-[9px]"} font-semibold tracking-[0.15em] text-[#495651]`}>
                 COMPUTER SCIENCE STUDENT
               </p>
               {!side && (
                 <p className={`${tiny} mt-[2%] text-[#77817e]`}>
-                  Delhi, India&nbsp;&nbsp; | &nbsp;&nbsp;chamki@email.com&nbsp;&nbsp; | &nbsp;&nbsp;+91 98765 43210
+                  Noida, Uttar Pradesh&nbsp;&nbsp; | &nbsp;&nbsp;aarav.sharma.dev@gmail.com&nbsp;&nbsp; | &nbsp;&nbsp;+91 98765 43210
                 </p>
               )}
             </div>
