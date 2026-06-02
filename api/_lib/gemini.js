@@ -118,6 +118,7 @@ function normalizeFallbackText(value, minLength, maxLength) {
 
 export async function improveWithLengthGuard({ instruction, input, minLength, maxLength, fallbackText }) {
   let improvedText = "";
+  const safeFallbackText = normalizeFallbackText(fallbackText, minLength, maxLength);
   const attempts = [
     instruction,
     `${instruction}
@@ -129,9 +130,14 @@ Strict output rule: Return only the improved text between ${minLength} and ${max
   ];
 
   for (const attempt of attempts) {
-    improvedText = await improveWithGemini({ instruction: attempt, input });
+    try {
+      improvedText = await improveWithGemini({ instruction: attempt, input });
+    } catch {
+      return safeFallbackText;
+    }
+
     if (isCompleteLengthBoundText(improvedText, minLength, maxLength)) return improvedText;
   }
 
-  return normalizeFallbackText(fallbackText, minLength, maxLength);
+  return safeFallbackText;
 }
