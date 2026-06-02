@@ -1,4 +1,4 @@
-import { improveWithLengthGuard, readJsonBody, sendAiJson, sendJson, validateText } from "../_lib/gemini.js";
+import { improveWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
 
 function buildProjectFallback({ name, technologies, description }) {
   const projectName = name.trim() || "this project";
@@ -42,16 +42,15 @@ export default async function handler(req, res) {
     const input = `Project Name: ${body.name.trim() || "Not provided"}
 Technologies: ${body.technologies.trim() || "Not provided"}
 Description: ${body.description.trim()}`;
-    const result = await improveWithLengthGuard({
+    const improvedText = await improveWithLengthGuard({
       instruction: projectInstruction,
       input,
       minLength: 300,
       maxLength: 400,
       fallbackText: buildProjectFallback(body),
-      feature: "improve-project",
     });
 
-    return sendAiJson(res, result.text, result.usage);
+    return sendJson(res, 200, { improvedText });
   } catch {
     return sendJson(res, 500, { error: "We could not improve this project right now. Please try again." });
   }
