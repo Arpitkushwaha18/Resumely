@@ -52,7 +52,7 @@ export default async function handler(req, res) {
     if (validationError) return sendJson(res, 400, { error: validationError });
 
     const input = body.summary.trim();
-    let improvedText = "";
+    let improvedText = buildFallbackSummary(input);
     const attempts = [
       summaryInstruction,
       `${summaryInstruction}
@@ -63,13 +63,20 @@ The previous draft was too short or incomplete. Regenerate it as a complete 380-
 Strict output rule: Return 3 to 5 complete sentences between 380 and 450 characters. Do not return a short summary. Do not include markdown or labels.`,
     ];
 
-    for (const instruction of attempts) {
-      improvedText = await improveWithGemini({
-        instruction,
-        input,
-      });
+    try {
+      for (const instruction of attempts) {
+        const candidateText = await improveWithGemini({
+          instruction,
+          input,
+        });
 
-      if (isCompleteSummary(improvedText)) break;
+        if (isCompleteSummary(candidateText)) {
+          improvedText = candidateText;
+          break;
+        }
+      }
+    } catch {
+      improvedText = buildFallbackSummary(input);
     }
 
     if (!isCompleteSummary(improvedText)) {
