@@ -283,26 +283,26 @@ function SidebarTemplate({ sections, template }) {
   const contactItems = sections.contactItems.length > 0 ? sections.contactItems : ["you@email.com", "+91 98765 43210"];
   return (
     <article className={`resume-paper font-sans ${template.paperClassName}`}>
-      <div className="grid h-full grid-cols-[31%_1fr]">
-        <aside className="px-[12%] py-[15%]" style={{ backgroundColor: template.pdf.sidebarBg }}>
-          <h1 className="text-[16px] font-bold uppercase leading-tight tracking-[0.04em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
-          <p className="mt-2 text-[8px] font-bold leading-[1.45]" style={{ color: template.accent }}>{sections.personal.professionalTitle || "Student Professional"}</p>
+      <div className="grid h-full grid-cols-[33%_1fr]">
+        <aside className="min-w-0 overflow-hidden px-[10%] py-[15%]" style={{ backgroundColor: template.pdf.sidebarBg }}>
+          <h1 className="break-words text-[15px] font-bold uppercase leading-tight tracking-[0.035em]" style={{ color: template.pdf.ink }}>{sections.personal.fullName || "Your Name"}</h1>
+          <p className="mt-2 break-words text-[7.5px] font-bold leading-[1.45]" style={{ color: template.accent }}>{sections.personal.professionalTitle || "Student Professional"}</p>
           <div className="mt-5">
             <h2 className="text-[8px] font-bold uppercase tracking-[0.16em]" style={{ color: template.pdf.ink }}>Contact</h2>
-            <div className="mt-2 space-y-1.5 text-[7px] leading-[1.45] text-[#5f6e78]">
+            <div className="mt-2 space-y-1.5 text-[6.7px] leading-[1.45] text-[#5f6e78] [overflow-wrap:anywhere]">
               {contactItems.map((item) => <p key={item}>{item}</p>)}
             </div>
           </div>
           {sections.skillGroups.length > 0 && (
             <div className="mt-5">
               <h2 className="text-[8px] font-bold uppercase tracking-[0.16em]" style={{ color: template.pdf.ink }}>Skills</h2>
-              <div className="mt-2 space-y-1.5 text-[7px] leading-[1.45] text-[#5f6e78]">
+              <div className="mt-2 space-y-1.5 text-[6.9px] leading-[1.45] text-[#5f6e78] [overflow-wrap:anywhere]">
                 {sections.skillGroups.flatMap(({ skills }) => skills).slice(0, 18).map((skill) => <p key={skill}>{skill}</p>)}
               </div>
             </div>
           )}
         </aside>
-        <main className="px-[7%] py-[6.5%]">
+        <main className="min-w-0 px-[6.5%] py-[6.5%]">
           <MainSections sections={{ ...sections, skillGroups: [] }} template={template} />
           <Skills skillGroups={sections.skillGroups} accent={template.accent} />
         </main>
