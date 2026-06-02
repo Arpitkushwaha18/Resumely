@@ -416,12 +416,15 @@ function BuilderApp() {
           <SectionCard title="Achievements" action={<AddButton onClick={() => setResume((current) => ({ ...current, achievements: [...current.achievements, ""] }))}>Add Achievement</AddButton>}>
             <div className="space-y-3">
               {resume.achievements.map((achievement, index) => (
-                <div key={index}>
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
-                    <div className="flex-1"><TextArea value={achievement} onChange={(value) => updateAchievement(index, value)} placeholder="Describe an academic, technical, or leadership achievement." rows={2} /></div>
-                    <ImproveButton onClick={() => handleImproveAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
-                    {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
+                <div key={index} className="rounded-xl border border-white/10 bg-slate-950/35 p-3 sm:p-4">
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <p className="text-xs font-bold text-blue-100/60">Achievement {index + 1}</p>
+                    <div className="flex shrink-0 items-center gap-1.5">
+                      <ImproveButton onClick={() => handleImproveAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
+                      {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
+                    </div>
                   </div>
+                  <TextArea value={achievement} onChange={(value) => updateAchievement(index, value)} placeholder="Describe an academic, technical, or leadership achievement." rows={2} />
                   <AiError message={aiStatus.achievements[index]?.error} />
                 </div>
               ))}
