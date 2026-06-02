@@ -135,7 +135,7 @@ function BuilderApp() {
   const [pdfState, setPdfState] = useState("idle");
   const [pdfMessage, setPdfMessage] = useState("");
   const [selectedTemplateId, setSelectedTemplateId] = useState(getInitialTemplateId);
-  const [aiStatus, setAiStatus] = useState({ summary: { loading: false, error: "" }, projects: {}, achievements: {} });
+  const [aiStatus, setAiStatus] = useState({ summary: { loading: false, error: "" }, experiences: {}, projects: {}, achievements: {} });
 
   const selectedTemplate = getTemplate(selectedTemplateId);
 
@@ -212,6 +212,26 @@ function BuilderApp() {
       updateAiStatus("projects", index, { loading: false, error: "" });
     } catch {
       updateAiStatus("projects", index, { loading: false, error: "We could not improve this project right now. Please try again." });
+    }
+  };
+
+  const handleImproveExperience = async (index) => {
+    const experience = resume.experience[index];
+    updateAiStatus("experiences", index, { loading: true, error: "" });
+    try {
+      const improvedText = await improveResumeText("/api/ai/improve-experience", {
+        role: experience.role,
+        organization: experience.organization,
+        type: experience.type,
+        location: experience.location,
+        startDate: experience.startDate,
+        endDate: experience.endDate,
+        description: experience.description,
+      });
+      updateExperience(index, "description", improvedText);
+      updateAiStatus("experiences", index, { loading: false, error: "" });
+    } catch {
+      updateAiStatus("experiences", index, { loading: false, error: "We could not improve this experience right now. Please try again." });
     }
   };
 
@@ -314,7 +334,14 @@ function BuilderApp() {
                       <AutocompleteInput label="Location" value={experience.location} onChange={(value) => updateExperience(index, "location", value)} suggestions={cities} placeholder="Remote or city" />
                       <TextInput label="Start Date" value={experience.startDate} onChange={(value) => updateExperience(index, "startDate", value)} placeholder="May 2025" />
                       <TextInput label="End Date" value={experience.endDate} onChange={(value) => updateExperience(index, "endDate", value)} placeholder="Jul 2025 or Present" />
-                      <div className="sm:col-span-2"><TextArea label="Description" value={experience.description} onChange={(value) => updateExperience(index, "description", value)} placeholder="Describe your responsibilities, tools used, and impact." /></div>
+                      <div className="sm:col-span-2">
+                        <div className="mb-2 flex items-center justify-between gap-3">
+                          <span className="block text-xs font-bold text-blue-100/85">Description</span>
+                          <ImproveButton onClick={() => handleImproveExperience(index)} loading={aiStatus.experiences[index]?.loading} disabled={!experience.description.trim()} />
+                        </div>
+                        <TextArea value={experience.description} onChange={(value) => updateExperience(index, "description", value)} placeholder="Describe your responsibilities, tools used, and impact." />
+                        <AiError message={aiStatus.experiences[index]?.error} />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -389,10 +416,13 @@ function BuilderApp() {
           <SectionCard title="Achievements" action={<AddButton onClick={() => setResume((current) => ({ ...current, achievements: [...current.achievements, ""] }))}>Add Achievement</AddButton>}>
             <div className="space-y-3">
               {resume.achievements.map((achievement, index) => (
-                <div key={index} className="flex flex-col gap-2 sm:flex-row sm:items-start">
-                  <div className="flex-1"><TextArea value={achievement} onChange={(value) => updateAchievement(index, value)} placeholder="Describe an academic, technical, or leadership achievement." rows={2} /></div>
-                  <ImproveButton onClick={() => handleImproveAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
-                  {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
+                <div key={index}>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start">
+                    <div className="flex-1"><TextArea value={achievement} onChange={(value) => updateAchievement(index, value)} placeholder="Describe an academic, technical, or leadership achievement." rows={2} /></div>
+                    <ImproveButton onClick={() => handleImproveAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
+                    {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
+                  </div>
+                  <AiError message={aiStatus.achievements[index]?.error} />
                 </div>
               ))}
             </div>

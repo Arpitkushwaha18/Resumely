@@ -89,3 +89,49 @@ ${input}`,
 
   return improvedText;
 }
+
+export function isCompleteLengthBoundText(value, minLength, maxLength) {
+  const text = value.trim();
+  return text.length >= minLength && text.length <= maxLength && /[.!?]$/.test(text);
+}
+
+function normalizeFallbackText(value, minLength, maxLength) {
+  let text = value.trim().replace(/\s+/g, " ");
+  const extension = " It reflects consistent learning, teamwork, responsibility, and readiness to contribute in a professional setting.";
+
+  while (text.length < minLength) {
+    text = `${text}${extension}`;
+  }
+
+  if (text.length <= maxLength) {
+    return /[.!?]$/.test(text) ? text : `${text}.`;
+  }
+
+  const clipped = text.slice(0, maxLength);
+  const lastPeriod = Math.max(clipped.lastIndexOf("."), clipped.lastIndexOf("!"), clipped.lastIndexOf("?"));
+  if (lastPeriod >= minLength - 1) {
+    return clipped.slice(0, lastPeriod + 1).trim();
+  }
+
+  return `${clipped.slice(0, maxLength - 1).trim().replace(/[,:;\s]+$/, "")}.`;
+}
+
+export async function improveWithLengthGuard({ instruction, input, minLength, maxLength, fallbackText }) {
+  let improvedText = "";
+  const attempts = [
+    instruction,
+    `${instruction}
+
+The previous draft was too short, too long, or incomplete. Regenerate it between ${minLength} and ${maxLength} characters, using complete sentences only.`,
+    `${instruction}
+
+Strict output rule: Return only the improved text between ${minLength} and ${maxLength} characters. End with sentence punctuation. Do not include markdown or labels.`,
+  ];
+
+  for (const attempt of attempts) {
+    improvedText = await improveWithGemini({ instruction: attempt, input });
+    if (isCompleteLengthBoundText(improvedText, minLength, maxLength)) return improvedText;
+  }
+
+  return normalizeFallbackText(fallbackText, minLength, maxLength);
+}
