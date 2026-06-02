@@ -12,7 +12,7 @@ import SkillTag from "./components/SkillTag.jsx";
 import { sampleResumeData } from "./templates/sampleResumeData.js";
 import { DEFAULT_TEMPLATE_ID, getTemplate, isValidTemplateId, normalizeTemplateId, resumeTemplates } from "./templates/templateRegistry.js";
 import { normalizeEducationEntries, normalizeExperienceEntries } from "./templates/templateUtils.js";
-import { improveResumeText } from "./utils/aiImprove.js";
+import { enhanceResumeText } from "./utils/aiEnhance.js";
 
 const STORAGE_KEY = "resumely-builder-draft";
 const TEMPLATE_STORAGE_KEY = "resumely-builder-template";
@@ -87,11 +87,11 @@ function DeleteButton({ label, onClick }) {
   return <button type="button" onClick={onClick} aria-label={label} className="grid h-9 w-9 place-items-center rounded-lg text-rose-300 transition hover:bg-rose-500/15 active:scale-95"><Trash2 size={16} /></button>;
 }
 
-function ImproveButton({ onClick, loading, disabled, label = "Improve" }) {
+function EnhanceButton({ onClick, loading, disabled, label = "Enhance" }) {
   return (
     <button type="button" onClick={onClick} disabled={disabled || loading} className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border border-violet-300/25 bg-violet-500/15 px-3 py-2 text-xs font-bold text-violet-100 transition hover:bg-violet-500/25 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60">
       {loading ? <LoaderCircle size={14} className="animate-spin" /> : <Sparkles size={14} />}
-      <span>{loading ? "Improving..." : label}</span>
+      <span>{loading ? "Enhancing..." : label}</span>
     </button>
   );
 }
@@ -188,38 +188,38 @@ function BuilderApp() {
     }));
   };
 
-  const handleImproveSummary = async () => {
+  const handleEnhanceSummary = async () => {
     updateAiStatus("summary", null, { loading: true, error: "" });
     try {
-      const improvedText = await improveResumeText("/api/ai/improve-summary", { summary: resume.summary });
-      updateSummary(improvedText);
+      const enhancedText = await enhanceResumeText("/api/ai/enhance-summary", { summary: resume.summary });
+      updateSummary(enhancedText);
       updateAiStatus("summary", null, { loading: false, error: "" });
     } catch {
-      updateAiStatus("summary", null, { loading: false, error: "We could not improve your summary right now. Please try again." });
+      updateAiStatus("summary", null, { loading: false, error: "We could not enhance your summary right now. Please try again." });
     }
   };
 
-  const handleImproveProject = async (index) => {
+  const handleEnhanceProject = async (index) => {
     const project = resume.projects[index];
     updateAiStatus("projects", index, { loading: true, error: "" });
     try {
-      const improvedText = await improveResumeText("/api/ai/improve-project", {
+      const enhancedText = await enhanceResumeText("/api/ai/enhance-project", {
         name: project.name,
         technologies: project.technologies,
         description: project.description,
       });
-      updateProject(index, "description", improvedText);
+      updateProject(index, "description", enhancedText);
       updateAiStatus("projects", index, { loading: false, error: "" });
     } catch {
-      updateAiStatus("projects", index, { loading: false, error: "We could not improve this project right now. Please try again." });
+      updateAiStatus("projects", index, { loading: false, error: "We could not enhance this project right now. Please try again." });
     }
   };
 
-  const handleImproveExperience = async (index) => {
+  const handleEnhanceExperience = async (index) => {
     const experience = resume.experience[index];
     updateAiStatus("experiences", index, { loading: true, error: "" });
     try {
-      const improvedText = await improveResumeText("/api/ai/improve-experience", {
+      const enhancedText = await enhanceResumeText("/api/ai/enhance-experience", {
         role: experience.role,
         organization: experience.organization,
         type: experience.type,
@@ -228,21 +228,21 @@ function BuilderApp() {
         endDate: experience.endDate,
         description: experience.description,
       });
-      updateExperience(index, "description", improvedText);
+      updateExperience(index, "description", enhancedText);
       updateAiStatus("experiences", index, { loading: false, error: "" });
     } catch {
-      updateAiStatus("experiences", index, { loading: false, error: "We could not improve this experience right now. Please try again." });
+      updateAiStatus("experiences", index, { loading: false, error: "We could not enhance this experience right now. Please try again." });
     }
   };
 
-  const handleImproveAchievement = async (index) => {
+  const handleEnhanceAchievement = async (index) => {
     updateAiStatus("achievements", index, { loading: true, error: "" });
     try {
-      const improvedText = await improveResumeText("/api/ai/improve-achievement", { achievement: resume.achievements[index] });
-      updateAchievement(index, improvedText);
+      const enhancedText = await enhanceResumeText("/api/ai/enhance-achievement", { achievement: resume.achievements[index] });
+      updateAchievement(index, enhancedText);
       updateAiStatus("achievements", index, { loading: false, error: "" });
     } catch {
-      updateAiStatus("achievements", index, { loading: false, error: "We could not improve this achievement right now. Please try again." });
+      updateAiStatus("achievements", index, { loading: false, error: "We could not enhance this achievement right now. Please try again." });
     }
   };
 
@@ -307,7 +307,7 @@ function BuilderApp() {
             </div>
           </SectionCard>
 
-          <SectionCard title="Professional Summary" description="Introduce yourself professionally and highlight the opportunities you are seeking." action={<ImproveButton onClick={handleImproveSummary} loading={aiStatus.summary.loading} disabled={!resume.summary.trim()} />}>
+          <SectionCard title="Professional Summary" description="Introduce yourself professionally and highlight the opportunities you are seeking." action={<EnhanceButton onClick={handleEnhanceSummary} loading={aiStatus.summary.loading} disabled={!resume.summary.trim()} />}>
             <TextArea
               value={resume.summary || ""}
               onChange={updateSummary}
@@ -337,7 +337,7 @@ function BuilderApp() {
                       <div className="sm:col-span-2">
                         <div className="mb-2 flex items-center justify-between gap-3">
                           <span className="block text-xs font-bold text-blue-100/85">Description</span>
-                          <ImproveButton onClick={() => handleImproveExperience(index)} loading={aiStatus.experiences[index]?.loading} disabled={!experience.description.trim()} />
+                          <EnhanceButton onClick={() => handleEnhanceExperience(index)} loading={aiStatus.experiences[index]?.loading} disabled={!experience.description.trim()} />
                         </div>
                         <TextArea value={experience.description} onChange={(value) => updateExperience(index, "description", value)} placeholder="Describe your responsibilities, tools used, and impact." />
                         <AiError message={aiStatus.experiences[index]?.error} />
@@ -380,7 +380,7 @@ function BuilderApp() {
                     <div className="sm:col-span-2">
                       <div className="mb-2 flex items-center justify-between gap-3">
                         <span className="block text-xs font-bold text-blue-100/85">Description</span>
-                        <ImproveButton onClick={() => handleImproveProject(index)} loading={aiStatus.projects[index]?.loading} disabled={!project.description.trim()} />
+                        <EnhanceButton onClick={() => handleEnhanceProject(index)} loading={aiStatus.projects[index]?.loading} disabled={!project.description.trim()} />
                       </div>
                       <TextArea value={project.description} onChange={(value) => updateProject(index, "description", value)} placeholder="Explain what you built and the result." />
                       <AiError message={aiStatus.projects[index]?.error} />
@@ -420,7 +420,7 @@ function BuilderApp() {
                   <div className="mb-2 flex items-center justify-between gap-3">
                     <p className="text-xs font-bold text-blue-100/60">Achievement {index + 1}</p>
                     <div className="flex shrink-0 items-center gap-1.5">
-                      <ImproveButton onClick={() => handleImproveAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
+                      <EnhanceButton onClick={() => handleEnhanceAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
                       {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
                     </div>
                   </div>

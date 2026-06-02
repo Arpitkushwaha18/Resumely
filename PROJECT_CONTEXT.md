@@ -36,7 +36,7 @@ The project is a working frontend prototype:
 - The landing page is complete and approved.
 - The resume builder is functional.
 - Autocomplete, autosave, live preview, mobile preview modal, sample loading, and clearing are implemented.
-- PDF export is implemented but needs quality improvements before it should be treated as production-ready.
+- PDF export is implemented but needs quality enhancements before it should be treated as production-ready.
 
 The highest-priority technical issue is PDF quality. The current PDF is rasterized and may not preserve selectable/searchable text.
 
@@ -696,7 +696,7 @@ The current exporter works, but it is not the final production-quality approach.
 5. **Preview clipping**
    - The visible preview uses `.resume-paper { aspect-ratio: 210 / 297; }` and `overflow-hidden`.
    - Long content can be clipped visually in the live one-page preview even though export attempts multi-page handling.
-   - A future improvement should introduce explicit page previews.
+   - A future enhancement should introduce explicit page previews.
 
 ### Recommended PDF direction
 
@@ -1068,7 +1068,7 @@ import { skills as skillSuggestions } from "../data/skills.js";
 
 ### Free-text policy
 
-Datasets improve suggestions but never restrict user input. Preserve this rule for all future autocomplete work.
+Datasets enhance suggestions but never restrict user input. Preserve this rule for all future autocomplete work.
 
 ## Design System
 
@@ -1238,7 +1238,7 @@ This is more recruiter-friendly and easier for applicant tracking systems to int
 
 10. **Skill categorization uses exact string matches**
     - Custom variants such as `React` instead of `React.js` appear under `Other Skills`.
-    - Future improvements could add normalized aliases.
+    - Future enhancements could add normalized aliases.
 
 11. **No template switching**
     - Landing page previews multiple concepts, but the builder currently renders one ATS template.
@@ -1266,7 +1266,7 @@ This is more recruiter-friendly and easier for applicant tracking systems to int
 
 ### In Progress
 
-- ⚠ PDF Export Improvements
+- ⚠ PDF Export Enhancements
 - ⚠ Multi-page preview and export reliability
 - ⚠ Text-preserving ATS-friendly PDF generation
 
@@ -1277,7 +1277,7 @@ This is more recruiter-friendly and easier for applicant tracking systems to int
 - ⬜ Project Reordering
 - ⬜ Certification Reordering
 - ⬜ Achievement Reordering
-- ⬜ Validation Improvements
+- ⬜ Validation Enhancements
 - ⬜ Print-Specific Resume Route
 - ⬜ AI Summary Generator
 - ⬜ AI Project Description Generator
@@ -1378,14 +1378,14 @@ Also manually verify:
 
 ## Next Recommended Task
 
-The next task after current PDF quality improvements should be a **text-preserving semantic PDF export and explicit multi-page resume preview**.
+The next task after current PDF quality enhancements should be a **text-preserving semantic PDF export and explicit multi-page resume preview**.
 
 ### Goal
 
 Replace raster-only PDF output with a professional A4 export that:
 
 - Preserves selectable text
-- Improves ATS parser compatibility
+- Enhances ATS parser compatibility
 - Supports multiple pages cleanly
 - Avoids splitting project, certification, or achievement entries awkwardly
 - Matches the visible preview closely

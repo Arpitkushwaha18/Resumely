@@ -1,11 +1,11 @@
-import { improveWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
+import { enhanceWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
 
 function buildProjectFallback({ name, technologies, description }) {
   const projectName = name.trim() || "this project";
   const techText = technologies.trim() ? ` using ${technologies.trim()}` : "";
   const cleanDescription = description.trim().replace(/\s+/g, " ");
 
-  return `Developed ${projectName}${techText}, focusing on practical problem solving, clean implementation, and user-focused functionality. The work involved understanding requirements, organizing the solution, and improving the overall flow based on the project goals. ${cleanDescription} This project strengthened technical learning, attention to detail, and the ability to apply concepts in a practical environment.`;
+  return `Developed ${projectName}${techText}, focusing on practical problem solving, clean implementation, and user-focused functionality. The work involved understanding requirements, organizing the solution, and enhancing the overall flow based on the project goals. ${cleanDescription} This project strengthened technical learning, attention to detail, and the ability to apply concepts in a practical environment.`;
 }
 
 const projectInstruction = `Rewrite this resume project description to sound professional, practical, impact-oriented, and ATS-friendly.
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     const input = `Project Name: ${body.name.trim() || "Not provided"}
 Technologies: ${body.technologies.trim() || "Not provided"}
 Description: ${body.description.trim()}`;
-    const improvedText = await improveWithLengthGuard({
+    const enhancedText = await enhanceWithLengthGuard({
       instruction: projectInstruction,
       input,
       minLength: 300,
@@ -50,8 +50,8 @@ Description: ${body.description.trim()}`;
       fallbackText: buildProjectFallback(body),
     });
 
-    return sendJson(res, 200, { improvedText });
+    return sendJson(res, 200, { enhancedText });
   } catch {
-    return sendJson(res, 500, { error: "We could not improve this project right now. Please try again." });
+    return sendJson(res, 500, { error: "We could not enhance this project right now. Please try again." });
   }
 }

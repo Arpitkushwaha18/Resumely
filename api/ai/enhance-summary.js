@@ -1,4 +1,4 @@
-import { improveWithGemini, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
+import { enhanceWithGemini, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
 
 function isCompleteSummary(value) {
   const text = value.trim();
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
     if (validationError) return sendJson(res, 400, { error: validationError });
 
     const input = body.summary.trim();
-    let improvedText = buildFallbackSummary(input);
+    let enhancedText = buildFallbackSummary(input);
     const attempts = [
       summaryInstruction,
       `${summaryInstruction}
@@ -65,26 +65,26 @@ Strict output rule: Return 3 to 5 complete sentences between 380 and 450 charact
 
     try {
       for (const instruction of attempts) {
-        const candidateText = await improveWithGemini({
+        const candidateText = await enhanceWithGemini({
           instruction,
           input,
         });
 
         if (isCompleteSummary(candidateText)) {
-          improvedText = candidateText;
+          enhancedText = candidateText;
           break;
         }
       }
     } catch {
-      improvedText = buildFallbackSummary(input);
+      enhancedText = buildFallbackSummary(input);
     }
 
-    if (!isCompleteSummary(improvedText)) {
-      improvedText = buildFallbackSummary(input);
+    if (!isCompleteSummary(enhancedText)) {
+      enhancedText = buildFallbackSummary(input);
     }
 
-    return sendJson(res, 200, { improvedText });
+    return sendJson(res, 200, { enhancedText });
   } catch {
-    return sendJson(res, 500, { error: "We could not improve your summary right now. Please try again." });
+    return sendJson(res, 500, { error: "We could not enhance your summary right now. Please try again." });
   }
 }

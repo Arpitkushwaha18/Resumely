@@ -197,7 +197,7 @@ function ResumePreview({ mini = false, accent = "#2563eb", kind = "classic" }) {
             <ResumeEntry
               title={kind === "line" ? "Campus Placement Portal" : "Frontend Developer Intern"}
               meta={kind === "line" ? "React, Node.js, MongoDB" : "TechNova Labs | May - Jul 2025"}
-              text={kind === "line" ? "Built a placement dashboard used to manage student applications." : "Developed reusable UI components and improved mobile responsiveness."}
+              text={kind === "line" ? "Built a placement dashboard used to manage student applications." : "Developed reusable UI components and enhanced mobile responsiveness."}
               mini={mini}
             />
             <ResumeEntry
@@ -258,14 +258,6 @@ function HeroVisual() {
         <div className="mx-auto w-[76%] py-5">
           <ResumePreview />
         </div>
-      </div>
-      <div className="animate-float absolute -left-2 top-[24%] flex items-center gap-2 rounded-xl border border-blue-100 bg-white/95 px-3 py-2.5 shadow-[0_14px_32px_rgba(30,64,175,0.14)] sm:-left-8">
-        <span className="grid h-7 w-7 place-items-center rounded-lg bg-mint-100 text-mint-700"><ShieldCheck size={15} /></span>
-        <div><p className="text-[10px] font-bold text-ink">ATS-friendly format</p><p className="text-[9px] text-muted">Clean and readable</p></div>
-      </div>
-      <div className="animate-float animation-delay-500 absolute -bottom-3 right-0 flex items-center gap-2 rounded-xl border border-blue-100 bg-white/95 px-3 py-2.5 shadow-[0_14px_32px_rgba(30,64,175,0.14)] sm:-right-6">
-        <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#fff1e8] text-coral"><Download size={14} /></span>
-        <div><p className="text-[10px] font-bold text-ink">PDF download</p><p className="text-[9px] text-muted">Ready when you are</p></div>
       </div>
     </div>
   );
@@ -387,7 +379,7 @@ function App() {
             <div className="absolute left-[17%] right-[17%] top-12 hidden border-t-2 border-dashed border-blue-300/30 md:block" />
             {[
               [FileText, "01", "Enter Your Details", "Add your education, skills, projects, and experience with simple guided prompts."],
-              [WandSparkles, "02", "Customize Resume", "Choose a template and fine-tune the colors and sections to suit your style."],
+              [WandSparkles, "02", "Enhance With AI", "Use AI to strengthen your summary with clearer phrasing, sharper focus, and a more professional tone."],
               [Download, "03", "Download PDF", "Export a clean, ATS-friendly PDF and start sending applications with confidence."],
             ].map(([Icon, number, title, text]) => (
               <article key={title} className="relative rounded-2xl border border-white/10 bg-white/[0.06] p-7 text-center shadow-sm backdrop-blur">

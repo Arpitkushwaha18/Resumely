@@ -30,7 +30,7 @@ export async function readJsonBody(req) {
   return {};
 }
 
-export async function improveWithGemini({ instruction, input }) {
+export async function enhanceWithGemini({ instruction, input }) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not configured.");
@@ -52,11 +52,11 @@ export async function improveWithGemini({ instruction, input }) {
               text: `${instruction}
 
 Rules:
-- Improve writing, grammar, professionalism, and ATS friendliness.
+- Enhance writing, grammar, professionalism, and ATS friendliness.
 - Preserve the user's facts and meaning.
 - Do not invent internships, achievements, metrics, technologies, employers, dates, awards, or experience.
 - Do not add fake information.
-- Return only the improved text, with no markdown, labels, or explanations.
+- Return only the enhanced text, with no markdown, labels, or explanations.
 
 User content:
 ${input}`,
@@ -78,16 +78,16 @@ ${input}`,
     throw new Error(message);
   }
 
-  const improvedText = data?.candidates?.[0]?.content?.parts
+  const enhancedText = data?.candidates?.[0]?.content?.parts
     ?.map((part) => part.text || "")
     .join("")
     .trim();
 
-  if (!improvedText) {
+  if (!enhancedText) {
     throw new Error("Gemini returned an empty response.");
   }
 
-  return improvedText;
+  return enhancedText;
 }
 
 export function isCompleteLengthBoundText(value, minLength, maxLength) {
@@ -116,8 +116,8 @@ function normalizeFallbackText(value, minLength, maxLength) {
   return `${clipped.slice(0, maxLength - 1).trim().replace(/[,:;\s]+$/, "")}.`;
 }
 
-export async function improveWithLengthGuard({ instruction, input, minLength, maxLength, fallbackText }) {
-  let improvedText = "";
+export async function enhanceWithLengthGuard({ instruction, input, minLength, maxLength, fallbackText }) {
+  let enhancedText = "";
   const safeFallbackText = normalizeFallbackText(fallbackText, minLength, maxLength);
   const attempts = [
     instruction,
@@ -126,17 +126,17 @@ export async function improveWithLengthGuard({ instruction, input, minLength, ma
 The previous draft was too short, too long, or incomplete. Regenerate it between ${minLength} and ${maxLength} characters, using complete sentences only.`,
     `${instruction}
 
-Strict output rule: Return only the improved text between ${minLength} and ${maxLength} characters. End with sentence punctuation. Do not include markdown or labels.`,
+Strict output rule: Return only the enhanced text between ${minLength} and ${maxLength} characters. End with sentence punctuation. Do not include markdown or labels.`,
   ];
 
   for (const attempt of attempts) {
     try {
-      improvedText = await improveWithGemini({ instruction: attempt, input });
+      enhancedText = await enhanceWithGemini({ instruction: attempt, input });
     } catch {
       return safeFallbackText;
     }
 
-    if (isCompleteLengthBoundText(improvedText, minLength, maxLength)) return improvedText;
+    if (isCompleteLengthBoundText(enhancedText, minLength, maxLength)) return enhancedText;
   }
 
   return safeFallbackText;

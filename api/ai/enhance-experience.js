@@ -1,4 +1,4 @@
-import { improveWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
+import { enhanceWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
 
 function buildExperienceFallback({ role, organization, type, description }) {
   const roleText = role.trim() || "the assigned role";
@@ -18,7 +18,7 @@ Length and structure:
 - End with sentence punctuation.
 
 Style:
-- Improve grammar, clarity, responsibility, teamwork, and learning impact.
+- Enhance grammar, clarity, responsibility, teamwork, and learning impact.
 - Use only the supplied role, organization, type, location, dates, and description.
 - Do not invent tasks, metrics, achievements, tools, projects, employers, dates, or responsibilities.`;
 
@@ -46,7 +46,7 @@ Location: ${body.location.trim() || "Not provided"}
 Dates: ${body.startDate.trim() || "Not provided"} to ${body.endDate.trim() || "Not provided"}
 Description: ${body.description.trim()}`;
 
-    const improvedText = await improveWithLengthGuard({
+    const enhancedText = await enhanceWithLengthGuard({
       instruction: experienceInstruction,
       input,
       minLength: 300,
@@ -54,8 +54,8 @@ Description: ${body.description.trim()}`;
       fallbackText: buildExperienceFallback(body),
     });
 
-    return sendJson(res, 200, { improvedText });
+    return sendJson(res, 200, { enhancedText });
   } catch {
-    return sendJson(res, 500, { error: "We could not improve this experience right now. Please try again." });
+    return sendJson(res, 500, { error: "We could not enhance this experience right now. Please try again." });
   }
 }
