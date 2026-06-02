@@ -1,31 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="420" height="594" viewBox="0 0 420 594">
   <rect width="420" height="594" fill="#fff"/>
   <rect x="28" y="28" width="364" height="96" rx="12" fill="#256f8f"/>
-  <text x="48" y="67" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" fill="#fff">CHAMKI CHAND</text>
-  <text x="48" y="91" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" fill="#eaf7fb">COMPUTER SCIENCE STUDENT</text>
-  <text x="48" y="111" font-family="Inter, Arial, sans-serif" font-size="8" fill="#eaf7fb">chamki@email.com | +91 98765 43210 | github.com/chamki | Delhi, India</text>
+  <text x="48" y="67" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="900" fill="#fff">NEHA KAPOOR</text>
+  <text x="48" y="91" font-family="Inter, Arial, sans-serif" font-size="10" font-weight="800" fill="#eaf7fb">MBA STUDENT</text>
+  <text x="48" y="111" font-family="Inter, Arial, sans-serif" font-size="8" fill="#eaf7fb">neha.kapoor.mba@gmail.com | +91 98765 43210 | linkedin.com/in/nehakapoor | Delhi</text>
   <g font-family="Inter, Arial, sans-serif">
     <circle cx="36" cy="154" r="4" fill="#256f8f"/><text x="50" y="158" font-size="9" font-weight="900" letter-spacing="1.4" fill="#256f8f">PROFESSIONAL SUMMARY</text>
     <line x1="38" y1="168" x2="38" y2="198" stroke="#8fb9c8" stroke-width="2"/>
-    <text x="54" y="178" font-size="9" fill="#5e6d68">Student developer focused on practical web applications and clean product</text>
-    <text x="54" y="192" font-size="9" fill="#5e6d68">experiences for campus and internship workflows.</text>
+    <text x="54" y="178" font-size="9" fill="#5e6d68">MBA student focused on marketing, business strategy, and client-facing</text>
+    <text x="54" y="192" font-size="9" fill="#5e6d68">problem solving with strong teamwork and presentation skills.</text>
     <circle cx="36" cy="229" r="4" fill="#256f8f"/><text x="50" y="233" font-size="9" font-weight="900" letter-spacing="1.4" fill="#256f8f">EDUCATION</text>
     <line x1="38" y1="243" x2="38" y2="295" stroke="#8fb9c8" stroke-width="2"/>
-    <text x="54" y="255" font-size="11" font-weight="800" fill="#203a44">KCC Institute of Technology and Management</text>
-    <text x="54" y="270" font-size="9" font-weight="700" fill="#52635d">B.Tech Computer Science and Engineering • 8.4 CGPA</text>
+    <text x="54" y="255" font-size="11" font-weight="800" fill="#203a44">Institute of Management Studies</text>
+    <text x="54" y="270" font-size="9" font-weight="700" fill="#52635d">MBA Marketing and Business Analytics • 8.3 CGPA</text>
     <text x="304" y="255" font-size="8" fill="#65756f">Expected Graduation: 2027</text>
-    <text x="54" y="291" font-size="10" font-weight="800" fill="#203a44">Delhi Public School</text>
-    <text x="54" y="305" font-size="8.5" fill="#52635d">Class 12 Science • 91%</text>
+    <text x="54" y="291" font-size="10" font-weight="800" fill="#203a44">Delhi University</text>
+    <text x="54" y="305" font-size="8.5" fill="#52635d">B.Com Honours • 82%</text>
     <circle cx="36" cy="344" r="4" fill="#256f8f"/><text x="50" y="348" font-size="9" font-weight="900" letter-spacing="1.4" fill="#256f8f">PROJECTS</text>
     <line x1="38" y1="358" x2="38" y2="430" stroke="#8fb9c8" stroke-width="2"/>
-    <text x="54" y="370" font-size="11" font-weight="800" fill="#203a44">Campus Placement Portal</text>
-    <text x="54" y="385" font-size="8.5" fill="#52635d">React.js • Node.js • MongoDB</text>
-    <text x="54" y="400" font-size="8.5" fill="#687772">Built a dashboard for applications, listings, and placement tracking.</text>
-    <text x="54" y="424" font-size="11" font-weight="800" fill="#203a44">Expense Tracker App</text>
-    <text x="54" y="439" font-size="8.5" fill="#52635d">JavaScript • HTML5 • CSS3</text>
+    <text x="54" y="370" font-size="11" font-weight="800" fill="#203a44">Market Research Study</text>
+    <text x="54" y="385" font-size="8.5" fill="#52635d">Survey Design • Excel • Presentation</text>
+    <text x="54" y="400" font-size="8.5" fill="#687772">Studied customer preferences and summarized actionable findings.</text>
+    <text x="54" y="424" font-size="11" font-weight="800" fill="#203a44">Brand Strategy Case</text>
+    <text x="54" y="439" font-size="8.5" fill="#52635d">SWOT • Competitor Analysis • Reporting</text>
     <circle cx="36" cy="478" r="4" fill="#256f8f"/><text x="50" y="482" font-size="9" font-weight="900" letter-spacing="1.4" fill="#256f8f">SKILLS</text>
     <line x1="38" y1="492" x2="38" y2="540" stroke="#8fb9c8" stroke-width="2"/>
-    <text x="54" y="506" font-size="8.5" fill="#62716c">JavaScript, Python, React.js, Node.js, MongoDB, SQL</text>
-    <text x="54" y="521" font-size="8.5" fill="#62716c">Git, VS Code, Communication Skills, Problem Solving</text>
+    <text x="54" y="506" font-size="8.5" fill="#62716c">Market Research, Excel, PowerPoint, Business Analytics</text>
+    <text x="54" y="521" font-size="8.5" fill="#62716c">Communication, Teamwork, Leadership, Problem Solving</text>
   </g>
 </svg>
