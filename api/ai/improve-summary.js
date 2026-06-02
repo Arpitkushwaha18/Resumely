@@ -11,7 +11,28 @@ export default async function handler(req, res) {
     if (validationError) return sendJson(res, 400, { error: validationError });
 
     const improvedText = await improveWithGemini({
-      instruction: "Rewrite this resume professional summary to sound polished, concise, recruiter-friendly, and ATS-friendly.",
+      instruction: `Generate a complete professional fresher resume summary from the user's content.
+
+Length and structure:
+- Minimum 350 characters and maximum 500 characters.
+- Write approximately 3 to 5 sentences.
+- Never return a one-sentence summary.
+
+Style:
+- Write like a real student resume.
+- Keep it professional, ATS-friendly, human sounding, and natural.
+- Avoid generic filler and overly short wording.
+
+Include when supported by the user's content:
+- Educational background.
+- Technical interests.
+- Work ethic.
+- Teamwork.
+- Learning mindset.
+- Career objective.
+
+Do not invent internships, projects, achievements, certifications, metrics, technologies, employers, dates, work experience, or any other fake detail.
+If a detail is not available, keep the wording broad and truthful.`,
       input: body.summary.trim(),
     });
 
