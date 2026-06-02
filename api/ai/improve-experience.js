@@ -1,4 +1,4 @@
-import { improveWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
+import { improveWithLengthGuard, readJsonBody, sendAiJson, sendJson, validateText } from "../_lib/gemini.js";
 
 function buildExperienceFallback({ role, organization, type, description }) {
   const roleText = role.trim() || "the assigned role";
@@ -46,15 +46,16 @@ Location: ${body.location.trim() || "Not provided"}
 Dates: ${body.startDate.trim() || "Not provided"} to ${body.endDate.trim() || "Not provided"}
 Description: ${body.description.trim()}`;
 
-    const improvedText = await improveWithLengthGuard({
+    const result = await improveWithLengthGuard({
       instruction: experienceInstruction,
       input,
       minLength: 300,
       maxLength: 400,
       fallbackText: buildExperienceFallback(body),
+      feature: "improve-experience",
     });
 
-    return sendJson(res, 200, { improvedText });
+    return sendAiJson(res, result.text, result.usage);
   } catch {
     return sendJson(res, 500, { error: "We could not improve this experience right now. Please try again." });
   }

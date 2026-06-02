@@ -1,4 +1,4 @@
-import { improveWithLengthGuard, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
+import { improveWithLengthGuard, readJsonBody, sendAiJson, sendJson, validateText } from "../_lib/gemini.js";
 
 function buildAchievementFallback(achievement) {
   const cleanAchievement = achievement.trim().replace(/\s+/g, " ");
@@ -28,15 +28,16 @@ export default async function handler(req, res) {
     const validationError = validateText(body.achievement, "Achievement", 1000);
     if (validationError) return sendJson(res, 400, { error: validationError });
 
-    const improvedText = await improveWithLengthGuard({
+    const result = await improveWithLengthGuard({
       instruction: achievementInstruction,
       input: body.achievement.trim(),
       minLength: 300,
       maxLength: 400,
       fallbackText: buildAchievementFallback(body.achievement),
+      feature: "improve-achievement",
     });
 
-    return sendJson(res, 200, { improvedText });
+    return sendAiJson(res, result.text, result.usage);
   } catch {
     return sendJson(res, 500, { error: "We could not improve this achievement right now. Please try again." });
   }

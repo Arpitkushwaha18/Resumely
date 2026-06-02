@@ -1,6 +1,17 @@
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models";
 const DEFAULT_MODEL = "gemini-2.5-flash";
 const MAX_INPUT_LENGTH = 4000;
+const ESTIMATED_AVERAGES = {
+  "improve-summary": "~250 tokens",
+  "improve-project": "~150 tokens",
+  "improve-achievement": "~70 tokens",
+  "improve-experience": "~150 tokens",
+};
+
+console.info("[AI Usage Estimates]");
+for (const [feature, estimate] of Object.entries(ESTIMATED_AVERAGES)) {
+  console.info(`${feature}: ${estimate}`);
+}
 
 export function validateText(value, fieldName, maxLength = MAX_INPUT_LENGTH) {
   if (typeof value !== "string") {
@@ -30,7 +41,45 @@ export async function readJsonBody(req) {
   return {};
 }
 
-export async function improveWithGemini({ instruction, input }) {
+export function shouldReturnUsageToClient() {
+  return process.env.NODE_ENV !== "production" && !process.env.VERCEL;
+}
+
+export function extractGeminiUsage(data) {
+  const usageMetadata = data?.usageMetadata || {};
+  return {
+    promptTokens: usageMetadata.promptTokenCount || 0,
+    completionTokens: usageMetadata.candidatesTokenCount || 0,
+    totalTokens: usageMetadata.totalTokenCount || 0,
+  };
+}
+
+export function addUsage(current = {}, next = {}) {
+  return {
+    promptTokens: (current.promptTokens || 0) + (next.promptTokens || 0),
+    completionTokens: (current.completionTokens || 0) + (next.completionTokens || 0),
+    totalTokens: (current.totalTokens || 0) + (next.totalTokens || 0),
+  };
+}
+
+export function logTokenUsage(feature, usage) {
+  console.info(`[AI Usage]
+Feature: ${feature}
+Prompt Tokens: ${usage.promptTokens}
+Output Tokens: ${usage.completionTokens}
+Total Tokens: ${usage.totalTokens}`);
+}
+
+export function sendAiJson(res, improvedText, usage) {
+  const body = { improvedText };
+  if (shouldReturnUsageToClient()) {
+    body.text = improvedText;
+    body.usage = usage;
+  }
+  return sendJson(res, 200, body);
+}
+
+export async function improveWithGemini({ instruction, input, feature = "unknown" }) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not configured.");
@@ -72,6 +121,7 @@ ${input}`,
   });
 
   const data = await response.json().catch(() => ({}));
+  const usage = extractGeminiUsage(data);
 
   if (!response.ok) {
     const message = data?.error?.message || "Gemini request failed.";
@@ -87,7 +137,9 @@ ${input}`,
     throw new Error("Gemini returned an empty response.");
   }
 
-  return improvedText;
+  logTokenUsage(feature, usage);
+
+  return { text: improvedText, usage };
 }
 
 export function isCompleteLengthBoundText(value, minLength, maxLength) {
@@ -116,8 +168,9 @@ function normalizeFallbackText(value, minLength, maxLength) {
   return `${clipped.slice(0, maxLength - 1).trim().replace(/[,:;\s]+$/, "")}.`;
 }
 
-export async function improveWithLengthGuard({ instruction, input, minLength, maxLength, fallbackText }) {
+export async function improveWithLengthGuard({ instruction, input, minLength, maxLength, fallbackText, feature }) {
   let improvedText = "";
+  let totalUsage = {};
   const safeFallbackText = normalizeFallbackText(fallbackText, minLength, maxLength);
   const attempts = [
     instruction,
@@ -131,13 +184,15 @@ Strict output rule: Return only the improved text between ${minLength} and ${max
 
   for (const attempt of attempts) {
     try {
-      improvedText = await improveWithGemini({ instruction: attempt, input });
+      const result = await improveWithGemini({ instruction: attempt, input, feature });
+      improvedText = result.text;
+      totalUsage = addUsage(totalUsage, result.usage);
     } catch {
-      return safeFallbackText;
+      return { text: safeFallbackText, usage: totalUsage };
     }
 
-    if (isCompleteLengthBoundText(improvedText, minLength, maxLength)) return improvedText;
+    if (isCompleteLengthBoundText(improvedText, minLength, maxLength)) return { text: improvedText, usage: totalUsage };
   }
 
-  return safeFallbackText;
+  return { text: safeFallbackText, usage: totalUsage };
 }

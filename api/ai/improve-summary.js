@@ -1,4 +1,4 @@
-import { improveWithGemini, readJsonBody, sendJson, validateText } from "../_lib/gemini.js";
+import { addUsage, improveWithGemini, readJsonBody, sendAiJson, sendJson, validateText } from "../_lib/gemini.js";
 
 function isCompleteSummary(value) {
   const text = value.trim();
@@ -53,6 +53,7 @@ export default async function handler(req, res) {
 
     const input = body.summary.trim();
     let improvedText = buildFallbackSummary(input);
+    let totalUsage = {};
     const attempts = [
       summaryInstruction,
       `${summaryInstruction}
@@ -65,10 +66,13 @@ Strict output rule: Return 3 to 5 complete sentences between 380 and 450 charact
 
     try {
       for (const instruction of attempts) {
-        const candidateText = await improveWithGemini({
+        const result = await improveWithGemini({
           instruction,
           input,
+          feature: "improve-summary",
         });
+        totalUsage = addUsage(totalUsage, result.usage);
+        const candidateText = result.text;
 
         if (isCompleteSummary(candidateText)) {
           improvedText = candidateText;
@@ -83,7 +87,7 @@ Strict output rule: Return 3 to 5 complete sentences between 380 and 450 charact
       improvedText = buildFallbackSummary(input);
     }
 
-    return sendJson(res, 200, { improvedText });
+    return sendAiJson(res, improvedText, totalUsage);
   } catch {
     return sendJson(res, 500, { error: "We could not improve your summary right now. Please try again." });
   }
