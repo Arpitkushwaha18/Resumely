@@ -334,7 +334,7 @@ function BuilderApp() {
         <div className="space-y-5">
           <SectionCard title="Personal Information" description="Add the details recruiters can use to contact you.">
             <div className="grid gap-4 sm:grid-cols-2">
-              <TextInput label="Full Name" value={resume.personal.fullName} onChange={(value) => updatePersonal("fullName", value)} placeholder="Chamki Chand" />
+              <TextInput label="Full Name" value={resume.personal.fullName} onChange={(value) => updatePersonal("fullName", value)} placeholder="Your Name" />
               <TextInput label="Professional Title" value={resume.personal.professionalTitle} onChange={(value) => updatePersonal("professionalTitle", value)} placeholder="Computer Science Engineering Student" />
               <TextInput label="Email" value={resume.personal.email} onChange={(value) => updatePersonal("email", value)} placeholder="you@email.com" type="email" />
               <TextInput label="Phone" value={resume.personal.phone} onChange={(value) => updatePersonal("phone", value)} placeholder="+91 98765 43210" />
