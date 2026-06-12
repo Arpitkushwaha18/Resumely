@@ -114,20 +114,11 @@ function DeleteButton({ label, onClick }) {
   return <button type="button" onClick={onClick} aria-label={label} className="grid h-9 w-9 place-items-center rounded-lg text-rose-300 transition hover:bg-rose-500/15 active:scale-95"><Trash2 size={16} /></button>;
 }
 
-function EnhanceButton({ onClick, loading, disabled, success, label = "Enhance" }) {
+function EnhanceButton({ onClick, loading, disabled, label = "Enhance" }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled || loading}
-      className={`ai-action-button inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-black transition active:scale-[0.98] disabled:cursor-wait disabled:opacity-60 ${
-        success
-          ? "border-emerald-300/30 bg-emerald-500/15 text-emerald-100"
-          : "border-violet-300/25 bg-violet-500/15 text-violet-100 hover:bg-violet-500/25"
-      } ${loading ? "is-loading" : ""}`}
-    >
-      {loading ? <LoaderCircle size={14} className="animate-spin" /> : success ? <CircleCheck size={14} /> : <Sparkles size={14} />}
-      <span>{loading ? "Improving..." : success ? "Improved" : label}</span>
+    <button type="button" onClick={onClick} disabled={disabled || loading} className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border border-violet-300/25 bg-violet-500/15 px-3 py-2 text-xs font-bold text-violet-100 transition hover:bg-violet-500/25 active:scale-[0.98] disabled:cursor-wait disabled:opacity-60">
+      {loading ? <LoaderCircle size={14} className="animate-spin" /> : <Sparkles size={14} />}
+      <span>{loading ? "Enhancing..." : label}</span>
     </button>
   );
 }
@@ -139,9 +130,9 @@ function AiError({ message }) {
 
 function TemplateSelect({ value, onChange }) {
   return (
-    <label className="flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-3 py-2 text-xs font-black text-blue-100 shadow-sm backdrop-blur">
+    <label className="flex min-h-9 items-center gap-2 rounded-full border border-white/10 bg-slate-950/55 px-3 py-2 text-xs font-bold text-blue-100 shadow-sm">
       <span className="hidden sm:inline">Template</span>
-      <select value={value} onChange={(event) => onChange(event.target.value)} className="max-w-[150px] bg-transparent text-xs font-black text-blue-100 outline-none sm:max-w-none">
+      <select value={value} onChange={(event) => onChange(event.target.value)} className="bg-slate-950 text-xs font-bold text-blue-100 outline-none">
         {resumeTemplates.map((template) => <option key={template.id} value={template.id}>{template.name}</option>)}
       </select>
     </label>
@@ -235,17 +226,12 @@ function BuilderApp() {
     }));
   };
 
-  const markAiSuccess = (type, key = null) => {
-    updateAiStatus(type, key, { loading: false, error: "", success: true });
-    window.setTimeout(() => updateAiStatus(type, key, { success: false }), 1800);
-  };
-
   const handleEnhanceSummary = async () => {
     updateAiStatus("summary", null, { loading: true, error: "" });
     try {
       const enhancedText = await enhanceResumeText("/api/ai/enhance-summary", { summary: resume.summary });
       updateSummary(enhancedText);
-      markAiSuccess("summary");
+      updateAiStatus("summary", null, { loading: false, error: "" });
     } catch {
       updateAiStatus("summary", null, { loading: false, error: "We could not enhance your summary right now. Please try again." });
     }
@@ -261,7 +247,7 @@ function BuilderApp() {
         description: project.description,
       });
       updateProject(index, "description", enhancedText);
-      markAiSuccess("projects", index);
+      updateAiStatus("projects", index, { loading: false, error: "" });
     } catch {
       updateAiStatus("projects", index, { loading: false, error: "We could not enhance this project right now. Please try again." });
     }
@@ -281,7 +267,7 @@ function BuilderApp() {
         description: experience.description,
       });
       updateExperience(index, "description", enhancedText);
-      markAiSuccess("experiences", index);
+      updateAiStatus("experiences", index, { loading: false, error: "" });
     } catch {
       updateAiStatus("experiences", index, { loading: false, error: "We could not enhance this experience right now. Please try again." });
     }
@@ -292,7 +278,7 @@ function BuilderApp() {
     try {
       const enhancedText = await enhanceResumeText("/api/ai/enhance-achievement", { achievement: resume.achievements[index] });
       updateAchievement(index, enhancedText);
-      markAiSuccess("achievements", index);
+      updateAiStatus("achievements", index, { loading: false, error: "" });
     } catch {
       updateAiStatus("achievements", index, { loading: false, error: "We could not enhance this achievement right now. Please try again." });
     }
@@ -314,8 +300,8 @@ function BuilderApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.24),transparent_32%),radial-gradient(circle_at_82%_10%,rgba(34,211,238,0.12),transparent_28%),linear-gradient(180deg,#020617_0%,#0f172a_55%,#111827_100%)] text-white">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/76 backdrop-blur-xl">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.20),transparent_32%),linear-gradient(180deg,#020617_0%,#0f172a_55%,#111827_100%)] text-white">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/88 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center justify-between gap-3 lg:justify-start">
             <div className="flex min-w-0 items-center gap-3">
@@ -332,20 +318,20 @@ function BuilderApp() {
             </div>
             <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-mint-600 text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 lg:hidden"><Download size={15} /></button>
           </div>
-          <div className="flex flex-wrap items-center gap-3 rounded-3xl border border-white/10 bg-white/[0.07] p-1.5 shadow-[0_18px_50px_rgba(0,0,0,0.18)] backdrop-blur-xl lg:justify-end">
+          <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] p-1.5 lg:justify-end">
             <TemplateSelect value={selectedTemplateId} onChange={handleTemplateChange} />
             <div className="ml-auto flex items-center gap-2">
-              <button type="button" onClick={() => setResume(getSampleResumeData(selectedTemplateId))} className="min-h-10 rounded-full border border-white/10 bg-slate-950/50 px-3 text-xs font-black text-blue-100 shadow-sm transition hover:border-blue-300/40 hover:text-white sm:px-4">Load Sample</button>
+              <button type="button" onClick={() => setResume(getSampleResumeData(selectedTemplateId))} className="min-h-9 rounded-full border border-white/10 bg-slate-950/55 px-3 text-xs font-bold text-blue-100 shadow-sm transition hover:border-blue-300/40 hover:text-white sm:px-4">Load Sample</button>
               <button type="button" onClick={() => setResume(emptyResume())} aria-label="Clear Resume" title="Clear Resume" className="grid h-9 w-9 place-items-center rounded-full text-rose-300 transition hover:bg-rose-500/15"><RotateCcw size={14} /></button>
-              <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="hidden min-h-10 items-center gap-1.5 rounded-full bg-mint-600 px-3 text-xs font-black text-white shadow-[0_14px_34px_rgba(37,99,235,0.28)] transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4 lg:inline-flex"><Download size={14} /><span>{pdfButtonText}</span></button>
+              <button type="button" disabled={pdfState === "generating"} onClick={handleDownloadPdf} aria-label="Download PDF" title="Download PDF" className="hidden min-h-9 items-center gap-1.5 rounded-full bg-mint-600 px-3 text-xs font-bold text-white shadow-sm transition hover:bg-mint-700 disabled:cursor-wait disabled:opacity-70 sm:px-4 lg:inline-flex"><Download size={14} /><span>{pdfButtonText}</span></button>
             </div>
           </div>
         </div>
         {pdfMessage && <p className="border-t border-rose-500/20 bg-rose-950/50 px-4 py-2 text-center text-xs font-semibold text-rose-200">{pdfMessage}</p>}
       </header>
 
-      <main className="builder-shell mx-auto grid max-w-[1500px] gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.88fr)] lg:py-8">
-        <div className="space-y-6">
+      <main className="builder-shell mx-auto grid max-w-[1500px] gap-6 px-4 py-5 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.88fr)]">
+        <div className="space-y-5">
           <SectionCard title="Personal Information" description="Add the details recruiters can use to contact you.">
             <div className="grid gap-4 sm:grid-cols-2">
               <TextInput label="Full Name" value={resume.personal.fullName} onChange={(value) => updatePersonal("fullName", value)} placeholder="Your Name" />
@@ -359,7 +345,7 @@ function BuilderApp() {
             </div>
           </SectionCard>
 
-          <SectionCard title="Professional Summary" description="Introduce yourself professionally and highlight the opportunities you are seeking." action={<EnhanceButton onClick={handleEnhanceSummary} loading={aiStatus.summary.loading} success={aiStatus.summary.success} disabled={!resume.summary.trim()} />}>
+          <SectionCard title="Professional Summary" description="Introduce yourself professionally and highlight the opportunities you are seeking." action={<EnhanceButton onClick={handleEnhanceSummary} loading={aiStatus.summary.loading} disabled={!resume.summary.trim()} />}>
             <TextArea
               value={resume.summary || ""}
               onChange={updateSummary}
@@ -389,7 +375,7 @@ function BuilderApp() {
                       <div className="sm:col-span-2">
                         <div className="mb-2 flex items-center justify-between gap-3">
                           <span className="block text-xs font-bold text-blue-100/85">Description</span>
-                          <EnhanceButton onClick={() => handleEnhanceExperience(index)} loading={aiStatus.experiences[index]?.loading} success={aiStatus.experiences[index]?.success} disabled={!experience.description.trim()} />
+                          <EnhanceButton onClick={() => handleEnhanceExperience(index)} loading={aiStatus.experiences[index]?.loading} disabled={!experience.description.trim()} />
                         </div>
                         <TextArea value={experience.description} onChange={(value) => updateExperience(index, "description", value)} placeholder="Describe your responsibilities, tools used, and impact." />
                         <AiError message={aiStatus.experiences[index]?.error} />
@@ -432,7 +418,7 @@ function BuilderApp() {
                     <div className="sm:col-span-2">
                       <div className="mb-2 flex items-center justify-between gap-3">
                         <span className="block text-xs font-bold text-blue-100/85">Description</span>
-                        <EnhanceButton onClick={() => handleEnhanceProject(index)} loading={aiStatus.projects[index]?.loading} success={aiStatus.projects[index]?.success} disabled={!project.description.trim()} />
+                        <EnhanceButton onClick={() => handleEnhanceProject(index)} loading={aiStatus.projects[index]?.loading} disabled={!project.description.trim()} />
                       </div>
                       <TextArea value={project.description} onChange={(value) => updateProject(index, "description", value)} placeholder="Explain what you built and the result." />
                       <AiError message={aiStatus.projects[index]?.error} />
@@ -472,7 +458,7 @@ function BuilderApp() {
                   <div className="mb-2 flex items-center justify-between gap-3">
                     <p className="text-xs font-bold text-blue-100/60">Achievement {index + 1}</p>
                     <div className="flex shrink-0 items-center gap-1.5">
-                      <EnhanceButton onClick={() => handleEnhanceAchievement(index)} loading={aiStatus.achievements[index]?.loading} success={aiStatus.achievements[index]?.success} disabled={!achievement.trim()} />
+                      <EnhanceButton onClick={() => handleEnhanceAchievement(index)} loading={aiStatus.achievements[index]?.loading} disabled={!achievement.trim()} />
                       {resume.achievements.length > 1 && <DeleteButton label={`Delete achievement ${index + 1}`} onClick={() => setResume((current) => ({ ...current, achievements: current.achievements.filter((_, itemIndex) => itemIndex !== index) }))} />}
                     </div>
                   </div>
@@ -487,7 +473,7 @@ function BuilderApp() {
         <aside className="hidden lg:block">
           <div className="sticky top-24">
             <div className="mb-3 flex items-center justify-between"><div><h2 className="text-sm font-bold text-white">Live Preview</h2><p className="mt-0.5 text-xs text-blue-100/60">{selectedTemplate.name}</p></div><span className="rounded-full bg-blue-500/15 px-3 py-1 text-[11px] font-bold text-blue-200">A4 Preview</span></div>
-            <div className="builder-scrollbar max-h-[calc(100vh-9rem)] overflow-auto rounded-3xl border border-white/10 bg-slate-950/58 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.26)] backdrop-blur-xl"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div>
+            <div className="builder-scrollbar max-h-[calc(100vh-9rem)] overflow-auto rounded-2xl border border-white/10 bg-slate-950/60 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.22)]"><ResumePreview resume={resume} templateId={selectedTemplateId} /></div>
           </div>
         </aside>
       </main>
