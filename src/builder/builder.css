@@ -26,6 +26,40 @@
   padding-bottom: 1px;
 }
 
+.ai-action-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-action-button::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(167, 139, 250, 0), rgba(167, 139, 250, 0.45), rgba(34, 211, 238, 0));
+  opacity: 0;
+  transform: translateX(-60%);
+}
+
+.ai-action-button.is-loading::before {
+  opacity: 1;
+  animation: ai-sheen 1.4s ease-in-out infinite;
+}
+
+.ai-action-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes ai-sheen {
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(70%);
+  }
+}
+
 @media (max-width: 1023px) {
   .resume-paper {
     aspect-ratio: auto;
