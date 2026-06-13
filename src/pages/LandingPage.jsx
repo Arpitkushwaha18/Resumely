@@ -26,6 +26,7 @@ import prestigePreview from "../assets/template-previews/prestige.svg";
 import swiftPreview from "../assets/template-previews/swift.svg";
 import zenithPreview from "../assets/template-previews/zenith.svg";
 import { resumeTemplates } from "../builder/templates/templateRegistry.js";
+import SEO from "../components/SEO.jsx";
 
 const navLinks = [
   ["Resume Templates", "#templates"],
@@ -37,7 +38,7 @@ const features = [
   {
     icon: LayoutTemplate,
     title: "Professional Templates",
-    text: "Modern layouts designed to make your experience stand out, even when you are just starting out.",
+    text: "Modern resume templates designed to help your experience stand out, even when you are just starting out.",
     tint: "bg-blue-50 text-blue-700",
   },
   {
@@ -49,7 +50,7 @@ const features = [
   {
     icon: ShieldCheck,
     title: "ATS Optimized",
-    text: "Built with clean formatting and clear sections that applicant tracking systems can read with ease.",
+    text: "Build an ATS resume with clean formatting and clear sections that applicant tracking systems can read with ease.",
     tint: "bg-[#eef0fd] text-[#6b70c9]",
   },
   {
@@ -301,6 +302,7 @@ function TrustBar() {
 function App() {
   return (
     <div className="overflow-hidden bg-slate-950">
+      <SEO />
       <Navbar />
       <main>
         <section className="relative border-b border-white/10 bg-[radial-gradient(circle_at_20%_10%,rgba(37,99,235,0.35),transparent_32%),radial-gradient(circle_at_82%_20%,rgba(14,165,233,0.22),transparent_28%),linear-gradient(180deg,#020617_0%,#0f172a_62%,#111827_100%)]">
@@ -309,13 +311,13 @@ function App() {
             <div className="relative z-10">
               <div className="animate-reveal mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-bold text-blue-100 shadow-sm backdrop-blur">
                 <span className="grid h-5 w-5 place-items-center rounded-full bg-mint-600 text-white"><Sparkles size={12} /></span>
-                Modern resume builder for students
+                Free resume builder for students and freshers
               </div>
               <h1 className="animate-reveal animation-delay-150 max-w-3xl text-[2.75rem] font-black leading-[1.04] text-white sm:text-6xl lg:text-[4.35rem]">
                 Create a Professional Resume <span className="text-blue-300">in Minutes</span>
               </h1>
               <p className="animate-reveal animation-delay-300 mt-6 max-w-xl text-base leading-7 text-blue-100 sm:text-lg sm:leading-8">
-                Create a polished, ATS-friendly resume for internships, placements, and fresher roles. Pick a template, fill your details, and export a clean PDF.
+                Use Resumely as your free resume builder, CV maker, and online CV maker for internships, placements, and fresher roles. Pick a professional resume template, add your details, and export a clean PDF.
               </p>
               <div className="animate-reveal animation-delay-500 mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button href="/builder" className="px-6 py-3.5">Create Resume Free <ArrowRight size={16} /></Button>
@@ -327,7 +329,7 @@ function App() {
                 <span className="flex items-center gap-1.5"><CircleCheck size={15} className="text-blue-300" /> ATS-friendly format</span>
               </div>
               <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
-                {["10 Professional Templates", "ATS Ready", "1-Click PDF"].map((item) => (
+                {["10 Resume Templates", "ATS Resume Ready", "1-Click PDF"].map((item) => (
                   <div key={item} className="rounded-2xl border border-white/10 bg-white/10 px-3 py-3 text-center text-xs font-bold text-white backdrop-blur">
                     {item}
                   </div>
@@ -341,7 +343,7 @@ function App() {
         <TrustBar />
 
         <section id="features" className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-          <SectionTitle dark eyebrow="Everything you need" title="A better way to build your resume" text="Simple, thoughtful tools that help you put your best foot forward without overthinking the process." />
+          <SectionTitle dark eyebrow="Everything you need" title="A better way to build your resume" text="Simple, thoughtful tools that make Resumely a practical resume creator for turning your experience into a polished, job-ready document." />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {features.map(({ icon: Icon, title, text, tint }) => (
               <article key={title} className="group rounded-2xl border border-white/10 bg-white/[0.06] p-6 shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-blue-300/50 hover:bg-white/[0.09] hover:shadow-[0_18px_42px_rgba(30,64,175,0.20)]">
@@ -357,8 +359,8 @@ function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
             <div className="mx-auto mb-12 max-w-2xl text-center">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Resume Templates</p>
-              <h2 className="text-3xl font-bold text-white sm:text-4xl">Start with a template that fits you</h2>
-              <p className="mt-4 text-base leading-7 text-blue-100">Recruiter-friendly designs for every step of your career. Pick one and make it yours.</p>
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">Start with a resume template that fits you</h2>
+              <p className="mt-4 text-base leading-7 text-blue-100">Recruiter-friendly resume templates for every step of your career. Pick one and make it yours.</p>
             </div>
             <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-5">
               {templates.map((template) => (
@@ -390,7 +392,7 @@ function App() {
             <div className="absolute left-[17%] right-[17%] top-12 hidden border-t-2 border-dashed border-blue-300/30 md:block" />
             {[
               [FileText, "01", "Enter Your Details", "Add your education, skills, projects, and experience with simple guided prompts."],
-              [WandSparkles, "02", "Enhance With AI", "Use AI to strengthen your summary with clearer phrasing, sharper focus, and a more professional tone."],
+              [WandSparkles, "02", "Enhance With AI", "Use the resume generator to strengthen your summary with clearer phrasing, sharper focus, and a more professional tone."],
               [Download, "03", "Download PDF", "Export a clean, ATS-friendly PDF and start sending applications with confidence."],
             ].map(([Icon, number, title, text]) => (
               <article key={title} className="relative rounded-2xl border border-white/10 bg-white/[0.06] p-7 text-center shadow-sm backdrop-blur">
@@ -429,7 +431,7 @@ function App() {
                 Resumely was built to help students and freshers create professional resumes without struggling with formatting, design, or expensive resume tools.
               </p>
               <p className="mt-3 text-base leading-7 text-blue-100">
-                Choose a template, fill your information, and download a professional resume within minutes.
+                Choose a CV maker template, fill your information, and download a professional resume within minutes.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
